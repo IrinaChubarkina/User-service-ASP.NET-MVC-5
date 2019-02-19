@@ -4,32 +4,27 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
+<h3>User edit</h3>
 @using (Html.BeginForm("Edit", "Home"))
 {
     <table>
 
         <tr>
-            <td>@Html.LabelFor(x => x.FirstName)</td>
-            <td>@Html.EditorFor(x => x.FirstName) </td>
+            <td><p>First name </p></td>
+            <td>@Html.Editor("FirstName") </td>
         </tr>
         <tr>
-            <td>@Html.LabelFor(x => x.LastName)</td>
-            <td>@Html.EditorFor(x => x.LastName) </td>
+            <td><p>Last name</p></td>
+            <td>@Html.Editor("LastName") </td>
         </tr>
         <tr>
-            <td>@Html.LabelFor(x => x.PhoneNumber)</td>
-            <td>@Html.EditorFor(x => x.PhoneNumber) </td>
+            <td><p>Phone </p></td>
+            <td>@Html.Editor("PhoneNumber") </td>
         </tr>
         <tr>
-            <td>@Html.LabelFor(x => x.Email)</td>
-            <td>@Html.EditorFor(x => x.Email) </td>
+            <td><p>e-mail</p></td>
+            <td>@Html.Editor("Email") </td>
         </tr>
         <tr><td><input type="submit" value="Done" /> </td><td></td></tr>
     </table>
 }
-
-<div>
-    @Html.ActionLink("Back", "Index")
-</div>

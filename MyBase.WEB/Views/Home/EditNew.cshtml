@@ -1,0 +1,38 @@
+﻿@model MyBase.WEB.Models.UserViewModel
+
+@{
+    ViewBag.Title = "EditNew";
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Футболист</legend>
+        <p>
+            Имя игрока <br />
+            @Html.EditorFor(model => model.FirstName)
+        </p>
+
+        <p>
+            Возраст <br />
+            @Html.EditorFor(model => model.LastName)
+        </p>
+
+        <p>
+            Позиция на поле  <br />
+            @Html.EditorFor(model => model.PhoneNumber)
+        </p>
+        <p>
+            Позиция на поле  <br />
+            @Html.EditorFor(model => model.Email)
+        </p>
+        
+        <p>
+            <input type="submit" value="Сохранить" />
+        </p>
+    </fieldset>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

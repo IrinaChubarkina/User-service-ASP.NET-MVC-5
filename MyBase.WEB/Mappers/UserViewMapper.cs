@@ -19,7 +19,7 @@ namespace MyBase.WEB.Mappers
                 LastName = source.LastName,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email,
-                ContactId = source.ContactId,
+                ContactId = source.Id, //по-моему ето нехорошо
             };
         }
 
