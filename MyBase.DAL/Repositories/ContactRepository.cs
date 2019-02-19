@@ -29,21 +29,21 @@ namespace MyBase.DAL.Repositories
             return db.Contacts.Find(id);
         }
 
-        public void Add(Contact book)
+        public void Add(Contact contact)
         {
-            db.Contacts.Add(book);
+            db.Contacts.Add(contact);
         }
 
-        public void Edit(Contact book)
+        public void Edit(Contact contact)
         {
-            db.Entry(book).State = EntityState.Modified;
+            db.Entry(contact).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            Contact book = db.Contacts.Find(id);
-            if (book != null)
-                db.Contacts.Remove(book);
+            Contact contact = db.Contacts.Find(id);
+            if (contact != null)
+                db.Contacts.Remove(contact);
         }
 
         /*public Contact Get<TProperty>(int id, Expression<Func<Contact, TProperty>> expression)

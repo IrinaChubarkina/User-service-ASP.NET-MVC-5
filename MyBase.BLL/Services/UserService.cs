@@ -53,8 +53,8 @@ namespace MyBase.BLL.Services
         {
             var user = userMapper.ConvertToDownLayer(userDto);
             var contact = contactMapper.ConvertToDownLayer(userDto);
-            unitOfWork.Users.Add(user);
-            unitOfWork.Contacts.Add(contact);
+            unitOfWork.Users.Edit(user);
+            unitOfWork.Contacts.Edit(contact);
             unitOfWork.Save();
         }
 

@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<MyBase.WEB.Models.UserViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "View";
 }
 
-@Html.ActionLink("Add ", "Add")
+<h2>Index</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -13,6 +16,15 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        <th>
+            @Html.DisplayNameFor(model => model.ContactId)
+        </th>
         </th>
     </tr>
 
@@ -25,7 +37,66 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
         </tr>
     }
 
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+    @model IEnumerable<MyBase.WEB.Models.UserViewModel>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    @Html.ActionLink("Add ", "Add")
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+            </tr>
+        }
+
+    </table>
+*@

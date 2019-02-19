@@ -1,0 +1,35 @@
+﻿@model MyBase.WEB.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Home"))
+{
+    <table>
+
+        <tr>
+            <td>@Html.LabelFor(x => x.FirstName)</td>
+            <td>@Html.EditorFor(x => x.FirstName) </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.LastName)</td>
+            <td>@Html.EditorFor(x => x.LastName) </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.PhoneNumber)</td>
+            <td>@Html.EditorFor(x => x.PhoneNumber) </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.Email)</td>
+            <td>@Html.EditorFor(x => x.Email) </td>
+        </tr>
+        <tr><td><input type="submit" value="Done" /> </td><td></td></tr>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
