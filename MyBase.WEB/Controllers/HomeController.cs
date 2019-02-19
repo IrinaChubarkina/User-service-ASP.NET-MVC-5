@@ -28,7 +28,8 @@ namespace MyBase.WEB.Controllers
                 users.Add(mapper.ConvertToUpLayer(u));
             }
             //ViewBag.Users = users;
-            return View(users);
+            return View("View", users);
+            //return View(users);
         }
 
         public ActionResult Add()

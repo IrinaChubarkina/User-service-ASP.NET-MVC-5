@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+
+
+<h3>I want to add</h3>
+@using (Html.BeginForm("Add", "Home"))
+{
+    <table>
+        
+        <tr>
+            <td><p>First name </p></td>
+            <td>@Html.TextBox("FirstName") </td>
+        </tr>
+        <tr>
+            <td><p>Last name</p></td>
+            <td>@Html.TextBox("LastName") </td>
+        </tr>
+        <tr>
+            <td><p>Phone </p></td>
+            <td>@Html.TextBox("PhoneNumber") </td>
+        </tr>
+        <tr>
+            <td><p>e-mail</p></td>
+            <td>@Html.TextBox("Email") </td>
+        </tr>
+        <tr><td><input type="submit" value="Done" /> </td><td></td></tr>
+    </table>
+}
+

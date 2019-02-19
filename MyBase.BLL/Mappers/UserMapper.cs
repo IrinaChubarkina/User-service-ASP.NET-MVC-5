@@ -31,6 +31,8 @@ namespace MyBase.BLL.Mappers
                 FirstName = source.FirstName,
                 LastName = source.LastName,
                 ContactId = source.ContactId,
+                PhoneNumber = source.Contact.PhoneNumber,
+                Email = source.Contact.Email
                 //Contact = source.Contact
             };
         }
