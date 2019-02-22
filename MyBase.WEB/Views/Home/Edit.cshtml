@@ -4,27 +4,32 @@
     ViewBag.Title = "Edit";
 }
 
-<h3>User edit</h3>
+<h3>Изменить</h3>
+
 @using (Html.BeginForm("Edit", "Home"))
 {
+    <input type="hidden" value="@Model.ContactId" name="ContactId" />
     <table>
-
         <tr>
-            <td><p>First name </p></td>
-            <td>@Html.Editor("FirstName") </td>
+            <td>@Html.DisplayNameFor(model => model.FirstName)</td>
+            <td>@Html.EditorFor(model => model.FirstName) </td>
         </tr>
         <tr>
-            <td><p>Last name</p></td>
-            <td>@Html.Editor("LastName") </td>
+            <td>@Html.DisplayNameFor(model => model.LastName)</td>
+            <td>@Html.EditorFor(model => model.LastName) </td>
         </tr>
         <tr>
-            <td><p>Phone </p></td>
-            <td>@Html.Editor("PhoneNumber") </td>
+            <td>@Html.DisplayNameFor(model => model.PhoneNumber)</td>
+            <td>@Html.EditorFor(model => model.PhoneNumber) </td>
         </tr>
         <tr>
-            <td><p>e-mail</p></td>
-            <td>@Html.Editor("Email") </td>
+            <td>@Html.DisplayNameFor(model => model.Email)</td>
+            <td>@Html.EditorFor(model => model.Email) </td>
         </tr>
-        <tr><td><input type="submit" value="Done" /> </td><td></td></tr>
+        <tr><td><input type="submit" value="Готово" /> </td><td></td></tr>
     </table>
+
+    <hr />
+        @Html.ActionLink("Все пользователи", "Index")
+
 }

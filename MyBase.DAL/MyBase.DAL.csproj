@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="EF\ApplicationContext.cs" />
     <Compile Include="Entities\Contact.cs" />
+    <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />

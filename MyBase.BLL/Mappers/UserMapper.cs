@@ -11,7 +11,7 @@ namespace MyBase.BLL.Mappers
 {
     public class UserMapper : IMapper<UserDTO, User>
     {
-        public User ConvertToDownLayer(UserDTO source)
+        public User Convert(UserDTO source)
         {
             return new User
             {
@@ -23,7 +23,7 @@ namespace MyBase.BLL.Mappers
             };
         }
 
-        public UserDTO ConvertToUpLayer(User source)
+        public UserDTO Convert(User source)
         {
             return new UserDTO
             {

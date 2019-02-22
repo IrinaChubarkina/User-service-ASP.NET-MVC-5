@@ -10,7 +10,7 @@ namespace MyBase.WEB.Mappers
 {
     public class UserViewMapper : IMapper<UserViewModel, UserDTO>
     {
-        public UserDTO ConvertToDownLayer(UserViewModel source)
+        public UserDTO Convert(UserViewModel source)
         {
             return new UserDTO
             {
@@ -19,11 +19,11 @@ namespace MyBase.WEB.Mappers
                 LastName = source.LastName,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email,
-                ContactId = source.Id, //по-моему ето нехорошо
+                ContactId = source.ContactId
             };
         }
 
-        public UserViewModel ConvertToUpLayer(UserDTO source)
+        public UserViewModel Convert(UserDTO source)
         {
             return new UserViewModel
             {
@@ -32,7 +32,7 @@ namespace MyBase.WEB.Mappers
                 LastName = source.LastName,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email,
-                ContactId = source.ContactId,
+                ContactId = source.ContactId
             };
         }
     }

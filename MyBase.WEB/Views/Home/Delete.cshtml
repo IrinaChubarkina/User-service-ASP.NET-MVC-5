@@ -1,10 +1,12 @@
 ﻿@model MyBase.WEB.Models.UserViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
+
 <div>
+
     <h4>Пользователь</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -38,11 +40,18 @@
 
         <dd>
             @Html.DisplayFor(model => model.Email)
-        </dd>        
+        </dd>
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }) |
+
+    
+    @using (Html.BeginForm("Delete", "Home")) //надо остальные??
+    {
+        <h3>Вы уверены?</h3>
+        <div class="form-actions no-color">
+            <input type="hidden" value="@Model.FirstName" name="FirstName" />
+            <input type="submit" value="Да" class="btn btn-default" />             
+        </div>
+    }
+    <hr />
     @Html.ActionLink("Все пользователи", "Index")
-</p>
+</div>

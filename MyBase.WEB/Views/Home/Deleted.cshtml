@@ -1,0 +1,11 @@
+﻿@model MyBase.WEB.Models.UserViewModel
+@{
+    ViewBag.Title = "Deleted";
+}
+
+<div>
+    <h2>Пользователь <b>@Model.FirstName</b> удален</h2>
+    <hr />
+    @Html.ActionLink("Все пользователи", "Index")
+</div>
+

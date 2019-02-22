@@ -30,15 +30,15 @@ namespace MyBase.BLL.Services
             var users = unitOfWork.Users.GetList();
             foreach (var u in users)
             {
-                usersDto.Add(userMapper.ConvertToUpLayer(u));
+                usersDto.Add(userMapper.Convert(u));
             }
             return usersDto;
         }
 
         public void Add(UserDTO userDto)
         {
-            var user = userMapper.ConvertToDownLayer(userDto);
-            var contact = contactMapper.ConvertToDownLayer(userDto);
+            var user = userMapper.Convert(userDto);
+            var contact = contactMapper.Convert(userDto);
             unitOfWork.Users.Add(user);
             unitOfWork.Contacts.Add(contact);
             unitOfWork.Save();
@@ -46,13 +46,13 @@ namespace MyBase.BLL.Services
 
         public UserDTO Get(int id)
         {
-            return userMapper.ConvertToUpLayer(unitOfWork.Users.Get(id));
+            return userMapper.Convert(unitOfWork.Users.Get(id));
         }
 
         public void Edit(UserDTO userDto)
         {
-            var user = userMapper.ConvertToDownLayer(userDto);
-            var contact = contactMapper.ConvertToDownLayer(userDto);
+            var user = userMapper.Convert(userDto);
+            var contact = contactMapper.Convert(userDto);
             unitOfWork.Users.Edit(user);
             unitOfWork.Contacts.Edit(contact);
             unitOfWork.Save();

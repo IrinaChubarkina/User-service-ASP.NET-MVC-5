@@ -11,18 +11,17 @@ namespace MyBase.BLL.Mappers
 {
     public class ContactMapper : IMapper<UserDTO, Contact>
     {
-        public Contact ConvertToDownLayer(UserDTO source)
+        public Contact Convert(UserDTO source)
         {
             return new Contact
             {
                 Id = source.ContactId,
                 PhoneNumber = source.PhoneNumber,
-                // Email = source.Contact.Email
                 Email = source.Email
             };
         }
 
-        public UserDTO ConvertToUpLayer(Contact source) // не надо
+        public UserDTO Convert(Contact source) // не надо
         {
             throw new NotImplementedException();
         }

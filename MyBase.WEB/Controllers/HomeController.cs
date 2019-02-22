@@ -27,7 +27,7 @@ namespace MyBase.WEB.Controllers
             var usersDto = service.GetList();
             foreach (var u in usersDto)
             {
-                users.Add(mapper.ConvertToUpLayer(u));
+                users.Add(mapper.Convert(u));
             }
             return View(users);
         }
@@ -36,7 +36,7 @@ namespace MyBase.WEB.Controllers
         public ActionResult Details(int id)
         {
             var userDto = service.Get(id);
-            var user = mapper.ConvertToUpLayer(userDto);
+            var user = mapper.Convert(userDto);
             return View(user);
         }
 
@@ -53,7 +53,7 @@ namespace MyBase.WEB.Controllers
         {
             try
             {
-                var userDto = mapper.ConvertToDownLayer(user);
+                var userDto = mapper.Convert(user);
                 service.Add(userDto);
                 return RedirectToAction("Index");
             }
@@ -65,9 +65,9 @@ namespace MyBase.WEB.Controllers
 
         // GET: Default/Edit/5
         public ActionResult Edit(int id)
-        {
+        {            
             var userDto = service.Get(id);
-            var user = mapper.ConvertToUpLayer(userDto);
+            var user = mapper.Convert(userDto);            
             return View(user);
         }
 
@@ -77,7 +77,7 @@ namespace MyBase.WEB.Controllers
         {            
             try
             {
-                var userDto = mapper.ConvertToDownLayer(user);
+                var userDto = mapper.Convert(user);
                 service.Edit(userDto);
                 return RedirectToAction("Index");
             }
@@ -89,46 +89,19 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult Delete(int id)
         {
-            service.Delete(id);
-            return RedirectToAction("Index");
+            //service.Delete(id);
+            //return RedirectToAction("Index");
+            //return View();
+            var userDto = service.Get(id);
+            var user = mapper.Convert(userDto);
+            return View(user);
         }
-
-
-
-
-
-
-         //public ActionResult Index()
-         //{
-         //    List<UserViewModel> users = new List<UserViewModel>();
-         //    var usersDto = service.GetList();
-         //    foreach (var u in usersDto)
-         //    {
-         //        users.Add(mapper.ConvertToUpLayer(u));
-         //    }
-         //    //ViewBag.Users = users;
-         //    return View("View", users);
-         //    //return View(users);
-         //}
-
-         //public ActionResult Add()
-         //{
-         //    return View();
-         //}
-
-         //[HttpPost]
-         //public ActionResult Add(UserViewModel user) // user + contact + image
-         //{
-         //    // userRequest -> mapping -> userDto 
-         //    var userDto = mapper.ConvertToDownLayer(user);
-         //    service.Add(userDto);
-         //    return Redirect("Index");
-         //}
-
-         //public ActionResult Delete()
-         //{
-         //    return View();
-         //}
-
+        [HttpPost]
+        public ActionResult Delete(UserViewModel user)
+        {
+            service.Delete(user.Id);
+            //return RedirectToAction("Index");
+            return View("Deleted", user);
+        }
     }
 }
