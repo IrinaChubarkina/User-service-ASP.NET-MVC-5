@@ -12,33 +12,11 @@ namespace MyBase.DAL.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext db;
-        private UserRepository userRepository;
-        private ContactRepository contactRepository;
 
-        public UnitOfWork(string connectionString)
+        public UnitOfWork(ApplicationContext applicationContext)
         {
-            db = new ApplicationContext(connectionString);
-        }
-
-        public IRepository<Contact> Contacts
-        {
-            get
-            {
-                if (contactRepository == null)
-                    contactRepository = new ContactRepository(db);
-                return contactRepository;
-            }
-        }
-
-        public IRepository<User> Users
-        {
-            get
-            {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
-            }
-        }
+            db = applicationContext;
+        }        
 
         public void Save()
         {

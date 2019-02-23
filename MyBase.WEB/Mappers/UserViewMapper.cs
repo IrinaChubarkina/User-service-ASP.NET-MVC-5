@@ -19,7 +19,9 @@ namespace MyBase.WEB.Mappers
                 LastName = source.LastName,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email,
-                ContactId = source.ContactId
+                ContactId = source.ContactId,
+                PictureId = source.PictureId,
+                Image = source.Image
             };
         }
 
@@ -32,7 +34,9 @@ namespace MyBase.WEB.Mappers
                 LastName = source.LastName,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email,
-                ContactId = source.ContactId
+                ContactId = source.ContactId,
+                PictureId = source.PictureId,
+                Image = source.Image
             };
         }
     }

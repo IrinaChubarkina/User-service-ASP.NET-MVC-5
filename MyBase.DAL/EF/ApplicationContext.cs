@@ -12,10 +12,10 @@ namespace MyBase.DAL.EF
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        //public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
 
-        public ApplicationContext(string connectionString)
-            : base(connectionString)
+        public ApplicationContext()
+            : base("DefaultConnection")
         {
         }
     }

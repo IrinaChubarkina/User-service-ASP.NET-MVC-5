@@ -14,5 +14,8 @@ namespace MyBase.DAL.Entities
 
         public int ContactId { get; set; }
         public Contact Contact { get; set; }
+
+        public int PictureId { get; set; }
+        public Picture Picture { get; set; }
     }
 }

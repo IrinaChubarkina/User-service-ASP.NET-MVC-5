@@ -19,6 +19,7 @@ namespace MyBase.BLL.Mappers
                 FirstName = source.FirstName,
                 LastName = source.LastName,
                 ContactId = source.ContactId,
+                PictureId = source.PictureId
                 //Contact = source.Contact
             };
         }
@@ -29,10 +30,12 @@ namespace MyBase.BLL.Mappers
             {
                 Id = source.Id,
                 FirstName = source.FirstName,
-                LastName = source.LastName,
-                ContactId = source.ContactId,
+                LastName = source.LastName,                
                 PhoneNumber = source.Contact.PhoneNumber,
-                Email = source.Contact.Email
+                Email = source.Contact.Email,
+                Image  = source.Picture.Image,
+                ContactId = source.ContactId,
+                PictureId = source.PictureId              
                 //Contact = source.Contact
             };
         }

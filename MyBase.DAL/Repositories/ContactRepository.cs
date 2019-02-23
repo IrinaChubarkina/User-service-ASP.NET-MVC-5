@@ -19,16 +19,6 @@ namespace MyBase.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<Contact> GetList() //не надо
-        {
-            return db.Contacts;
-        }
-
-        public Contact Get(int id) //не надо
-        {
-            return db.Contacts.Find(id);
-        }
-
         public void Add(Contact contact)
         {
             db.Contacts.Add(contact);
@@ -45,10 +35,5 @@ namespace MyBase.DAL.Repositories
             if (contact != null)
                 db.Contacts.Remove(contact);
         }
-
-        /*public Contact Get<TProperty>(int id, Expression<Func<Contact, TProperty>> expression)
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }

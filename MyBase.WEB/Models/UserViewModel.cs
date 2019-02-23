@@ -30,5 +30,9 @@ namespace MyBase.WEB.Models
 
         //[HiddenInput(DisplayValue = false)]
         public int ContactId { get; set; }
+
+        public int PictureId { get; set; }
+        //public string Name { get; set; }
+        public byte[] Image { get; set; }
     }
 }

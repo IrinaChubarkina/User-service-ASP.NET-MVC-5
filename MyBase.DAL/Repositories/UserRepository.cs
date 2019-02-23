@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyBase.DAL.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository<User>
     {
         ApplicationContext db;
 
@@ -28,6 +28,7 @@ namespace MyBase.DAL.Repositories
         public void Add(User user)
         {
             db.Users.Add(user);
+            db.SaveChanges();
         }
 
         public void Edit(User user)
@@ -38,7 +39,7 @@ namespace MyBase.DAL.Repositories
         public User Get(int id)
         {
             //return _dbSet.Include(,).Find(id);
-            return db.Users.Include(x => x.Contact).ToList().Find(x => x.Id == id);
+            return db.Users.Include(x => x.Contact).Include(x => x.Picture).ToList().Find(x => x.Id == id);
             //return db.Users.Include(x => x.Contact).FirstOrDefault(x => x.Id == id)
             // return db.Users.Include(x => x.Contact)......
             //return db.Users.Find(id);
@@ -46,7 +47,7 @@ namespace MyBase.DAL.Repositories
 
         public IEnumerable<User> GetList()
         {
-            return db.Users.Include(u => u.Contact);
+            return db.Users.Include(u => u.Contact).Include(x => x.Picture);
             // return db.Users.ToList();
             // return _dbSet.ToList();            
         }

@@ -23,7 +23,7 @@ namespace MyBase.WEB
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             NinjectModule userModule = new UserModule();
-            NinjectModule serviceModule = new ServiceModule("DefaultConnection");
+            NinjectModule serviceModule = new ServiceModule();
             var kernel = new StandardKernel(userModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

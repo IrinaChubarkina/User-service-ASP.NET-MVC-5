@@ -14,9 +14,11 @@ namespace MyBase.BLL.DTO
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public byte[] Image { get; set; }
 
-        // нужен ли класс ContactDTO/ могу ли тут ссылаться на DAL? вроде могу
         public int ContactId { get; set; }
-        //public Contact Contact { get; set; } //без этого можно обойтись?
+        public int PictureId { get; set; }
+        //public string Name { get; set; }
+        
     }
 }

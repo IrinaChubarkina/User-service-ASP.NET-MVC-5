@@ -57,7 +57,7 @@ namespace MyBase.WEB.Controllers
                 service.Add(userDto);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
                 return View();
             }

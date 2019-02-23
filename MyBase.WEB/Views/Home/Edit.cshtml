@@ -9,6 +9,7 @@
 @using (Html.BeginForm("Edit", "Home"))
 {
     <input type="hidden" value="@Model.ContactId" name="ContactId" />
+    <input type="hidden" value="@Model.PictureId" name="ContactId" />
     <table>
         <tr>
             <td>@Html.DisplayNameFor(model => model.FirstName)</td>
@@ -30,6 +31,6 @@
     </table>
 
     <hr />
-        @Html.ActionLink("Все пользователи", "Index")
+    @Html.ActionLink("Все пользователи", "Index")
 
 }

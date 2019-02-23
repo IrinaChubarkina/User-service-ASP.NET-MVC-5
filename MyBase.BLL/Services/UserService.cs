@@ -14,20 +14,28 @@ namespace MyBase.BLL.Services
     public class UserService : IUserService
     {
         IUnitOfWork unitOfWork;
+        IUserRepository<User> userRepository;
+        IRepository<Contact> contactRepository;
+        IRepository<Picture> pictureRepository;
         IMapper<UserDTO, User> userMapper;
         IMapper<UserDTO, Contact> contactMapper;
+        IMapper<UserDTO, Picture> pictureMapper;
 
-        public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm)
+        public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm, IMapper<UserDTO, Picture> pm, IUserRepository<User> ur, IRepository<Contact> cr, IRepository<Picture> pr)
         {
             unitOfWork = uow;
             userMapper = um;
             contactMapper = cm;
+            pictureMapper = pm;
+            userRepository = ur;
+            contactRepository = cr;
+            pictureRepository = pr;
         }
 
         public IEnumerable<UserDTO> GetList()
         {
             List<UserDTO> usersDto = new List<UserDTO>();
-            var users = unitOfWork.Users.GetList();
+            var users = userRepository.GetList();
             foreach (var u in users)
             {
                 usersDto.Add(userMapper.Convert(u));
@@ -39,29 +47,36 @@ namespace MyBase.BLL.Services
         {
             var user = userMapper.Convert(userDto);
             var contact = contactMapper.Convert(userDto);
-            unitOfWork.Users.Add(user);
-            unitOfWork.Contacts.Add(contact);
+            var picture = pictureMapper.Convert(userDto);
+            userRepository.Add(user);
+            contactRepository.Add(contact);
+            pictureRepository.Add(picture);
             unitOfWork.Save();
+
         }
 
         public UserDTO Get(int id)
         {
-            return userMapper.Convert(unitOfWork.Users.Get(id));
+            return userMapper.Convert(userRepository.Get(id));
         }
 
         public void Edit(UserDTO userDto)
         {
             var user = userMapper.Convert(userDto);
             var contact = contactMapper.Convert(userDto);
-            unitOfWork.Users.Edit(user);
-            unitOfWork.Contacts.Edit(contact);
+            var picture = pictureMapper.Convert(userDto);
+            userRepository.Edit(user);
+            contactRepository.Edit(contact);
+            pictureRepository.Edit(picture);
             unitOfWork.Save();
         }
 
-        public void Delete(int id)
+        public void Delete(int id) 
         {
-            unitOfWork.Users.Delete(id);
-            unitOfWork.Contacts.Delete(id);
+            var user = userRepository.Get(id);
+            userRepository.Delete(id);
+            contactRepository.Delete(user.ContactId);
+            pictureRepository.Delete(user.PictureId);            
             unitOfWork.Save();
         }
 
