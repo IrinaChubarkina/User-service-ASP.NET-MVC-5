@@ -24,7 +24,7 @@ namespace MyBase.BLL.Infrastructure
         public override void Load()
         {
             Bind<IUnitOfWork>().To<UnitOfWork>();
-            Bind<ApplicationContext>().To<ApplicationContext>().InTransientScope();
+            Bind<ApplicationContext>().To<ApplicationContext>().InSingletonScope();
             Bind<IMapper<UserDTO, User>>().To<UserMapper>();
             Bind<IMapper<UserDTO, Contact>>().To<ContactMapper>();
             Bind<IMapper<UserDTO, Picture>>().To<PictureMapper>();

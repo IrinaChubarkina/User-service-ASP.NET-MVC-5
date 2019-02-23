@@ -28,7 +28,6 @@ namespace MyBase.DAL.Repositories
         public void Add(User user)
         {
             db.Users.Add(user);
-            db.SaveChanges();
         }
 
         public void Edit(User user)
