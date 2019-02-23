@@ -11,19 +11,19 @@
     <table>
         <tr>
             <td>@Html.DisplayNameFor(model => model.FirstName)</td>
-            <td>@Html.TextBox("FirstName") </td>
+            <td>@Html.EditorFor(model => model.FirstName) </td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.LastName)</td>
-            <td>@Html.TextBox("LastName") </td>
+            <td>@Html.EditorFor(model => model.LastName) </td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.PhoneNumber)</td>
-            <td>@Html.TextBox("PhoneNumber") </td>
+            <td>@Html.EditorFor(model => model.PhoneNumber) </td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.Email)</td>
-            <td>@Html.TextBox("Email") </td>
+            <td>@Html.EditorFor(model => model.Email) </td>
         </tr>
         <tr><td><input type="submit" value="Готово" /> </td><td></td></tr>
     </table>

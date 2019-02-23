@@ -12,15 +12,19 @@ namespace MyBase.WEB.Models
        // [HiddenInput(DisplayValue =false)]
         public int Id { get; set; }
 
+        //[Required]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
+        //[Required]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
+        //[Required]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
 
+        //[Required]
         [Display(Name = "Почта")]
         public string Email { get; set; }
 
