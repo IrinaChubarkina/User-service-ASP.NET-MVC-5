@@ -6,6 +6,7 @@ using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using MyBase.DAL.Repositories;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace MyBase.BLL.Infrastructure
         public override void Load()
         {
             Bind<IUnitOfWork>().To<UnitOfWork>();
-            Bind<ApplicationContext>().To<ApplicationContext>().InSingletonScope();
+            Bind<ApplicationContext>().To<ApplicationContext>().InRequestScope();
             Bind<IMapper<UserDTO, User>>().To<UserMapper>();
             Bind<IMapper<UserDTO, Contact>>().To<ContactMapper>();
             Bind<IMapper<UserDTO, Picture>>().To<PictureMapper>();

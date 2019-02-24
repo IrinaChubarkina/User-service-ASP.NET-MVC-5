@@ -3,6 +3,7 @@ using MyBase.BLL.Interfaces;
 using MyBase.WEB.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -49,12 +50,22 @@ namespace MyBase.WEB.Controllers
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult Create(UserViewModel user, HttpPostedFileBase uploadImage)
         {
             try
             {
+                if (uploadImage != null)
+                {
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    }
+                    user.Image = imageData;
+                }
                 var userDto = mapper.Convert(user);
-                service.Add(userDto);
+                service.Add(userDto);      
+                
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -73,18 +84,20 @@ namespace MyBase.WEB.Controllers
 
         // POST: Default/Edit/5
         [HttpPost]
-        public ActionResult Edit(UserViewModel user)
-        {            
-            try
+        public ActionResult Edit(UserViewModel user, HttpPostedFileBase uploadImage)
+        {
+            if (uploadImage != null)
             {
-                var userDto = mapper.Convert(user);
-                service.Edit(userDto);
-                return RedirectToAction("Index");
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+                user.Image = imageData;
             }
-            catch
-            {
-                return View();
-            }
+            var userDto = mapper.Convert(user);
+            service.Edit(userDto);
+            return RedirectToAction("Index");            
         }
 
         public ActionResult Delete(int id)
