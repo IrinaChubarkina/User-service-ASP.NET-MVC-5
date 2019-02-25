@@ -9,9 +9,11 @@
 
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="hidden" value="@Model.ContactId" name="ContactId" />
-    <input type="hidden" value="@Model.PictureId" name="ContactId" />
     <table>
+        <tr>
+            <td>@Html.HiddenFor(model => model.ContactId)</td>
+            <td>@Html.HiddenFor(model => model.PictureId) </td>
+        </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.FirstName)</td>
             <td>@Html.EditorFor(model => model.FirstName) </td>
@@ -27,7 +29,7 @@
         <tr>
             <td>@Html.DisplayNameFor(model => model.Email)</td>
             <td>@Html.EditorFor(model => model.Email) </td>
-        </tr>
+        </tr>        
     </table>
     <hr />
     <input type="file" name="uploadImage" />

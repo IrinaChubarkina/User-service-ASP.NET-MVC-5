@@ -9,6 +9,10 @@
 <hr />
 @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @*<div class="editor-field">
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>*@
     <table>
         <tr>
             <td>@Html.DisplayNameFor(model => model.FirstName)</td>
@@ -24,8 +28,8 @@
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.Email)</td>
-            <td>@Html.EditorFor(model => model.Email) </td>
-        </tr>        
+            <td>@Html.EditorFor(model => model.Email)</td>
+        </tr>
     </table>
     <hr />
     <input type="file" name="uploadImage" />
