@@ -32,6 +32,7 @@ namespace MyBase.BLL.Infrastructure
             Bind<IUserRepository<User>>().To<UserRepository>();
             Bind<IRepository<Contact>>().To<ContactRepository>();
             Bind<IRepository<Picture>>().To<PictureRepository>();
+            Bind<IUserValidator>().To<UserValidator>();
         }
     }
 }

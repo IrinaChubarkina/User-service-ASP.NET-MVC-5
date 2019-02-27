@@ -20,7 +20,7 @@ namespace MyBase.WEB.Controllers
             service = serv;
             mapper = m;
         }
-                
+
         // GET: Default
         public ActionResult Index()
         {
@@ -52,7 +52,7 @@ namespace MyBase.WEB.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel user, HttpPostedFileBase uploadImage)
         {
-            try
+            if (ModelState.IsValid)
             {
                 if (uploadImage != null)
                 {
@@ -64,21 +64,18 @@ namespace MyBase.WEB.Controllers
                     user.Image = imageData;
                 }
                 var userDto = mapper.Convert(user);
-                service.Add(userDto);      
-                
+                service.Add(userDto);
+
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
-                return View();
-            }
+            return View(user);
         }
 
         // GET: Default/Edit/5
         public ActionResult Edit(int id)
-        {            
+        {
             var userDto = service.Get(id);
-            var user = mapper.Convert(userDto);            
+            var user = mapper.Convert(userDto);
             return View(user);
         }
 
@@ -86,18 +83,22 @@ namespace MyBase.WEB.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel user, HttpPostedFileBase uploadImage)
         {
-            if (uploadImage != null)
+            if (ModelState.IsValid)
             {
-                byte[] imageData = null;
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                if (uploadImage != null)
                 {
-                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    }
+                    user.Image = imageData;
                 }
-                user.Image = imageData;
+                var userDto = mapper.Convert(user);
+                service.Edit(userDto);
+                return RedirectToAction("Index");
             }
-            var userDto = mapper.Convert(user);
-            service.Edit(userDto);
-            return RedirectToAction("Index");            
+            return View(user);            
         }
 
         public ActionResult Delete(int id)

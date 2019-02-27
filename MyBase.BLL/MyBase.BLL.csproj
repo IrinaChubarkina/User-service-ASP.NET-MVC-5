@@ -49,8 +49,10 @@
   <ItemGroup>
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
+    <Compile Include="Infrastructure\UserValidator.cs" />
     <Compile Include="Interfaces\IMapper.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Interfaces\IUserValidator.cs" />
     <Compile Include="Mappers\ContactMapper.cs" />
     <Compile Include="Mappers\PictureMapper.cs" />
     <Compile Include="Mappers\UserMapper.cs" />

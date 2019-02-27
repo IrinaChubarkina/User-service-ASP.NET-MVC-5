@@ -9,23 +9,24 @@ namespace MyBase.WEB.Models
 {
     public class UserViewModel
     {
-       // [HiddenInput(DisplayValue =false)]
+        //[HiddenInput(DisplayValue =false)]
         public int Id { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Почта")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         //[HiddenInput(DisplayValue = false)]
@@ -33,6 +34,7 @@ namespace MyBase.WEB.Models
 
         public int PictureId { get; set; }
         //public string Name { get; set; }
+        //[Required]
         public byte[] Image { get; set; }
     }
 }

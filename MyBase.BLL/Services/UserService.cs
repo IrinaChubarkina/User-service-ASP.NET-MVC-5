@@ -20,8 +20,11 @@ namespace MyBase.BLL.Services
         IMapper<UserDTO, User> userMapper;
         IMapper<UserDTO, Contact> contactMapper;
         IMapper<UserDTO, Picture> pictureMapper;
+        IUserValidator userValidator;
 
-        public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm, IMapper<UserDTO, Picture> pm, IUserRepository<User> ur, IRepository<Contact> cr, IRepository<Picture> pr)
+        public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm,
+            IMapper<UserDTO, Picture> pm, IUserRepository<User> ur,
+            IRepository<Contact> cr, IRepository<Picture> pr, IUserValidator uv)
         {
             unitOfWork = uow;
             userMapper = um;
@@ -30,6 +33,7 @@ namespace MyBase.BLL.Services
             userRepository = ur;
             contactRepository = cr;
             pictureRepository = pr;
+            userValidator = uv;
         }
 
         public IEnumerable<UserDTO> GetList()
@@ -45,14 +49,20 @@ namespace MyBase.BLL.Services
 
         public void Add(UserDTO userDto)
         {
-            var user = userMapper.Convert(userDto);
-            var contact = contactMapper.Convert(userDto);
-            var picture = pictureMapper.Convert(userDto);
-            userRepository.Add(user);
-            contactRepository.Add(contact);
-            pictureRepository.Add(picture);
-            unitOfWork.Save();
-
+            if (userValidator.Check(userDto))
+            {
+                var user = userMapper.Convert(userDto);
+                var contact = contactMapper.Convert(userDto);
+                var picture = pictureMapper.Convert(userDto);
+                userRepository.Add(user);
+                contactRepository.Add(contact);
+                pictureRepository.Add(picture);
+                unitOfWork.Save();
+            }
+            else
+            {
+                throw new Exception("Не все поля заполнены");
+            }
         }
 
         public UserDTO Get(int id)
@@ -62,21 +72,28 @@ namespace MyBase.BLL.Services
 
         public void Edit(UserDTO userDto)
         {
-            var user = userMapper.Convert(userDto);
-            var contact = contactMapper.Convert(userDto);
-            var picture = pictureMapper.Convert(userDto);
-            userRepository.Edit(user);
-            contactRepository.Edit(contact);
-            pictureRepository.Edit(picture);
-            unitOfWork.Save();
+            if (userValidator.Check(userDto))
+            {
+                var user = userMapper.Convert(userDto);
+                var contact = contactMapper.Convert(userDto);
+                var picture = pictureMapper.Convert(userDto);
+                userRepository.Edit(user);
+                contactRepository.Edit(contact);
+                pictureRepository.Edit(picture);
+                unitOfWork.Save();
+            }
+            else
+            {
+                throw new Exception("Не все поля заполнены");
+            }
         }
 
-        public void Delete(int id) 
+        public void Delete(int id)
         {
             var user = userRepository.Get(id);
             userRepository.Delete(id);
             contactRepository.Delete(user.ContactId);
-            pictureRepository.Delete(user.PictureId);            
+            pictureRepository.Delete(user.PictureId);
             unitOfWork.Save();
         }
 

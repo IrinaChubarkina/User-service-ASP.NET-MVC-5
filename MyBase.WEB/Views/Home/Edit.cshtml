@@ -16,20 +16,20 @@
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.FirstName)</td>
-            <td>@Html.EditorFor(model => model.FirstName) </td>
+            <td>@Html.EditorFor(model => model.FirstName) @Html.ValidationMessageFor(model => model.FirstName)</td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.LastName)</td>
-            <td>@Html.EditorFor(model => model.LastName) </td>
+            <td>@Html.EditorFor(model => model.LastName) @Html.ValidationMessageFor(model => model.LastName)</td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.PhoneNumber)</td>
-            <td>@Html.EditorFor(model => model.PhoneNumber) </td>
+            <td>@Html.EditorFor(model => model.PhoneNumber) @Html.ValidationMessageFor(model => model.PhoneNumber)</td>
         </tr>
         <tr>
             <td>@Html.DisplayNameFor(model => model.Email)</td>
-            <td>@Html.EditorFor(model => model.Email) </td>
-        </tr>        
+            <td>@Html.EditorFor(model => model.Email) @Html.ValidationMessageFor(model => model.Email)</td>
+        </tr>       
     </table>
     <hr />
     <input type="file" name="uploadImage" />
