@@ -103,9 +103,6 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult Delete(int id)
         {
-            //service.Delete(id);
-            //return RedirectToAction("Index");
-            //return View();
             var userDto = service.Get(id);
             var user = mapper.Convert(userDto);
             return View(user);
@@ -114,8 +111,13 @@ namespace MyBase.WEB.Controllers
         public ActionResult Delete(UserViewModel user)
         {
             service.Delete(user.Id);
-            //return RedirectToAction("Index");
             return View("Deleted", user);
+        }
+
+        public ActionResult CreateFakeData()
+        {
+            service.CreateFakeData();
+            return RedirectToAction("Create");
         }
     }
 }

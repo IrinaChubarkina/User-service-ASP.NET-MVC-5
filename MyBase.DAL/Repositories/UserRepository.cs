@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Extensions;
 
 namespace MyBase.DAL.Repositories
 {
@@ -16,6 +17,7 @@ namespace MyBase.DAL.Repositories
 
         public UserRepository(ApplicationContext context)
         {
+            EntityFrameworkManager.BulkOperationBuilder = builder => builder.BatchSize = 30000;
             db = context;
         }
         public void Delete(int id)
@@ -37,24 +39,51 @@ namespace MyBase.DAL.Repositories
 
         public User Get(int id)
         {
-            //return _dbSet.Include(,).Find(id);
-            return db.Users.Include(x => x.Contact).Include(x => x.Picture).ToList().Find(x => x.Id == id);
-            //return db.Users.Include(x => x.Contact).FirstOrDefault(x => x.Id == id)
-            // return db.Users.Include(x => x.Contact)......
-            //return db.Users.Find(id);
+            return db.Users.Include(x => x.Contact).Include(x => x.Picture).ToList().Find(x => x.Id == id);            
         }
 
         public IEnumerable<User> GetList()
         {
-            return db.Users.Include(u => u.Contact).Include(x => x.Picture);
-            // return db.Users.ToList();
-            // return _dbSet.ToList();            
+            return db.Users.Include(u => u.Contact).Include(x => x.Picture);          
         }
 
-        /* public User Get<TProperty>(int id, Expression<Func<User, TProperty>> expression)
-         {
-             return db.Users.Include(expression).FirstOrDefault(x => x.Id == id);
-         }*/
+        public void CreateFakeData()
+        {
+            db.BulkInsert(Data(), options => options.IncludeGraph = true);
+            //Task[] tasks1 = new Task[2]
+            //{
+            //    new Task(() => db.BulkInsert(Data(), options => options.IncludeGraph = true)),
+            //    new Task(() => db.BulkInsert(Data(), options => options.IncludeGraph = true))
+            //};
+            //foreach (var t in tasks1)
+            //    t.Start();
+            //Task.WaitAll(tasks1); 
+        }
+
+        public static List<User> Data()
+        {
+            List<User> list = new List<User>();
+
+            for (int i = 0; i < 100000; i++)
+            {
+                list.Add(new User()
+                {
+                    FirstName = $"Name {i}",
+                    LastName = $"Last name {i}",
+                    Contact = new Contact()
+                    {
+                        Email = $"Email {i}",
+                        PhoneNumber = $"Number {i}"
+                    },
+                    Picture = new Picture()
+                    {
+                        //
+                    }
+                });
+            }
+            return list;
+        }
+
     }
 }
 

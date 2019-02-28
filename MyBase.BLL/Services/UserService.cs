@@ -97,6 +97,11 @@ namespace MyBase.BLL.Services
             unitOfWork.Save();
         }
 
+        public void CreateFakeData()
+        {
+            userRepository.CreateFakeData();
+        }
+
         public void Dispose()
         {
             unitOfWork.Dispose();

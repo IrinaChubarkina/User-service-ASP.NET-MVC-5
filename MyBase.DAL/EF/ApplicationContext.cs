@@ -14,8 +14,17 @@ namespace MyBase.DAL.EF
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Picture> Pictures { get; set; }
 
+        static ApplicationContext()
+        {
+            Database.SetInitializer<ApplicationContext>(new MyContextInitializer());
+        }
+
         public ApplicationContext()
             : base("DefaultConnection")
+        {
+        }
+
+        class MyContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
         {
         }
     }
