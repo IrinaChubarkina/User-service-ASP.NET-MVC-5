@@ -17,7 +17,7 @@ namespace MyBase.DAL.Repositories
 
         public UserRepository(ApplicationContext context)
         {
-            EntityFrameworkManager.BulkOperationBuilder = builder => builder.BatchSize = 30000;
+            //EntityFrameworkManager.BulkOperationBuilder = builder => builder.BatchSize = 30000;
             db = context;
         }
         public void Delete(int id)
@@ -64,7 +64,7 @@ namespace MyBase.DAL.Repositories
         {
             List<User> list = new List<User>();
 
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 list.Add(new User()
                 {

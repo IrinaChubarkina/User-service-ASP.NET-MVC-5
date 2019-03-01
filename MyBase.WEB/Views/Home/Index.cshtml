@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MyBase.WEB.Models.UserViewModel>
+﻿@*@model IEnumerable<MyBase.WEB.Models.UserViewModel>*@
+@model PagedList.IPagedList<MyBase.WEB.Models.UserViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "View";
@@ -33,7 +36,10 @@
     }
 
 </table>
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
 
 

@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace MyBase.WEB.Controllers
 {
@@ -22,7 +24,7 @@ namespace MyBase.WEB.Controllers
         }
 
         // GET: Default
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             List<UserViewModel> users = new List<UserViewModel>();
             var usersDto = service.GetList();
@@ -30,7 +32,10 @@ namespace MyBase.WEB.Controllers
             {
                 users.Add(mapper.Convert(u));
             }
-            return View(users);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(users.ToPagedList(pageNumber, pageSize));
+            //return View(users);
         }
 
         // GET: Default/Details/5
