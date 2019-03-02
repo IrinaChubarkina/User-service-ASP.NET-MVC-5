@@ -1,4 +1,5 @@
-﻿using MyBase.DAL.EF;
+﻿using EntityFramework.Utilities;
+using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System;
@@ -35,5 +36,16 @@ namespace MyBase.DAL.Repositories
             if (contact != null)
                 db.Contacts.Remove(contact);
         }
+
+        public void InsertFakeData(IEnumerable<User> source)
+        {
+            EFBatchOperation.For(db, db.Contacts).InsertAll(source.Select(p => p.Contact));
+        }
+
+        public int Count()
+        {
+            return db.Contacts.Count();
+        }
+
     }
 }

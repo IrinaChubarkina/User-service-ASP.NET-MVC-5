@@ -15,7 +15,7 @@ namespace MyBase.DAL.EF
         public DbSet<Picture> Pictures { get; set; }
 
         static ApplicationContext()
-        {
+        {            
             Database.SetInitializer<ApplicationContext>(new MyContextInitializer());
         }
 

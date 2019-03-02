@@ -21,10 +21,11 @@ namespace MyBase.BLL.Services
         IMapper<UserDTO, Contact> contactMapper;
         IMapper<UserDTO, Picture> pictureMapper;
         IUserValidator userValidator;
+        IDataGenerator dataGenerator;
 
         public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm,
             IMapper<UserDTO, Picture> pm, IUserRepository<User> ur,
-            IRepository<Contact> cr, IRepository<Picture> pr, IUserValidator uv)
+            IRepository<Contact> cr, IRepository<Picture> pr, IUserValidator uv, IDataGenerator dg)
         {
             unitOfWork = uow;
             userMapper = um;
@@ -34,6 +35,7 @@ namespace MyBase.BLL.Services
             contactRepository = cr;
             pictureRepository = pr;
             userValidator = uv;
+            dataGenerator = dg;
         }
 
         public IEnumerable<UserDTO> GetList()
@@ -97,9 +99,15 @@ namespace MyBase.BLL.Services
             unitOfWork.Save();
         }
 
-        public void CreateFakeData()
+        public void InsertFakeData(int number)
         {
-            userRepository.CreateFakeData();
+            int contactCount = contactRepository.Count();
+            int pictureCount = pictureRepository.Count();
+            int userCount = userRepository.Count();
+            IEnumerable<User> source = dataGenerator.GenerateData(number, userCount, contactCount, pictureCount);
+            userRepository.InsertFakeData(source);
+            contactRepository.InsertFakeData(source);
+            pictureRepository.InsertFakeData(source);
         }
 
         public void Dispose()

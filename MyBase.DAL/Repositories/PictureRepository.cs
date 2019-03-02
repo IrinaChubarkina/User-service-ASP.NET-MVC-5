@@ -1,4 +1,5 @@
-﻿using MyBase.DAL.EF;
+﻿using EntityFramework.Utilities;
+using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System;
@@ -22,6 +23,16 @@ namespace MyBase.DAL.Repositories
         public void Add(Picture picture)
         {
             db.Pictures.Add(picture);
+        }
+
+        public int Count()
+        {
+            return db.Pictures.Count();
+        }
+
+        public void InsertFakeData(IEnumerable<User> source)
+        {
+            EFBatchOperation.For(db, db.Pictures).InsertAll(source.Select(p => p.Picture));
         }
 
         public void Delete(int id)

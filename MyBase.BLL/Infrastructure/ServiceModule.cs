@@ -1,6 +1,7 @@
 ﻿using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
 using MyBase.BLL.Mappers;
+using MyBase.BLL.Services;
 using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
@@ -33,6 +34,7 @@ namespace MyBase.BLL.Infrastructure
             Bind<IRepository<Contact>>().To<ContactRepository>();
             Bind<IRepository<Picture>>().To<PictureRepository>();
             Bind<IUserValidator>().To<UserValidator>();
+            Bind<IDataGenerator>().To<DataGenerator>();
         }
     }
 }

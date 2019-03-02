@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyBase.DAL.Interfaces
 {
-    public interface IUserRepository<TEntity>
+    public interface IUserRepository<TEntity> : IRepository<TEntity>
        where TEntity : class
     {
         IEnumerable<TEntity> GetList();
         TEntity Get(int id);
-        void Add(TEntity item);
-        void Edit(TEntity item);
-        void Delete(int id);
-        void CreateFakeData();
     }
 }
 
