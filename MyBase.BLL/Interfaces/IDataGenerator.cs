@@ -9,6 +9,6 @@ namespace MyBase.BLL.Interfaces
 {
     public interface IDataGenerator
     {
-        IEnumerable<User> GenerateData(int count, int initialContactId, int initialPictureId);
+        IEnumerable<User> GenerateData(int count, int initialId, int initialContactId, int initialPictureId);
     }
 }

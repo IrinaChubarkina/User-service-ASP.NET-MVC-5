@@ -121,7 +121,7 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult CreateFakeData()
         {
-            int number = 10;
+            int number = 1000000;
             service.InsertFakeData(number);
             return RedirectToAction("Create");
         }

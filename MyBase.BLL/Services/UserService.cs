@@ -103,8 +103,8 @@ namespace MyBase.BLL.Services
         {
             int contactCount = contactRepository.Count();
             int pictureCount = pictureRepository.Count();
-            //int userCount = userRepository.Count();
-            IEnumerable<User> source = dataGenerator.GenerateData(number, contactCount, pictureCount);
+            int userCount = userRepository.Count();
+            IEnumerable<User> source = dataGenerator.GenerateData(number, userCount, contactCount, pictureCount);
             userRepository.InsertFakeData(source);
             contactRepository.InsertFakeData(source);
             pictureRepository.InsertFakeData(source);
