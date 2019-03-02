@@ -44,7 +44,9 @@ namespace MyBase.DAL.Repositories
 
         public int Count()
         {
-            return db.Contacts.Count();
+            if (db.Contacts.Count() == 0)
+                return 0;
+            return db.Contacts.Max(x => x.Id);
         }
 
     }

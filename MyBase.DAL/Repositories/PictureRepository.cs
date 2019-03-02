@@ -27,7 +27,9 @@ namespace MyBase.DAL.Repositories
 
         public int Count()
         {
-            return db.Pictures.Count();
+            if (db.Pictures.Count() == 0)
+                return 0;
+            return db.Pictures.Max(x => x.Id);
         }
 
         public void InsertFakeData(IEnumerable<User> source)

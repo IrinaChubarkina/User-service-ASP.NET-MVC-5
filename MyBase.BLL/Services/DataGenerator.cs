@@ -10,21 +10,21 @@ namespace MyBase.BLL.Services
 {
     public class DataGenerator : IDataGenerator
     {
-        public IEnumerable<User> GenerateData(int count, int initialId, int initialContactId, int initialPictureId)
+        public IEnumerable<User> GenerateData(int number, int initialContactId, int initialPictureId)
         {
             List<User> list = new List<User>();
-            for (int i = initialId + 1; i < initialId + count; i++)
+            for (int i = 1; i <= number; i++)
             {
                 list.Add(new User()
                 {
-                    FirstName = $"Name_{i}",
-                    LastName = $"LastName_{i}",
-                    ContactId = i + initialContactId - initialId,
-                    PictureId = i + initialPictureId - initialId,
+                    FirstName = $"Name",
+                    LastName = $"Last name",
+                    ContactId = i + initialContactId,
+                    PictureId = i + initialPictureId,
                     Contact = new Contact()
                     {
-                        Email = $"Email_{i + initialContactId - initialId}",
-                        PhoneNumber = $"Number_{i + initialContactId - initialId}"
+                        Email = $"Email",
+                        PhoneNumber = $"Number"
                     },
                     Picture = new Picture()
                     {

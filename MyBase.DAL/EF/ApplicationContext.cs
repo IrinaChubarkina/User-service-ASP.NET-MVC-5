@@ -16,7 +16,7 @@ namespace MyBase.DAL.EF
 
         static ApplicationContext()
         {            
-            Database.SetInitializer<ApplicationContext>(new MyContextInitializer());
+            //Database.SetInitializer<ApplicationContext>(new MyContextInitializer());
         }
 
         public ApplicationContext()

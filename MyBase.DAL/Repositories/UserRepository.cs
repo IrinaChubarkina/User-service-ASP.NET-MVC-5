@@ -68,8 +68,10 @@ namespace MyBase.DAL.Repositories
         }       
 
         public int Count()
-        {
-            return db.Users.Count();
+        {            
+            if (db.Users.Count() == 0)
+                return 0;
+            return db.Users.Max(x => x.Id);
         }
     }
 }
