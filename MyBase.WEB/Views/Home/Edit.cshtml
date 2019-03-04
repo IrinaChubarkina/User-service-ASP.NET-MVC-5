@@ -4,9 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h3>Изменить</h3>
+@if (Model.Image != null)
+{
+    @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
+        + Convert.ToBase64String(Model.Image) + "\" />")
+}
 <hr />
-
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <table>
@@ -29,7 +32,7 @@
         <tr>
             <td>@Html.DisplayNameFor(model => model.Email)</td>
             <td>@Html.EditorFor(model => model.Email) @Html.ValidationMessageFor(model => model.Email)</td>
-        </tr>       
+        </tr>
     </table>
     <hr />
     <input type="file" name="uploadImage" />

@@ -22,10 +22,10 @@ namespace MyBase.WEB.Controllers
         }
 
         // GET: Default
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, int? size)
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            int pageSize = 25;
+            int pageSize = size ?? 10;
             int pageNumber = page ?? 1;
             PageInfo pageInfo = new PageInfo
             {

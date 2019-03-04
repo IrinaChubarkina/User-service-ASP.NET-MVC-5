@@ -38,18 +38,27 @@
 
 @if (Model.PageInfo.TotalItems > Model.PageInfo.PageSize)
 {
-<div class="btn-group">
-    @if (Model.PageInfo.PageNumber > 1)
-    {
-        <a class="btn btn-default" href="/?page=1"> << </a>
-        <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber - 1)"> < </a>
-    }
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
-    @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
-    {
-        <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber + 1)"> > </a>
-        <a class="btn btn-default" href="/?page=@(Model.PageInfo.TotalPages)"> >> </a>
-    }
-
-</div>
+    <div class="btn-group">
+        @if (Model.PageInfo.PageNumber > 1)
+        {
+            <a class="btn btn-default" href="/?page=1&size=@Model.PageInfo.PageSize"> << </a>
+            <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber - 1)&size=@Model.PageInfo.PageSize"> < </a>
+        }
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, size = Model.PageInfo.PageSize }))
+        @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
+        {
+            <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber + 1)&size=@Model.PageInfo.PageSize"> > </a>
+            <a class="btn btn-default" href="/?page=@(Model.PageInfo.TotalPages)&size=@Model.PageInfo.PageSize"> >> </a>
+        }
+    </div>
+    <div class="btn-group" style="position:absolute; right:100px;" >
+        <header style="margin:5px;" >Выводить по</header>
+        <a class="btn btn-default" href="/?size=10"> 10 </a>
+        <a class="btn btn-default" href="/?size=25"> 25 </a>
+        <a class="btn btn-default" href="/?size=100"> 100 </a>
+    </div>
 }
+
+
+
+
