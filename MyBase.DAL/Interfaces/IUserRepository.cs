@@ -9,7 +9,7 @@ namespace MyBase.DAL.Interfaces
     public interface IUserRepository<TEntity> : IRepository<TEntity>
        where TEntity : class
     {
-        IEnumerable<TEntity> GetList();
+        IEnumerable<TEntity> GetList(int listSize, int startFrom);
         TEntity Get(int id);
     }
 }

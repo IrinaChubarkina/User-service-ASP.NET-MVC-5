@@ -9,12 +9,13 @@ namespace MyBase.BLL.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<UserDTO> GetList();
+        IEnumerable<UserDTO> GetList(int listSize, int startFrom);
         void Add(UserDTO userDto);
         UserDTO Get(int id);
         void Edit(UserDTO userDto);
         void Delete(int id);
         void Dispose();
         void InsertFakeData(int number);
+        int Count();
     }
 }

@@ -44,7 +44,7 @@ namespace MyBase.DAL.Repositories
                 db.Pictures.Remove(picture);
         }
 
-        public void Edit(Picture picture)
+        public void Update(Picture picture)
         {
             db.Entry(picture).State = EntityState.Modified;
         }

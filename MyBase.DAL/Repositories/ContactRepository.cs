@@ -25,7 +25,7 @@ namespace MyBase.DAL.Repositories
             db.Contacts.Add(contact);
         }
 
-        public void Edit(Contact contact)
+        public void Update(Contact contact)
         {
             db.Entry(contact).State = EntityState.Modified;
         }

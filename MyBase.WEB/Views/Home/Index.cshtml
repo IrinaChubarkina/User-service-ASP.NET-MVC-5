@@ -1,15 +1,13 @@
-﻿@*@model IEnumerable<MyBase.WEB.Models.UserViewModel>*@
-@model PagedList.IPagedList<MyBase.WEB.Models.UserViewModel>
-@using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-
+﻿@model MyBase.WEB.Models.IndexViewModel
+@using MyBase.WEB.Helpers
 @{
     ViewBag.Title = "View";
 }
 @Html.ActionLink("Много", "CreateFakeData")
+
 <table class="table">
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Users)
     {
         <tr>
             <td>
@@ -37,50 +35,21 @@
 
 </table>
 <br />
-Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-
-
-
-
-
-
-
-
-
-
-@*
-    @model IEnumerable<MyBase.WEB.Models.UserViewModel>
-
-    @{
-        ViewBag.Title = "Index";
+@if (Model.PageInfo.TotalItems > Model.PageInfo.PageSize)
+{
+<div class="btn-group">
+    @if (Model.PageInfo.PageNumber > 1)
+    {
+        <a class="btn btn-default" href="/?page=1"> << </a>
+        <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber - 1)"> < </a>
+    }
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
+    {
+        <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber + 1)"> > </a>
+        <a class="btn btn-default" href="/?page=@(Model.PageInfo.TotalPages)"> >> </a>
     }
 
-    @Html.ActionLink("Add ", "Add")
-
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-            </tr>
-        }
-
-    </table>
-*@
+</div>
+}

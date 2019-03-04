@@ -8,7 +8,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Z.EntityFramework.Extensions;
 
 namespace MyBase.DAL.Repositories
 {
@@ -32,7 +31,7 @@ namespace MyBase.DAL.Repositories
             db.Users.Add(user);
         }
 
-        public void Edit(User user)
+        public void Update(User user)
         {
             db.Entry(user).State = EntityState.Modified;
         }
@@ -43,35 +42,28 @@ namespace MyBase.DAL.Repositories
                 .AsNoTracking()
                 .Include(x => x.Contact)
                 .Include(x => x.Picture)
-                .ToList()
-                .Find(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<User> GetList()
+        public IEnumerable<User> GetList(int listSize, int startFrom)
         {
-
-            //var result = db.Users
-            //    .IncludeEFU(db, u => u.Contact)
-            //    .ToList();
-
             return db.Users
+                .AsNoTracking()
                 .Include(u => u.Contact)
-                .Include(x => x.Picture)
-                .AsNoTracking();
-
-
+                .Include(u => u.Picture)
+                .OrderBy(u => u.Id)
+                .Skip(() => startFrom)
+                .Take(() => listSize);
         }
 
         public void InsertFakeData(IEnumerable<User> source)
-        {            
+        {
             EFBatchOperation.For(db, db.Users).InsertAll(source);
-        }       
+        }
 
         public int Count()
-        {            
-            if (db.Users.Count() == 0)
-                return 0;
-            return db.Users.Max(x => x.Id);
+        {
+            return db.Users.Count();
         }
     }
 }

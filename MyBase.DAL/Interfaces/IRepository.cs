@@ -11,7 +11,7 @@ namespace MyBase.DAL.Interfaces
        where TEntity : class
     {
         void Add(TEntity item);
-        void Edit(TEntity item);
+        void Update(TEntity item);
         void Delete(int id);
         void InsertFakeData(IEnumerable<User> source);
         int Count();

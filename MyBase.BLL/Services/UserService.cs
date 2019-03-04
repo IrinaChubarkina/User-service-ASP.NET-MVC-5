@@ -38,10 +38,11 @@ namespace MyBase.BLL.Services
             dataGenerator = dg;
         }
 
-        public IEnumerable<UserDTO> GetList()
+        public IEnumerable<UserDTO> GetList(int listSize, int pageNumber)
         {
+            int startFrom = (pageNumber - 1) * listSize;
             List<UserDTO> usersDto = new List<UserDTO>();
-            var users = userRepository.GetList();
+            var users = userRepository.GetList(listSize, startFrom);
             foreach (var u in users)
             {
                 usersDto.Add(userMapper.Convert(u));
@@ -79,9 +80,9 @@ namespace MyBase.BLL.Services
                 var user = userMapper.Convert(userDto);
                 var contact = contactMapper.Convert(userDto);
                 var picture = pictureMapper.Convert(userDto);
-                userRepository.Edit(user);
-                contactRepository.Edit(contact);
-                pictureRepository.Edit(picture);
+                userRepository.Update(user);
+                contactRepository.Update(contact);
+                pictureRepository.Update(picture);
                 unitOfWork.Save();
             }
             else
@@ -113,6 +114,11 @@ namespace MyBase.BLL.Services
         public void Dispose()
         {
             unitOfWork.Dispose();
+        }
+
+        public int Count()
+        {
+            return userRepository.Count();
         }
     }
 }

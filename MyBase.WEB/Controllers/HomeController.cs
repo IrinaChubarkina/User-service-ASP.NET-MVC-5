@@ -7,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList.Mvc;
-using PagedList;
 
 namespace MyBase.WEB.Controllers
 {
@@ -27,15 +25,25 @@ namespace MyBase.WEB.Controllers
         public ActionResult Index(int? page)
         {
             List<UserViewModel> users = new List<UserViewModel>();
-            var usersDto = service.GetList();
+            int pageSize = 25;
+            int pageNumber = page ?? 1;
+            PageInfo pageInfo = new PageInfo
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = service.Count()
+            };
+            var usersDto = service.GetList(pageSize, pageNumber);
             foreach (var u in usersDto)
             {
                 users.Add(mapper.Convert(u));
             }
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            return View(users.ToPagedList(pageNumber, pageSize));
-            //return View(users);
+            IndexViewModel ivm = new IndexViewModel
+            {
+                PageInfo = pageInfo,
+                Users = users
+            };
+            return View(ivm);
         }
 
         // GET: Default/Details/5
@@ -121,9 +129,9 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult CreateFakeData()
         {
-            int number = 1000000;
+            int number = 100000;
             service.InsertFakeData(number);
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
     }
 }
