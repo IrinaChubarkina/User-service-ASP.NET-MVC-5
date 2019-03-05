@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
+
 
 namespace MyBase.WEB.Controllers
 {
@@ -18,7 +20,7 @@ namespace MyBase.WEB.Controllers
         public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m)
         {
             service = serv;
-            mapper = m;
+            mapper = m;            
         }
 
         // GET: Default
@@ -129,8 +131,9 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult CreateFakeData()
         {
-            int number = 100000;
-            service.InsertFakeData(number);
+            string connectionString =  ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            int number = 1000;
+            service.InsertFakeData(number, connectionString);
             return RedirectToAction("Index");
         }
     }

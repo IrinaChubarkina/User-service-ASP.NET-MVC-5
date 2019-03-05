@@ -1,10 +1,11 @@
-﻿using EntityFramework.Utilities;
-using MyBase.DAL.EF;
+﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace MyBase.DAL.Repositories
 
         public void Update(User user)
         {
-            db.Entry(user).State = EntityState.Modified;
+            db.Entry(user).State = System.Data.Entity.EntityState.Modified;
         }
 
         public User Get(int id)
@@ -56,9 +57,39 @@ namespace MyBase.DAL.Repositories
                 .Take(() => listSize);
         }
 
-        public void InsertFakeData(IEnumerable<User> source)
+        public void InsertFakeData(string connectionString)
         {
-            EFBatchOperation.For(db, db.Users).InsertAll(source);
+            var dt = new DataTable();
+
+            dt.Columns.Add("Id");
+            dt.Columns.Add("PhoneNumber", typeof(string));
+            dt.Columns.Add("Email", typeof(string));
+
+            var dt1 = new DataTable();
+            dt1.Columns.Add("Id");
+            dt1.Columns.Add("Name");
+            dt1.Columns.Add("Image");
+
+            for (var i = 1; i < 10000; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["Id"] = i;
+                row["PhoneNumber"] = "PhoneNumber " + i;
+                row["Email"] = "Email " + i;
+                dt.Rows.Add(row);
+                row = dt1.NewRow();
+                row["Id"] = i;
+                row["Name"] = "Name " + i;
+                row["Image"] = null;
+                dt1.Rows.Add(row);
+            }
+            using (var sqlBulk = new SqlBulkCopy(connectionString))
+            {
+                sqlBulk.DestinationTableName = "Contacts";
+                sqlBulk.WriteToServer(dt);
+                sqlBulk.DestinationTableName = "Pictures";
+                sqlBulk.WriteToServer(dt1);
+            }
         }
 
         public int Count()

@@ -13,7 +13,7 @@ namespace MyBase.DAL.Interfaces
         void Add(TEntity item);
         void Update(TEntity item);
         void Delete(int id);
-        void InsertFakeData(IEnumerable<User> source);
+        void InsertFakeData(string connectionString);
         int Count();
     }
 }

@@ -100,15 +100,11 @@ namespace MyBase.BLL.Services
             unitOfWork.Save();
         }
 
-        public void InsertFakeData(int number)
+        public void InsertFakeData(int number, string connectionString)
         {
-            int contactCount = contactRepository.Count();
-            int pictureCount = pictureRepository.Count();
-            int userCount = userRepository.Count();
-            IEnumerable<User> source = dataGenerator.GenerateData(number, userCount, contactCount, pictureCount);
-            userRepository.InsertFakeData(source);
-            contactRepository.InsertFakeData(source);
-            pictureRepository.InsertFakeData(source);
+            userRepository.InsertFakeData(connectionString);
+            //contactRepository.InsertFakeData(source);
+            //pictureRepository.InsertFakeData(source);
         }
 
         public void Dispose()

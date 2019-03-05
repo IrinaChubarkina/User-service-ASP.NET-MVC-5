@@ -1,5 +1,4 @@
-﻿using EntityFramework.Utilities;
-using MyBase.DAL.EF;
+﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System;
@@ -32,9 +31,8 @@ namespace MyBase.DAL.Repositories
             return db.Pictures.Max(x => x.Id);
         }
 
-        public void InsertFakeData(IEnumerable<User> source)
+        public void InsertFakeData(string connectionString)
         {
-            EFBatchOperation.For(db, db.Pictures).InsertAll(source.Select(p => p.Picture));
         }
 
         public void Delete(int id)

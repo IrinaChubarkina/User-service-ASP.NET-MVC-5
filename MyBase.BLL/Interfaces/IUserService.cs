@@ -15,7 +15,7 @@ namespace MyBase.BLL.Interfaces
         void Edit(UserDTO userDto);
         void Delete(int id);
         void Dispose();
-        void InsertFakeData(int number);
+        void InsertFakeData(int number, string connectionString);
         int Count();
     }
 }
