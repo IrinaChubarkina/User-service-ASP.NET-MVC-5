@@ -36,7 +36,7 @@ namespace MyBase.DAL.Repositories
                 db.Contacts.Remove(contact);
         }
 
-        public void InsertFakeData(string connectionString)
+        public void InsertFakeData(int number, string connectionString)
         {
         }
 

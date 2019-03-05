@@ -132,7 +132,7 @@ namespace MyBase.WEB.Controllers
         public ActionResult CreateFakeData()
         {
             string connectionString =  ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            int number = 1000;
+            int number = 100000;
             service.InsertFakeData(number, connectionString);
             return RedirectToAction("Index");
         }

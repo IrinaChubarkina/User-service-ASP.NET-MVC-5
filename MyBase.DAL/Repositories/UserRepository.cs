@@ -57,38 +57,55 @@ namespace MyBase.DAL.Repositories
                 .Take(() => listSize);
         }
 
-        public void InsertFakeData(string connectionString)
+        public void InsertFakeData(int number, string connectionString)
         {
-            var dt = new DataTable();
+            var dtContacts = new DataTable();
+            dtContacts.Columns.Add("Id");
+            dtContacts.Columns.Add("PhoneNumber", typeof(string));
+            dtContacts.Columns.Add("Email", typeof(string));
 
-            dt.Columns.Add("Id");
-            dt.Columns.Add("PhoneNumber", typeof(string));
-            dt.Columns.Add("Email", typeof(string));
+            var dtPictures = new DataTable();
+            dtPictures.Columns.Add("Id");
+            dtPictures.Columns.Add("Name");
+            dtPictures.Columns.Add("Image");
 
-            var dt1 = new DataTable();
-            dt1.Columns.Add("Id");
-            dt1.Columns.Add("Name");
-            dt1.Columns.Add("Image");
+            var dtUsers = new DataTable();
+            dtUsers.Columns.Add("Id");
+            dtUsers.Columns.Add("FirstName");
+            dtUsers.Columns.Add("LastName");
+            dtUsers.Columns.Add("ContactId");
+            dtUsers.Columns.Add("PictureId");
 
-            for (var i = 1; i < 10000; i++)
+            for (var i = 1; i <=number; i++)
             {
-                DataRow row = dt.NewRow();
+                DataRow row = dtContacts.NewRow();
                 row["Id"] = i;
                 row["PhoneNumber"] = "PhoneNumber " + i;
                 row["Email"] = "Email " + i;
-                dt.Rows.Add(row);
-                row = dt1.NewRow();
+                dtContacts.Rows.Add(row);
+
+                row = dtPictures.NewRow();
                 row["Id"] = i;
                 row["Name"] = "Name " + i;
                 row["Image"] = null;
-                dt1.Rows.Add(row);
+                dtPictures.Rows.Add(row);
+
+                row = dtUsers.NewRow();
+                row["Id"] = i;
+                row["FirstName"] = "FirstName " + i;
+                row["LastName"] = "LastName" + i;
+                row["ContactId"] =  i;
+                row["PictureId"] = i;
+                dtUsers.Rows.Add(row);
             }
             using (var sqlBulk = new SqlBulkCopy(connectionString))
             {
                 sqlBulk.DestinationTableName = "Contacts";
-                sqlBulk.WriteToServer(dt);
+                sqlBulk.WriteToServer(dtContacts);
                 sqlBulk.DestinationTableName = "Pictures";
-                sqlBulk.WriteToServer(dt1);
+                sqlBulk.WriteToServer(dtPictures);
+                sqlBulk.DestinationTableName = "Users";
+                sqlBulk.WriteToServer(dtUsers);
             }
         }
 

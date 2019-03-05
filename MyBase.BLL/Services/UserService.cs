@@ -102,7 +102,7 @@ namespace MyBase.BLL.Services
 
         public void InsertFakeData(int number, string connectionString)
         {
-            userRepository.InsertFakeData(connectionString);
+            userRepository.InsertFakeData(number, connectionString);
             //contactRepository.InsertFakeData(source);
             //pictureRepository.InsertFakeData(source);
         }

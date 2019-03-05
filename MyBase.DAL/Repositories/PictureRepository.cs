@@ -31,7 +31,7 @@ namespace MyBase.DAL.Repositories
             return db.Pictures.Max(x => x.Id);
         }
 
-        public void InsertFakeData(string connectionString)
+        public void InsertFakeData(int number, string connectionString)
         {
         }
 
