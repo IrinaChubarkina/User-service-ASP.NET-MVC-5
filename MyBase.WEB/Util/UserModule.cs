@@ -18,7 +18,7 @@ namespace MyBase.WEB.Util
         {
             Bind<IUserService>().To<UserService>();
             Bind<IMapper<UserViewModel, UserDTO>>().To<UserViewMapper>();
-            Bind<IDataGenerator>().To<DataGenerator>();
+            Bind<IFakeDataService>().To<FakeDataService>();
         }
     }
 }

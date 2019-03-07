@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyBase.BLL.DataGen
 {
-    public interface IDataGenerator
+    public interface IFakeDataService
     {
-        void GenerateData(int recordsCount);
+        void InsertData(int recordsCount);
     }
 }

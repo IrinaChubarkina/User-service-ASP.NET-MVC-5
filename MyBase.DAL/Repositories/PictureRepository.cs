@@ -24,7 +24,7 @@ namespace MyBase.DAL.Repositories
             db.Pictures.Add(picture);
         }
 
-        public int Count()
+        public int GetLastId()
         {
             if (db.Pictures.Count() == 0)
                 return 0;

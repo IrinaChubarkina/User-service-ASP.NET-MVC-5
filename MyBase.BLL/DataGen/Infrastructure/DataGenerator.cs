@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MyBase.BLL.DataGen
 {
-    public abstract class TableCreator
+    public abstract class DataGenerator
     {
         readonly string connectionString = ConfigurationManager.ConnectionString(); 
 
-        public void InsertData(int recordsCount)
+        public void GenerateData(int recordsCount)
         {
             var dataTable = CreateTable();
             FillTable(dataTable, recordsCount);

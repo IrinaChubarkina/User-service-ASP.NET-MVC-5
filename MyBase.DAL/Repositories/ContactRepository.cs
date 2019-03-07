@@ -40,7 +40,7 @@ namespace MyBase.DAL.Repositories
         {
         }
 
-        public int Count()
+        public int GetLastId()
         {
             if (db.Contacts.Count() == 0)
                 return 0;

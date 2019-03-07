@@ -11,6 +11,7 @@ namespace MyBase.DAL.Interfaces
     {
         IEnumerable<TEntity> GetList(int listSize, int startFrom);
         TEntity Get(int id);
+        int Count();
     }
 }
 

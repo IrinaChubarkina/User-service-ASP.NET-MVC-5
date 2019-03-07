@@ -1,13 +1,10 @@
 ﻿using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
 using MyBase.WEB.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Configuration;
 using MyBase.BLL.DataGen;
 
 namespace MyBase.WEB.Controllers
@@ -15,14 +12,14 @@ namespace MyBase.WEB.Controllers
     public class HomeController : Controller
     {
         IUserService service;
-        IDataGenerator dataGenerator;
+        IFakeDataService fakeDataService;
         IMapper<UserViewModel, UserDTO> mapper;
 
-        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IDataGenerator dg)
+        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IFakeDataService ds)
         {
             service = serv;
             mapper = m;
-            dataGenerator = dg;
+            fakeDataService = ds;
         }
 
         // GET: Default
@@ -133,9 +130,8 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult CreateFakeData()
         {
-            //string connectionString =  ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            int number = 100;
-            dataGenerator.GenerateData(number);
+            int number = 100000;
+            fakeDataService.InsertData(number);
             return RedirectToAction("Index");
         }
     }

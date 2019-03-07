@@ -22,15 +22,16 @@ namespace MyBase.WEB.Helpers
             else
             {
                 startNumber = (int)pageInfo.PageNumber - 1;
-            };
-            if (pageInfo.PageNumber == pageInfo.TotalPages)
+            }
+
+            if (pageInfo.PageNumber >= pageInfo.TotalPages-1)
             {
                 lastNumber = pageInfo.TotalPages;
             }
             else
             {
                 lastNumber = startNumber + 2;
-            };
+            }
             StringBuilder result = new StringBuilder();
             for (int i = startNumber; i <= lastNumber; i++)
             {

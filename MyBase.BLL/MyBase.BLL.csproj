@@ -48,10 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGen\DataGenerator.cs" />
-    <Compile Include="DataGen\IDataGenerator.cs" />
-    <Compile Include="DataGen\TableCreator.cs" />
-    <Compile Include="DataGen\UserTableCreator.cs" />
+    <Compile Include="DataGen\Infrastructure\ContactGenerator.cs" />
+    <Compile Include="DataGen\Infrastructure\PictureGenerator.cs" />
+    <Compile Include="DataGen\Infrastructure\UserGenerator.cs" />
+    <Compile Include="DataGen\Services\FakeDataService.cs" />
+    <Compile Include="DataGen\Interfaces\IFakeDataService.cs" />
+    <Compile Include="DataGen\Infrastructure\DataGenerator.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
@@ -74,5 +76,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
