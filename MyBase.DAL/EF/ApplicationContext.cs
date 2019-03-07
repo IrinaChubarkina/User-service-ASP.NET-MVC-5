@@ -22,10 +22,16 @@ namespace MyBase.DAL.EF
         public ApplicationContext()
             : base("DefaultConnection")
         {
+            
         }
 
         class MyContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
         {
+            //public override void InitializeDatabase(ApplicationContext context)
+            //{
+            //    base.InitializeDatabase(context);
+            //    string connectionString = context.Database.Connection.ConnectionString;
+            //}
         }
     }
 }

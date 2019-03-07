@@ -8,19 +8,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
-
+using MyBase.BLL.DataGen;
 
 namespace MyBase.WEB.Controllers
 {
     public class HomeController : Controller
     {
         IUserService service;
+        IDataGenerator dataGenerator;
         IMapper<UserViewModel, UserDTO> mapper;
 
-        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m)
+        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IDataGenerator dg)
         {
             service = serv;
-            mapper = m;            
+            mapper = m;
+            dataGenerator = dg;
         }
 
         // GET: Default
@@ -79,7 +81,7 @@ namespace MyBase.WEB.Controllers
                     user.Image = imageData;
                 }
                 var userDto = mapper.Convert(user);
-                service.Add(userDto);
+                service.Create(userDto);
 
                 return RedirectToAction("Index");
             }
@@ -131,9 +133,9 @@ namespace MyBase.WEB.Controllers
 
         public ActionResult CreateFakeData()
         {
-            string connectionString =  ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            int number = 100000;
-            service.InsertFakeData(number, connectionString);
+            //string connectionString =  ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            int number = 100;
+            dataGenerator.GenerateData(number);
             return RedirectToAction("Index");
         }
     }

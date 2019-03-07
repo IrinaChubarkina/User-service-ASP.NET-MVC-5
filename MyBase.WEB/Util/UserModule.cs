@@ -1,4 +1,5 @@
-﻿using MyBase.BLL.DTO;
+﻿using MyBase.BLL.DataGen;
+using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
 using MyBase.BLL.Services;
 using MyBase.WEB.Mappers;
@@ -17,6 +18,7 @@ namespace MyBase.WEB.Util
         {
             Bind<IUserService>().To<UserService>();
             Bind<IMapper<UserViewModel, UserDTO>>().To<UserViewMapper>();
+            Bind<IDataGenerator>().To<DataGenerator>();
         }
     }
 }

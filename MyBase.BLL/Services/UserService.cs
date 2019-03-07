@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MyBase.BLL.Services
 {
     public class UserService : IUserService
-    {
+    {       
         IUnitOfWork unitOfWork;
         IUserRepository<User> userRepository;
         IRepository<Contact> contactRepository;
@@ -21,11 +21,10 @@ namespace MyBase.BLL.Services
         IMapper<UserDTO, Contact> contactMapper;
         IMapper<UserDTO, Picture> pictureMapper;
         IUserValidator userValidator;
-        IDataGenerator dataGenerator;
 
         public UserService(IUnitOfWork uow, IMapper<UserDTO, User> um, IMapper<UserDTO, Contact> cm,
             IMapper<UserDTO, Picture> pm, IUserRepository<User> ur,
-            IRepository<Contact> cr, IRepository<Picture> pr, IUserValidator uv, IDataGenerator dg)
+            IRepository<Contact> cr, IRepository<Picture> pr, IUserValidator uv)
         {
             unitOfWork = uow;
             userMapper = um;
@@ -35,7 +34,6 @@ namespace MyBase.BLL.Services
             contactRepository = cr;
             pictureRepository = pr;
             userValidator = uv;
-            dataGenerator = dg;
         }
 
         public IEnumerable<UserDTO> GetList(int listSize, int pageNumber)
@@ -50,7 +48,7 @@ namespace MyBase.BLL.Services
             return usersDto;
         }
 
-        public void Add(UserDTO userDto)
+        public void Create(UserDTO userDto)
         {
             if (userValidator.Check(userDto))
             {
@@ -100,12 +98,12 @@ namespace MyBase.BLL.Services
             unitOfWork.Save();
         }
 
-        public void InsertFakeData(int number, string connectionString)
-        {
-            userRepository.InsertFakeData(number, connectionString);
-            //contactRepository.InsertFakeData(source);
-            //pictureRepository.InsertFakeData(source);
-        }
+        //public void InsertFakeData(int number, string connectionString)
+        //{
+        //    userRepository.InsertFakeData(number, connectionString);
+        //    //contactRepository.InsertFakeData(source);
+        //    //pictureRepository.InsertFakeData(source);
+        //}
 
         public void Dispose()
         {

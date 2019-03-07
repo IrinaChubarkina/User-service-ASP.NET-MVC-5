@@ -16,7 +16,7 @@ namespace MyBase.DAL.Repositories
 
         public ContactRepository(ApplicationContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public void Add(Contact contact)

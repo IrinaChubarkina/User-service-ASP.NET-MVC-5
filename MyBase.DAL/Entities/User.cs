@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace MyBase.DAL.Entities
 {
     public class User
     {
+        //[System.ComponentModel.DataAnnotations.Schema.Column("Id")]
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

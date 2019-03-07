@@ -34,7 +34,6 @@ namespace MyBase.BLL.Infrastructure
             Bind<IRepository<Contact>>().To<ContactRepository>();
             Bind<IRepository<Picture>>().To<PictureRepository>();
             Bind<IUserValidator>().To<UserValidator>();
-            Bind<IDataGenerator>().To<DataGenerator>();
         }
     }
 }
