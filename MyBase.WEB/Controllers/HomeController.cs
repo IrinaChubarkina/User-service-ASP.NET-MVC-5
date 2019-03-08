@@ -5,122 +5,120 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using MyBase.BLL.DataGen;
+using MyBase.BLL.DataGen.Interfaces;
 
 namespace MyBase.WEB.Controllers
 {
     public class HomeController : Controller
     {
         IUserService service;
-        IFakeDataService fakeDataService;
+        IFakeUsersCreator fakeUsersCreator;
         IMapper<UserViewModel, UserDTO> mapper;
 
-        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IFakeDataService ds)
+        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IFakeUsersCreator cr)
         {
             service = serv;
             mapper = m;
-            fakeDataService = ds;
+            fakeUsersCreator = cr;
         }
 
-        // GET: Default
         public ActionResult Index(int? page, int? size)
         {
-            List<UserViewModel> users = new List<UserViewModel>();
-            int pageSize = size ?? 10;
-            int pageNumber = page ?? 1;
-            PageInfo pageInfo = new PageInfo
+            var pageSize = size ?? 10;
+            var pageNumber = page ?? 1;
+            var pageInfo = new PageInfo
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = service.Count()
+                TotalItems = service.GetUsersCount()
             };
+
+            var users = new List<UserViewModel>();
             var usersDto = service.GetList(pageSize, pageNumber);
             foreach (var u in usersDto)
             {
                 users.Add(mapper.Convert(u));
             }
-            IndexViewModel ivm = new IndexViewModel
+
+            var indexViewModel = new IndexViewModel
             {
                 PageInfo = pageInfo,
                 Users = users
             };
-            return View(ivm);
+
+            return View(indexViewModel);
         }
 
-        // GET: Default/Details/5
         public ActionResult Details(int id)
         {
-            var userDto = service.Get(id);
+            var userDto = service.GetUser(id);
             var user = mapper.Convert(userDto);
             return View(user);
         }
 
-        // GET: Default/Create
         public ActionResult Create()
         {
             return View();
         }
 
-
-        // POST: Default/Create
         [HttpPost]
         public ActionResult Create(UserViewModel user, HttpPostedFileBase uploadImage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (uploadImage != null)
-                {
-                    byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                    user.Image = imageData;
-                }
-                var userDto = mapper.Convert(user);
-                service.Create(userDto);
-
-                return RedirectToAction("Index");
+                return View(user);
             }
-            return View(user);
+
+            if (uploadImage != null)
+            {
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    user.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+            }
+
+            var userDto = mapper.Convert(user);
+            service.Create(userDto);
+
+            return RedirectToAction("Index");
         }
 
-        // GET: Default/Edit/5
         public ActionResult Edit(int id)
         {
-            var userDto = service.Get(id);
+            var userDto = service.GetUser(id);
             var user = mapper.Convert(userDto);
             return View(user);
         }
 
-        // POST: Default/Edit/5
         [HttpPost]
         public ActionResult Edit(UserViewModel user, HttpPostedFileBase uploadImage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (uploadImage != null)
-                {
-                    byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                    user.Image = imageData;
-                }
-                var userDto = mapper.Convert(user);
-                service.Edit(userDto);
-                return RedirectToAction("Index");
+                return View(user);
             }
-            return View(user);            
+
+            if (uploadImage != null)
+            {
+                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                {
+                    user.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
+                }
+            }
+
+            var userDto = mapper.Convert(user);
+            service.Edit(userDto);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            var userDto = service.Get(id);
+            var userDto = service.GetUser(id);
             var user = mapper.Convert(userDto);
             return View(user);
         }
+
         [HttpPost]
         public ActionResult Delete(UserViewModel user)
         {
@@ -128,10 +126,9 @@ namespace MyBase.WEB.Controllers
             return View("Deleted", user);
         }
 
-        public ActionResult CreateFakeData()
+        public ActionResult CreateFakeUsers()
         {
-            int number = 100000;
-            fakeDataService.InsertData(number);
+            fakeUsersCreator.CreateFakeUsers();
             return RedirectToAction("Index");
         }
     }

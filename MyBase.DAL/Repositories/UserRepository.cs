@@ -1,14 +1,10 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.DAL.Repositories
 {
@@ -28,7 +24,7 @@ namespace MyBase.DAL.Repositories
                 db.Users.Remove(user);
         }
 
-        public void Add(User user)
+        public void Create(User user)
         {
             db.Users.Add(user);
         }
@@ -38,7 +34,7 @@ namespace MyBase.DAL.Repositories
             db.Entry(user).State = System.Data.Entity.EntityState.Modified;
         }
 
-        public User Get(int id)
+        public User GetUser(int id)
         {
             return db.Users
                 .AsNoTracking()
@@ -58,14 +54,9 @@ namespace MyBase.DAL.Repositories
                 .Take(() => listSize);
         }
         
-        public int Count()
+        public int GetUsersCount()
         {            
             return db.Users.Count();
-        }
-
-        public int GetLastId()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.DAL.Repositories
 {
@@ -19,20 +14,9 @@ namespace MyBase.DAL.Repositories
             db = context;
         }
 
-        public void Add(Picture picture)
+        public void Create(Picture picture)
         {
             db.Pictures.Add(picture);
-        }
-
-        public int GetLastId()
-        {
-            if (db.Pictures.Count() == 0)
-                return 0;
-            return db.Pictures.Max(x => x.Id);
-        }
-
-        public void InsertFakeData(int number, string connectionString)
-        {
         }
 
         public void Delete(int id)

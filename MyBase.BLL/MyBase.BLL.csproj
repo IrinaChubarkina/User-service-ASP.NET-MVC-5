@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -48,12 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGen\Infrastructure\ContactGenerator.cs" />
-    <Compile Include="DataGen\Infrastructure\PictureGenerator.cs" />
-    <Compile Include="DataGen\Infrastructure\UserGenerator.cs" />
-    <Compile Include="DataGen\Services\FakeDataService.cs" />
-    <Compile Include="DataGen\Interfaces\IFakeDataService.cs" />
-    <Compile Include="DataGen\Infrastructure\DataGenerator.cs" />
+    <Compile Include="DataGen\Infrastructure\ContactTableGenerator.cs" />
+    <Compile Include="DataGen\Infrastructure\UserTableGenerator.cs" />
+    <Compile Include="DataGen\Services\FakeUsersCreator.cs" />
+    <Compile Include="DataGen\Interfaces\IFakeUsersCreator.cs" />
+    <Compile Include="DataGen\Interfaces\ITableGenerator.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
@@ -76,6 +76,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

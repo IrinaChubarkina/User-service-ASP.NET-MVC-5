@@ -2,10 +2,6 @@
 using MyBase.BLL.Interfaces;
 using MyBase.DAL.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.BLL.Mappers
 {
@@ -13,15 +9,14 @@ namespace MyBase.BLL.Mappers
     {
         public Picture Convert(UserDTO source)
         {
-            return new Picture
-            {
+            return new Picture {
                 Id = source.PictureId,
                 Image = source.Image,
-                //NAME !!!?
+                Name = source.PictureName
             };
         }
 
-        public UserDTO Convert(Picture source) // не надо
+        public UserDTO Convert(Picture source)
         {
             throw new NotImplementedException();
         }

@@ -4,10 +4,6 @@
     ViewBag.Title = "Delete";
 }
 
-
-
-    @*@Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
-        + Convert.ToBase64String(Model.Image) + "\" />")*@
     @if (Model.Image != null)
     {
       @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
@@ -49,7 +45,7 @@
     </dl>
 
 
-    @using (Html.BeginForm("Delete", "Home")) //надо остальные??
+    @using (Html.BeginForm("Delete", "Home")) 
     {
         <h4>Вы уверены?</h4>
         <div class="form-actions no-color">

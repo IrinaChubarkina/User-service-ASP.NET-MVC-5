@@ -1,14 +1,11 @@
-﻿using MyBase.BLL.DataGen;
+﻿using MyBase.BLL.DataGen.Interfaces;
+using MyBase.BLL.DataGen.Services;
 using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
 using MyBase.BLL.Services;
 using MyBase.WEB.Mappers;
 using MyBase.WEB.Models;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MyBase.WEB.Util
 {
@@ -18,7 +15,7 @@ namespace MyBase.WEB.Util
         {
             Bind<IUserService>().To<UserService>();
             Bind<IMapper<UserViewModel, UserDTO>>().To<UserViewMapper>();
-            Bind<IFakeDataService>().To<FakeDataService>();
+            Bind<IFakeUsersCreator>().To<FakeUsersCreator>();
         }
     }
 }

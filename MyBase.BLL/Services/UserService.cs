@@ -1,13 +1,9 @@
 ﻿using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
-using MyBase.BLL.Mappers;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.BLL.Services
 {
@@ -38,13 +34,15 @@ namespace MyBase.BLL.Services
 
         public IEnumerable<UserDTO> GetList(int listSize, int pageNumber)
         {
-            int startFrom = (pageNumber - 1) * listSize;
-            List<UserDTO> usersDto = new List<UserDTO>();
+            var startFrom = (pageNumber - 1) * listSize;
+
+            var usersDto = new List<UserDTO>();
             var users = userRepository.GetList(listSize, startFrom);
             foreach (var u in users)
             {
                 usersDto.Add(userMapper.Convert(u));
             }
+
             return usersDto;
         }
 
@@ -55,9 +53,11 @@ namespace MyBase.BLL.Services
                 var user = userMapper.Convert(userDto);
                 var contact = contactMapper.Convert(userDto);
                 var picture = pictureMapper.Convert(userDto);
-                userRepository.Add(user);
-                contactRepository.Add(contact);
-                pictureRepository.Add(picture);
+
+                userRepository.Create(user);
+                contactRepository.Create(contact);
+                pictureRepository.Create(picture);
+
                 unitOfWork.Save();
             }
             else
@@ -66,9 +66,9 @@ namespace MyBase.BLL.Services
             }
         }
 
-        public UserDTO Get(int id)
+        public UserDTO GetUser(int id)
         {
-            return userMapper.Convert(userRepository.Get(id));
+            return userMapper.Convert(userRepository.GetUser(id));
         }
 
         public void Edit(UserDTO userDto)
@@ -78,9 +78,11 @@ namespace MyBase.BLL.Services
                 var user = userMapper.Convert(userDto);
                 var contact = contactMapper.Convert(userDto);
                 var picture = pictureMapper.Convert(userDto);
+
                 userRepository.Update(user);
                 contactRepository.Update(contact);
                 pictureRepository.Update(picture);
+
                 unitOfWork.Save();
             }
             else
@@ -91,28 +93,22 @@ namespace MyBase.BLL.Services
 
         public void Delete(int id)
         {
-            var user = userRepository.Get(id);
+            var user = userRepository.GetUser(id);
             userRepository.Delete(id);
             contactRepository.Delete(user.ContactId);
             pictureRepository.Delete(user.PictureId);
+
             unitOfWork.Save();
         }
-
-        //public void InsertFakeData(int number, string connectionString)
-        //{
-        //    userRepository.InsertFakeData(number, connectionString);
-        //    //contactRepository.InsertFakeData(source);
-        //    //pictureRepository.InsertFakeData(source);
-        //}
 
         public void Dispose()
         {
             unitOfWork.Dispose();
         }
 
-        public int Count()
+        public int GetUsersCount()
         {
-            return userRepository.Count();
+            return userRepository.GetUsersCount();
         }
     }
 }

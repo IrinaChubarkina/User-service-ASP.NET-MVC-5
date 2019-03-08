@@ -1,11 +1,6 @@
 ﻿using MyBase.BLL.DTO;
 using MyBase.BLL.Interfaces;
 using MyBase.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.BLL.Mappers
 {
@@ -13,21 +8,18 @@ namespace MyBase.BLL.Mappers
     {
         public User Convert(UserDTO source)
         {
-            return new User
-            {
+            return new User {
                 Id = source.Id,
                 FirstName = source.FirstName,
                 LastName = source.LastName,
                 ContactId = source.ContactId,
                 PictureId = source.PictureId
-                //Contact = source.Contact
             };
         }
 
         public UserDTO Convert(User source)
         {
-            return new UserDTO
-            {
+            return new UserDTO {
                 Id = source.Id,
                 FirstName = source.FirstName,
                 LastName = source.LastName,                
@@ -36,7 +28,6 @@ namespace MyBase.BLL.Mappers
                 Image  = source.Picture.Image,
                 ContactId = source.ContactId,
                 PictureId = source.PictureId              
-                //Contact = source.Contact
             };
         }
     }

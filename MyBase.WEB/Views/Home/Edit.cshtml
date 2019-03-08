@@ -9,7 +9,9 @@
     @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
         + Convert.ToBase64String(Model.Image) + "\" />")
 }
+
 <hr />
+
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <table>
@@ -39,5 +41,4 @@
     <hr />
     <input type="submit" value="Готово" />
     <hr />
-
 }

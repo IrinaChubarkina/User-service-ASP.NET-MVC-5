@@ -1,12 +1,7 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.DAL.Repositories
 {
@@ -19,7 +14,7 @@ namespace MyBase.DAL.Repositories
             db = context;
         }
 
-        public void Add(Contact contact)
+        public void Create(Contact contact)
         {
             db.Contacts.Add(contact);
         }
@@ -35,17 +30,5 @@ namespace MyBase.DAL.Repositories
             if (contact != null)
                 db.Contacts.Remove(contact);
         }
-
-        public void InsertFakeData(int number, string connectionString)
-        {
-        }
-
-        public int GetLastId()
-        {
-            if (db.Contacts.Count() == 0)
-                return 0;
-            return db.Contacts.Max(x => x.Id);
-        }
-
     }
 }

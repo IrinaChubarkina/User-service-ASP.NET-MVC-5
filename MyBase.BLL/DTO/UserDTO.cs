@@ -1,11 +1,4 @@
-﻿using MyBase.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyBase.BLL.DTO
+﻿namespace MyBase.BLL.DTO
 {
     public class UserDTO
     {
@@ -15,10 +8,9 @@ namespace MyBase.BLL.DTO
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public byte[] Image { get; set; }
+        public string PictureName { get; set; }
 
         public int ContactId { get; set; }
         public int PictureId { get; set; }
-        //public string Name { get; set; }
-        
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MyBase.DAL.Interfaces
 {
@@ -10,8 +6,8 @@ namespace MyBase.DAL.Interfaces
        where TEntity : class
     {
         IEnumerable<TEntity> GetList(int listSize, int startFrom);
-        TEntity Get(int id);
-        int Count();
+        TEntity GetUser(int id);
+        int GetUsersCount();
     }
 }
 

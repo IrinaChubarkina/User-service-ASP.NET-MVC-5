@@ -1,9 +1,5 @@
 ﻿using MyBase.BLL.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.BLL.Interfaces
 {
@@ -11,11 +7,10 @@ namespace MyBase.BLL.Interfaces
     {
         IEnumerable<UserDTO> GetList(int listSize, int startFrom);
         void Create(UserDTO userDto);
-        UserDTO Get(int id);
+        UserDTO GetUser(int id);
         void Edit(UserDTO userDto);
         void Delete(int id);
         void Dispose();
-        //void InsertFakeData(int number, string connectionString);
-        int Count();
+        int GetUsersCount();
     }
 }

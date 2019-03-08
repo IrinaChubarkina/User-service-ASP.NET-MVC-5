@@ -2,10 +2,6 @@
 using MyBase.BLL.Interfaces;
 using MyBase.DAL.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyBase.BLL.Mappers
 {
@@ -13,15 +9,14 @@ namespace MyBase.BLL.Mappers
     {
         public Contact Convert(UserDTO source)
         {
-            return new Contact
-            {
+            return new Contact {
                 Id = source.ContactId,
                 PhoneNumber = source.PhoneNumber,
                 Email = source.Email
             };
         }
 
-        public UserDTO Convert(Contact source) // не надо
+        public UserDTO Convert(Contact source) 
         {
             throw new NotImplementedException();
         }

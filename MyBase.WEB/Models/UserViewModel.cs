@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyBase.WEB.Models
 {
     public class UserViewModel
     {
-        //[HiddenInput(DisplayValue =false)]
         public int Id { get; set; }
 
         [Required]
@@ -29,12 +23,11 @@ namespace MyBase.WEB.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        //[HiddenInput(DisplayValue = false)]
-        public int ContactId { get; set; }
-
-        public int PictureId { get; set; }
         //public string Name { get; set; }
-        //[Required]
         public byte[] Image { get; set; }
+
+        public int ContactId { get; set; }
+        public int PictureId { get; set; }
+        
     }
 }
