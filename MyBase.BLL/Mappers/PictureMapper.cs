@@ -1,24 +1,16 @@
 ﻿using MyBase.BLL.DTO;
-using MyBase.BLL.Interfaces;
 using MyBase.DAL.Entities;
-using System;
 
 namespace MyBase.BLL.Mappers
 {
     public class PictureMapper : IMapper<UserDTO, Picture>
     {
-        public Picture Convert(UserDTO source)
+        public Picture Map(UserDTO source)
         {
             return new Picture {
-                Id = source.PictureId,
+                Id = source.PictureId.Value,
                 Image = source.Image,
-                Name = source.PictureName
             };
-        }
-
-        public UserDTO Convert(Picture source)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

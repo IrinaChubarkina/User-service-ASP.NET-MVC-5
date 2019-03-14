@@ -7,28 +7,21 @@ namespace MyBase.DAL.Repositories
 {
     public class ContactRepository : IRepository<Contact>
     {
-        private ApplicationContext db;
+        ApplicationContext _context;
 
         public ContactRepository(ApplicationContext context)
         {
-            db = context;
+            _context = context;
         }
 
         public void Create(Contact contact)
         {
-            db.Contacts.Add(contact);
+            _context.Contacts.Add(contact);
         }
 
         public void Update(Contact contact)
         {
-            db.Entry(contact).State = EntityState.Modified;
-        }
-
-        public void Delete(int id)
-        {
-            Contact contact = db.Contacts.Find(id);
-            if (contact != null)
-                db.Contacts.Remove(contact);
+            _context.Entry(contact).State = EntityState.Modified;
         }
     }
 }

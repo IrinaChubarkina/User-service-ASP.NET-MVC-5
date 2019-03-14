@@ -8,9 +8,7 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public byte[] Image { get; set; }
-        public string PictureName { get; set; }
-
         public int ContactId { get; set; }
-        public int PictureId { get; set; }
+        public int? PictureId { get; set; }
     }
 }

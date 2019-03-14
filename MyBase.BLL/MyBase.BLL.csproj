@@ -49,23 +49,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGen\Infrastructure\ContactTableGenerator.cs" />
-    <Compile Include="DataGen\Infrastructure\UserTableGenerator.cs" />
-    <Compile Include="DataGen\Services\FakeUsersCreator.cs" />
-    <Compile Include="DataGen\Interfaces\IFakeUsersCreator.cs" />
-    <Compile Include="DataGen\Interfaces\ITableGenerator.cs" />
+    <Compile Include="Services\UserService\Mappers\IUserMapper.cs" />
+    <Compile Include="Services\UserService\TableGenerators\DataTableGenerator.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
+    <Compile Include="Infrastructure\Helpers\StringHelper.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
-    <Compile Include="Infrastructure\UserValidator.cs" />
-    <Compile Include="Interfaces\IMapper.cs" />
-    <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Interfaces\IUserValidator.cs" />
+    <Compile Include="Services\UserService\Validators\UserValidator.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
+    <Compile Include="Services\UserService\IUserService.cs" />
     <Compile Include="Mappers\ContactMapper.cs" />
     <Compile Include="Mappers\PictureMapper.cs" />
-    <Compile Include="Mappers\UserMapper.cs" />
+    <Compile Include="Services\UserService\Mappers\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserService\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyBase.DAL\MyBase.DAL.csproj">

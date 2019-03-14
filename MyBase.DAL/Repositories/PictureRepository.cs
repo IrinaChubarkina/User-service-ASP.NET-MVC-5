@@ -7,28 +7,21 @@ namespace MyBase.DAL.Repositories
 {
     public class PictureRepository : IRepository<Picture>
     {
-        private ApplicationContext db;
+        ApplicationContext _context;
 
         public PictureRepository(ApplicationContext context)
         {
-            db = context;
+            _context = context;
         }
 
         public void Create(Picture picture)
         {
-            db.Pictures.Add(picture);
-        }
-
-        public void Delete(int id)
-        {
-            Picture picture = db.Pictures.Find(id);
-            if (picture != null)
-                db.Pictures.Remove(picture);
+            _context.Pictures.Add(picture);
         }
 
         public void Update(Picture picture)
         {
-            db.Entry(picture).State = EntityState.Modified;
+            _context.Entry(picture).State = EntityState.Modified;
         }
     }
 }

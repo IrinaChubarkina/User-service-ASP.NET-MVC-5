@@ -5,6 +5,5 @@
     {
         void Create(TEntity item);
         void Update(TEntity item);
-        void Delete(int id);
     }
 }

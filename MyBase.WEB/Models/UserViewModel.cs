@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace MyBase.WEB.Models
 {
@@ -23,11 +24,11 @@ namespace MyBase.WEB.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        //public string Name { get; set; }
         public byte[] Image { get; set; }
 
+        public HttpPostedFileBase File { get; set; }
         public int ContactId { get; set; }
-        public int PictureId { get; set; }
+        public int? PictureId { get; set; }
         
     }
 }

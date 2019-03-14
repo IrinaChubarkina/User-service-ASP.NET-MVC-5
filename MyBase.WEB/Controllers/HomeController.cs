@@ -1,28 +1,25 @@
 ﻿using MyBase.BLL.DTO;
-using MyBase.BLL.Interfaces;
+using MyBase.BLL.Services.UserService;
+using MyBase.BLL.Services.UserService.Mappers;
 using MyBase.WEB.Models;
-using System.Collections.Generic;
 using System.IO;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using MyBase.BLL.DataGen.Interfaces;
 
 namespace MyBase.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        IUserService service;
-        IFakeUsersCreator fakeUsersCreator;
-        IMapper<UserViewModel, UserDTO> mapper;
+        IUserService _userService;
+        IUserMapper<UserDTO, UserViewModel> _mapper;
 
-        public HomeController(IUserService serv, IMapper<UserViewModel, UserDTO> m, IFakeUsersCreator cr)
+        public HomeController(IUserService userService, IUserMapper<UserDTO, UserViewModel> mapper)
         {
-            service = serv;
-            mapper = m;
-            fakeUsersCreator = cr;
+            _userService = userService;
+            _mapper = mapper;
         }
 
-        public ActionResult Index(int? page, int? size)
+        public async Task<ActionResult> Index(int? page, int? size)
         {
             var pageSize = size ?? 10;
             var pageNumber = page ?? 1;
@@ -30,15 +27,11 @@ namespace MyBase.WEB.Controllers
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = service.GetUsersCount()
+                TotalItems = await _userService.GetUsersCountAsync()
             };
 
-            var users = new List<UserViewModel>();
-            var usersDto = service.GetList(pageSize, pageNumber);
-            foreach (var u in usersDto)
-            {
-                users.Add(mapper.Convert(u));
-            }
+            var usersDto = await _userService.GetListAsync(pageSize, pageNumber);
+            var users = _mapper.Map(usersDto);
 
             var indexViewModel = new IndexViewModel
             {
@@ -49,10 +42,10 @@ namespace MyBase.WEB.Controllers
             return View(indexViewModel);
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var userDto = service.GetUser(id);
-            var user = mapper.Convert(userDto);
+            var userDto = await _userService.GetUserAsync(id);
+            var user = _mapper.Map(userDto);
             return View(user);
         }
 
@@ -62,73 +55,65 @@ namespace MyBase.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(UserViewModel user, HttpPostedFileBase uploadImage)
+        public async Task<ActionResult> Create(UserViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }          
+
+            var userDto = _mapper.Map(user);
+            await _userService.CreateAsync(userDto);
+
+            return RedirectToAction("Index");
+        }
+
+        public async  Task<ActionResult> Edit(int id)
+        {
+            var userDto = await _userService.GetUserAsync(id);
+            var user = _mapper.Map(userDto);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
                 return View(user);
             }
 
-            if (uploadImage != null)
+            if (user.Image != null)
             {
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+                using (var binaryReader = new BinaryReader(user.File.InputStream))
                 {
-                    user.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
+                    var image = binaryReader.ReadBytes(user.File.ContentLength);
                 }
             }
 
-            var userDto = mapper.Convert(user);
-            service.Create(userDto);
+            var userDto = _mapper.Map(user);
+            _userService.EditAsync(userDto);
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var userDto = service.GetUser(id);
-            var user = mapper.Convert(userDto);
+            var userDto = await _userService.GetUserAsync(id);
+            var user = _mapper.Map(userDto);
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel user, HttpPostedFileBase uploadImage)
+        public async Task<ActionResult> Delete(UserViewModel user)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(user);
-            }
-
-            if (uploadImage != null)
-            {
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                {
-                    user.Image = binaryReader.ReadBytes(uploadImage.ContentLength);
-                }
-            }
-
-            var userDto = mapper.Convert(user);
-            service.Edit(userDto);
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var userDto = service.GetUser(id);
-            var user = mapper.Convert(userDto);
-            return View(user);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(UserViewModel user)
-        {
-            service.Delete(user.Id);
+            await _userService.DeleteAsync(user.Id);
             return View("Deleted", user);
         }
 
-        public ActionResult CreateFakeUsers()
+        public async Task<ActionResult> FillStorageWithUsers()
         {
-            fakeUsersCreator.CreateFakeUsers();
+            await _userService.FillStorageWithUsersAsync();
             return RedirectToAction("Index");
         }
     }
