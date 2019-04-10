@@ -58,7 +58,6 @@
     <Compile Include="Services\UserService\Validators\UserValidator.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Services\UserService\IUserService.cs" />
-    <Compile Include="Mappers\ContactMapper.cs" />
     <Compile Include="Mappers\PictureMapper.cs" />
     <Compile Include="Services\UserService\Mappers\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

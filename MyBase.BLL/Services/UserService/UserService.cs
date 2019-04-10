@@ -16,47 +16,39 @@ namespace MyBase.BLL.Services.UserService
     {
         IUnitOfWork _unitOfWork;
         IUserRepository<User> _userRepository;
-        IRepository<Contact> _contactRepository;
         IRepository<Picture> _pictureRepository;
         IUserMapper<User, UserDTO> _userMapper;
-        IMapper<UserDTO, Contact> _contactMapper;
         IMapper<UserDTO, Picture> _pictureMapper;
 
         public UserService(
             IUnitOfWork unitOfWork,
             IUserRepository<User> userRepository,
-            IRepository<Contact> contactRepository,
             IRepository<Picture> pictureRepository,
             IUserMapper<User, UserDTO> userMapper,
-            IMapper<UserDTO, Contact> contactMapper,
             IMapper<UserDTO, Picture> pictureMapper)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
-            _contactRepository = contactRepository;
             _pictureRepository = pictureRepository;
             _userMapper = userMapper;
-            _contactMapper = contactMapper;
             _pictureMapper = pictureMapper;
         }
 
-        public async Task<List<UserDTO>> GetListAsync(int listSize, int pageNumber)
+        public async Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int pageNumber)
         {
             var startFrom = (pageNumber - 1) * listSize;
 
-            var users = await _userRepository.GetListAsync(listSize, startFrom);
+            var users = await _userRepository.GetListOfUsersAsync(listSize, startFrom);
             var usersDto = _userMapper.Map(users);
 
             return usersDto;
         }
 
-        public Task CreateAsync(UserDTO userDto)
+        public Task CreateUserAsync(UserDTO userDto)
         {
             new UserValidator().ValidateAndThrow(userDto);
 
             var user = _userMapper.Map(userDto);
-            var contact = _contactMapper.Map(userDto);
-            user.Contact = contact;
 
             if (userDto.Image != null)
             {
@@ -75,13 +67,11 @@ namespace MyBase.BLL.Services.UserService
             return _userMapper.Map(user);
         }
 
-        public async Task EditAsync(UserDTO userDto)
+        public async Task UpdateUserAsync(UserDTO userDto)
         {
             new UserValidator().ValidateAndThrow(userDto);
 
             var user = _userMapper.Map(userDto);
-            var contact = _contactMapper.Map(userDto);
-            user.Contact = contact;
 
             if (userDto.Image != null)
             {
@@ -95,7 +85,7 @@ namespace MyBase.BLL.Services.UserService
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteUserAsync(int id)
         {
             await _userRepository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
@@ -106,9 +96,9 @@ namespace MyBase.BLL.Services.UserService
             _unitOfWork.Dispose();
         }
 
-        public Task<int> GetUsersCountAsync()
+        public Task<int> GetCountOfUsersAsync()
         {
-            return _userRepository.GetUsersCountAsync();
+            return _userRepository.GetCountOfUsersAsync();
         }
 
         public async Task FillStorageWithUsersAsync()
@@ -118,7 +108,6 @@ namespace MyBase.BLL.Services.UserService
             var generator = new DataTableGenerator();
             var dataTables = new DataTable[] {
                 generator.CreateUsersTable(recordsCount),
-                generator.CreateContactsTable(recordsCount)
             };
 
             var connectionString = ConfigurationManager.ConnectionString();

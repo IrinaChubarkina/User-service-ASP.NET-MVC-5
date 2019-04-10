@@ -8,12 +8,13 @@ using System.Web.Mvc;
 
 namespace MyBase.WEB.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         IUserService _userService;
-        IUserMapper<UserDTO, UserViewModel> _mapper; //автомапперы юзать
+        IUserMapper<UserDTO, UserViewModel> _mapper; 
+        //автомапперы юзать
 
-        public HomeController(IUserService userService, IUserMapper<UserDTO, UserViewModel> mapper)
+        public UserController(IUserService userService, IUserMapper<UserDTO, UserViewModel> mapper)
         {
             _userService = userService;
             _mapper = mapper;
@@ -27,10 +28,10 @@ namespace MyBase.WEB.Controllers
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = await _userService.GetUsersCountAsync()
+                TotalItems = await _userService.GetCountOfUsersAsync()
             };
 
-            var usersDto = await _userService.GetListAsync(pageSize, pageNumber);
+            var usersDto = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
             var users = _mapper.Map(usersDto);
 
             var indexViewModel = new IndexViewModel
@@ -63,7 +64,7 @@ namespace MyBase.WEB.Controllers
             }          
 
             var userDto = _mapper.Map(user);
-            await _userService.CreateAsync(userDto); 
+            await _userService.CreateUserAsync(userDto); 
             //tempdata успешное создание пользователя (уведомление)
             return RedirectToAction("Index");
         }
@@ -84,12 +85,13 @@ namespace MyBase.WEB.Controllers
             }
 
             var userDto = _mapper.Map(user);
-            await _userService.EditAsync(userDto);
+            await _userService.UpdateUserAsync(userDto);
 
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Delete(int id) //отдать partial view попап
+        //отдать partial view попап
+        public async Task<ActionResult> Delete(int id) 
         {
             var userDto = await _userService.GetUserAsync(id);
             var user = _mapper.Map(userDto);
@@ -99,13 +101,14 @@ namespace MyBase.WEB.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(UserViewModel user)
         {
-            await _userService.DeleteAsync(user.Id);
+            await _userService.DeleteUserAsync(user.Id);
             return View("Deleted", user);
         }
 
+        //tempdata - уведомление об успешном выполнении операции
         public async Task<ActionResult> FillStorageWithUsers()
         {
-            await _userService.FillStorageWithUsersAsync(); //tempdata - уведомление об успешном выполнении операции
+            await _userService.FillStorageWithUsersAsync(); 
             return RedirectToAction("Index");
         }
     }

@@ -38,17 +38,15 @@ namespace MyBase.DAL.Repositories
         public Task<User> GetUserAsync(int id)
         {
             return _context.Users
-                .Include(x => x.Contact)
                 .Include(x => x.Picture)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         //паттерн спецификация нужен
-        public Task<List<User>> GetListAsync(int listSize, int startFrom)
+        public Task<List<User>> GetListOfUsersAsync(int listSize, int startFrom)
         {
             return _context.Users
                 .Where(u => u.IsDeleted == false)
-                .Include(u => u.Contact)
                 .Include(u => u.Picture)
                 .OrderBy(u => u.Id)
                 .Skip(startFrom)
@@ -56,7 +54,7 @@ namespace MyBase.DAL.Repositories
                 .ToListAsync();
         }
         
-        public Task<int> GetUsersCountAsync()
+        public Task<int> GetCountOfUsersAsync()
         {            
             return _context.Users.CountAsync();
         }

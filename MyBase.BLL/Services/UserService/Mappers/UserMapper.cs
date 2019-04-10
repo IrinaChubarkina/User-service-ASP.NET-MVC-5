@@ -12,7 +12,8 @@ namespace MyBase.BLL.Services.UserService.Mappers
                 Id = source.Id,
                 FirstName = source.FirstName,
                 LastName = source.LastName,
-                ContactId = source.ContactId,
+                PhoneNumber = source.PhoneNumber,
+                Email = source.Email,
                 PictureId = source.PictureId
             };
             if (source.Image == null)
@@ -28,9 +29,8 @@ namespace MyBase.BLL.Services.UserService.Mappers
                 Id = source.Id,
                 FirstName = source.FirstName,
                 LastName = source.LastName,                
-                PhoneNumber = source.Contact.PhoneNumber,
-                Email = source.Contact.Email,
-                ContactId = source.ContactId,
+                PhoneNumber = source.PhoneNumber,
+                Email = source.Email,
                 PictureId = source.PictureId
             };
             if (source.Picture != null)

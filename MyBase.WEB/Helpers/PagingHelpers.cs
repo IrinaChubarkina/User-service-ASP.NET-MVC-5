@@ -12,22 +12,22 @@ namespace MyBase.WEB.Helpers
         {
             int startNumber;
             int lastNumber;
-            if (pageInfo.PageNumber == 1)
+            if (pageInfo.PageNumber <= 5)
             {
                 startNumber = 1;
             }
             else
             {
-                startNumber = (int)pageInfo.PageNumber - 1;
+                startNumber = (int)pageInfo.PageNumber - 5;
             }
 
-            if (pageInfo.PageNumber >= pageInfo.TotalPages-1)
+            if (pageInfo.PageNumber >= pageInfo.TotalPages-5)
             {
                 lastNumber = pageInfo.TotalPages;
             }
             else
             {
-                lastNumber = startNumber + 2;
+                lastNumber = startNumber + 9;
             }
             StringBuilder result = new StringBuilder();
             for (int i = startNumber; i <= lastNumber; i++)

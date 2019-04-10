@@ -17,10 +17,8 @@ namespace MyBase.BLL.Infrastructure
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<ApplicationContext>().To<ApplicationContext>().InRequestScope();
             Bind<IUserMapper<User, UserDTO>>().To<UserMapper>();
-            Bind<IMapper<UserDTO, Contact>>().To<ContactMapper>();
             Bind<IMapper<UserDTO, Picture>>().To<PictureMapper>();
             Bind<IUserRepository<User>>().To<UserRepository>();
-            Bind<IRepository<Contact>>().To<ContactRepository>();
             Bind<IRepository<Picture>>().To<PictureRepository>();
         }
     }

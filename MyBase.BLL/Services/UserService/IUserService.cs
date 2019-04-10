@@ -6,13 +6,13 @@ namespace MyBase.BLL.Services.UserService
 {
     public interface IUserService
     {
-        Task<List<UserDTO>> GetListAsync(int listSize, int startFrom);
-        Task CreateAsync(UserDTO userDto);
+        Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int startFrom);
+        Task CreateUserAsync(UserDTO userDto);
         Task<UserDTO> GetUserAsync(int id);
-        Task EditAsync(UserDTO userDto);
-        Task DeleteAsync(int id);
+        Task UpdateUserAsync(UserDTO userDto);
+        Task DeleteUserAsync(int id);
         void Dispose();
-        Task<int> GetUsersCountAsync();
+        Task<int> GetCountOfUsersAsync();
         Task FillStorageWithUsersAsync();
     }
 }
