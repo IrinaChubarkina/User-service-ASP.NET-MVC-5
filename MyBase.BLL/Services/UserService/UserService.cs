@@ -23,13 +23,13 @@ namespace MyBase.BLL.Services.UserService
         IMapper<UserDTO, Picture> _pictureMapper;
 
         public UserService(
-            IUnitOfWork unitOfWork, 
+            IUnitOfWork unitOfWork,
             IUserRepository<User> userRepository,
-            IRepository<Contact> contactRepository, 
+            IRepository<Contact> contactRepository,
             IRepository<Picture> pictureRepository,
             IUserMapper<User, UserDTO> userMapper,
             IMapper<UserDTO, Contact> contactMapper,
-            IMapper<UserDTO, Picture> pictureMapper) 
+            IMapper<UserDTO, Picture> pictureMapper)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
@@ -46,7 +46,7 @@ namespace MyBase.BLL.Services.UserService
 
             var users = await _userRepository.GetListAsync(listSize, startFrom);
             var usersDto = _userMapper.Map(users);
-            
+
             return usersDto;
         }
 
@@ -54,13 +54,13 @@ namespace MyBase.BLL.Services.UserService
         {
             new UserValidator().ValidateAndThrow(userDto);
 
-            var contact = _contactMapper.Map(userDto);
-            var picture = _pictureMapper.Map(userDto);
             var user = _userMapper.Map(userDto);
-
+            var contact = _contactMapper.Map(userDto);
             user.Contact = contact;
+
             if (userDto.Image != null)
             {
+                var picture = _pictureMapper.Map(userDto);
                 user.Picture = picture;
             }
 
@@ -81,27 +81,24 @@ namespace MyBase.BLL.Services.UserService
 
             var user = _userMapper.Map(userDto);
             var contact = _contactMapper.Map(userDto);
-            var picture = _pictureMapper.Map(userDto);
-
-            //user.Contact = contact;
+            user.Contact = contact;
 
             if (userDto.Image != null)
             {
-                _pictureRepository.Update(picture);
+                var picture = _pictureMapper.Map(userDto);
+                _pictureRepository.Create(picture);
                 user.Picture = picture;
             }
 
             _userRepository.Update(user);
-            _contactRepository.Update(contact);
-            //_userRepository.Create(user);
-            //await _userRepository.DeleteAsync(userDto.Id);
 
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            return _userRepository.DeleteAsync(id);
+            await _userRepository.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public void Dispose()

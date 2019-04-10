@@ -55,6 +55,8 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
+    <Compile Include="Specifications\BaseSpecification.cs" />
+    <Compile Include="Specifications\Interfaces\ISpecification.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Migrations\201902231327217_AddPictureTable.cs" />
     <Compile Include="Migrations\201902231327217_AddPictureTable.Designer.cs">
@@ -83,5 +85,6 @@
       <DependentUpon>201903101706450_AddIsDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,8 +7,8 @@ namespace MyBase.BLL.Mappers
     {
         public Picture Map(UserDTO source)
         {
-            return new Picture {
-                Id = source.PictureId.Value,
+            return new Picture {                
+                Id = source.PictureId ?? 0,
                 Image = source.Image,
             };
         }        

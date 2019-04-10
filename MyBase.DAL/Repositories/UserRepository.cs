@@ -1,6 +1,7 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
+using MyBase.DAL.Specifications.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,12 +19,10 @@ namespace MyBase.DAL.Repositories
             _context = context;
         }
 
-        public Task DeleteAsync(int id) //сделать через EF 
+        public async Task DeleteAsync(int id) 
         {
-            return _context.Database.ExecuteSqlCommandAsync(
-                "UPDATE Users " +
-                "SET IsDeleted = 1" +
-                "WHERE Id = {0}", id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            user.IsDeleted = true;
         }
 
         public void Create(User user)
@@ -48,6 +47,7 @@ namespace MyBase.DAL.Repositories
         public Task<List<User>> GetListAsync(int listSize, int startFrom)
         {
             return _context.Users
+                .Where(u => u.IsDeleted == false)
                 .Include(u => u.Contact)
                 .Include(u => u.Picture)
                 .OrderBy(u => u.Id)

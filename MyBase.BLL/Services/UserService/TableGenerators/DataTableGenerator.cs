@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace MyBase.BLL.DataGen.Infrastructure
 {
-    public class DataTableGenerator 
+    public class DataTableGenerator
     {
         public DataTable CreateUsersTable(int recordsCount)
         {
             var dataTable = new DataTable("Users");
 
-            var columns = new[] { "FirstName", "LastName", "ContactId"};
+            var columns = new[] { "FirstName", "LastName", "ContactId" };
             foreach (var column in columns)
             {
                 dataTable.Columns.Add(column);

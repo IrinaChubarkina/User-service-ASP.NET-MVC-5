@@ -11,7 +11,7 @@ namespace MyBase.WEB.Controllers
     public class HomeController : Controller
     {
         IUserService _userService;
-        IUserMapper<UserDTO, UserViewModel> _mapper;
+        IUserMapper<UserDTO, UserViewModel> _mapper; //автомапперы юзать
 
         public HomeController(IUserService userService, IUserMapper<UserDTO, UserViewModel> mapper)
         {
@@ -63,12 +63,12 @@ namespace MyBase.WEB.Controllers
             }          
 
             var userDto = _mapper.Map(user);
-            await _userService.CreateAsync(userDto);
-
+            await _userService.CreateAsync(userDto); 
+            //tempdata успешное создание пользователя (уведомление)
             return RedirectToAction("Index");
         }
 
-        public async  Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
             var user = _mapper.Map(userDto);
@@ -76,28 +76,20 @@ namespace MyBase.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel user)
+        public async Task<ActionResult> Edit(UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
                 return View(user);
             }
 
-            if (user.Image != null)
-            {
-                using (var binaryReader = new BinaryReader(user.File.InputStream))
-                {
-                    var image = binaryReader.ReadBytes(user.File.ContentLength);
-                }
-            }
-
             var userDto = _mapper.Map(user);
-            _userService.EditAsync(userDto);
+            await _userService.EditAsync(userDto);
 
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id) //отдать partial view попап
         {
             var userDto = await _userService.GetUserAsync(id);
             var user = _mapper.Map(userDto);
@@ -113,7 +105,7 @@ namespace MyBase.WEB.Controllers
 
         public async Task<ActionResult> FillStorageWithUsers()
         {
-            await _userService.FillStorageWithUsersAsync();
+            await _userService.FillStorageWithUsersAsync(); //tempdata - уведомление об успешном выполнении операции
             return RedirectToAction("Index");
         }
     }
