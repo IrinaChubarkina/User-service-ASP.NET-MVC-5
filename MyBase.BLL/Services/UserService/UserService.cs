@@ -81,25 +81,20 @@ namespace MyBase.BLL.Services.UserService
         public async Task FillStorageWithUsersAsync()
         {
             var recordsCount = 100 * 1000;
-
-            var generator = new DataTableGenerator();
-            var dataTables = new DataTable[] {
-                generator.CreateUsersTable(recordsCount),
-            };
+            var dataTable = new DataTableGenerator().CreateUsersTable(recordsCount);
 
             var connectionString = ConfigurationManager.ConnectionString();
 
-            foreach (var dataTable in dataTables)
-                using (var sqlBulk = new SqlBulkCopy(connectionString))
-                {
-                    sqlBulk.DestinationTableName = dataTable.TableName;
+            using (var sqlBulk = new SqlBulkCopy(connectionString))
+            {
+                sqlBulk.DestinationTableName = dataTable.TableName;
 
-                    foreach (var column in dataTable.Columns)
-                    {
-                        sqlBulk.ColumnMappings.Add(column.ToString(), column.ToString());
-                    }
-                    await sqlBulk.WriteToServerAsync(dataTable);
+                foreach (var column in dataTable.Columns)
+                {
+                    sqlBulk.ColumnMappings.Add(column.ToString(), column.ToString());
                 }
+                await sqlBulk.WriteToServerAsync(dataTable);
+            }
         }
     }
 }

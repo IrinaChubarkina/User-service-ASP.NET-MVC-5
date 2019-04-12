@@ -1,7 +1,5 @@
-﻿using MyBase.DAL.EF;
-using System;
+﻿using System;
 using System.Data;
-using System.Linq;
 
 namespace MyBase.BLL.DataGen.Infrastructure
 {
@@ -16,8 +14,6 @@ namespace MyBase.BLL.DataGen.Infrastructure
             {
                 dataTable.Columns.Add(column);
             }
-
-            var context = new ApplicationContext();
 
             var random = new Random();
             for (var i = 1; i <= recordsCount; i++)
