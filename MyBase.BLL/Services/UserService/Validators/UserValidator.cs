@@ -1,20 +1,17 @@
-﻿using MyBase.BLL.DTO;
-using MyBase.BLL.Infrastructure.Helpers;
-using System;
+﻿using FluentValidation;
+using MyBase.BLL.DTO;
 
 namespace MyBase.BLL.Infrastructure
 {
-    public class UserValidator 
+    public class UserValidator : AbstractValidator<UserDTO>
     {
-        public void ValidateAndThrow(UserDTO user)
+        public UserValidator()
         {
-            if (user.FirstName.IsEmpty() ||
-                user.LastName.IsEmpty() ||
-                user.PhoneNumber.IsEmpty() ||
-                user.Email.IsEmpty())
-            {
-                throw new Exception("Не все поля заполнены");
-            }
+            RuleFor(customer => customer.FirstName).NotEmpty();
+            RuleFor(customer => customer.LastName).NotEmpty();
+            RuleFor(customer => customer.Email).NotEmpty().EmailAddress();
+            RuleFor(customer => customer.PhoneNumber).NotEmpty();
         }
     }
+
 }

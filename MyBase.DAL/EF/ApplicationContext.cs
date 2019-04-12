@@ -6,7 +6,6 @@ namespace MyBase.DAL.EF
     public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
 
         static ApplicationContext()
         {              

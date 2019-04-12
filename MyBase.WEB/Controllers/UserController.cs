@@ -1,7 +1,8 @@
-﻿using MyBase.BLL.DTO;
+﻿using AutoMapper;
+using MyBase.BLL.DTO;
 using MyBase.BLL.Services.UserService;
-using MyBase.BLL.Services.UserService.Mappers;
 using MyBase.WEB.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -11,13 +12,12 @@ namespace MyBase.WEB.Controllers
     public class UserController : Controller
     {
         IUserService _userService;
-        IUserMapper<UserDTO, UserViewModel> _mapper; 
-        //автомапперы юзать
+        //readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IUserMapper<UserDTO, UserViewModel> mapper)
+        public UserController(IUserService userService/*, IMapper mapper*/)
         {
             _userService = userService;
-            _mapper = mapper;
+            //_mapper = mapper;
         }
 
         public async Task<ActionResult> Index(int? page, int? size)
@@ -32,7 +32,7 @@ namespace MyBase.WEB.Controllers
             };
 
             var usersDto = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
-            var users = _mapper.Map(usersDto);
+            var users = Mapper.Map<List<UserViewModel>>(usersDto);
 
             var indexViewModel = new IndexViewModel
             {
@@ -46,7 +46,8 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = _mapper.Map(userDto);
+            var user = Mapper.Map<UserViewModel>(userDto);
+
             return View(user);
         }
 
@@ -61,10 +62,16 @@ namespace MyBase.WEB.Controllers
             if (!ModelState.IsValid)
             {
                 return View(user);
-            }          
+            }
 
-            var userDto = _mapper.Map(user);
-            await _userService.CreateUserAsync(userDto); 
+            if (user.File != null)
+                using (var binaryReader = new BinaryReader(user.File.InputStream))
+                {
+                    user.Image = binaryReader.ReadBytes(user.File.ContentLength);
+                }
+
+            var userDto = Mapper.Map<UserDTO>(user);
+            await _userService.CreateUserAsync(userDto);
             //tempdata успешное создание пользователя (уведомление)
             return RedirectToAction("Index");
         }
@@ -72,7 +79,8 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = _mapper.Map(userDto);
+            var user = Mapper.Map<UserViewModel>(userDto);
+
             return View(user);
         }
 
@@ -84,17 +92,24 @@ namespace MyBase.WEB.Controllers
                 return View(user);
             }
 
-            var userDto = _mapper.Map(user);
+            if (user.File != null)
+                using (var binaryReader = new BinaryReader(user.File.InputStream))
+                {
+                    user.Image = binaryReader.ReadBytes(user.File.ContentLength);
+                }
+
+            var userDto = Mapper.Map<UserDTO>(user);
             await _userService.UpdateUserAsync(userDto);
 
             return RedirectToAction("Index");
         }
 
         //отдать partial view попап
-        public async Task<ActionResult> Delete(int id) 
+        public async Task<ActionResult> Delete(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = _mapper.Map(userDto);
+            var user = Mapper.Map<UserViewModel>(userDto);
+
             return View(user);
         }
 
@@ -108,7 +123,7 @@ namespace MyBase.WEB.Controllers
         //tempdata - уведомление об успешном выполнении операции
         public async Task<ActionResult> FillStorageWithUsers()
         {
-            await _userService.FillStorageWithUsersAsync(); 
+            await _userService.FillStorageWithUsersAsync();
             return RedirectToAction("Index");
         }
     }
