@@ -27,7 +27,6 @@ namespace MyBase.WEB.Models
         public byte[] Image { get; set; }
 
         public HttpPostedFileBase File { get; set; }
-        public int ContactId { get; set; }
         public int? PictureId { get; set; }
         
     }

@@ -1,4 +1,5 @@
-﻿using MyBase.BLL.DataGen.Infrastructure;
+﻿using FluentValidation;
+using MyBase.BLL.DataGen.Infrastructure;
 using MyBase.BLL.DTO;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Mappers;
