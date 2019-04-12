@@ -1,4 +1,10 @@
-﻿using MyBase.BLL.Services.UserService;
+﻿using AutoMapper;
+using MyBase.BLL.DTO;
+using MyBase.BLL.Infrastructure;
+using MyBase.BLL.Services.UserService;
+using MyBase.WEB.App_Start;
+using MyBase.WEB.Models;
+using Ninject;
 using Ninject.Modules;
 
 namespace MyBase.WEB.Util
@@ -9,5 +15,5 @@ namespace MyBase.WEB.Util
         {
             Bind<IUserService>().To<UserService>();
         }
-    }
+}
 }

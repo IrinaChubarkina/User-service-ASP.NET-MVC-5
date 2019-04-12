@@ -50,13 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\ApplicationContext.cs" />
-    <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\201904100210114_DeleteContactTable.cs" />
     <Compile Include="Migrations\201904100210114_DeleteContactTable.Designer.cs">
       <DependentUpon>201904100210114_DeleteContactTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\Interfaces\IRepository.cs" />
+    <Compile Include="Migrations\201904120507516_DeletePictureTable.cs" />
+    <Compile Include="Migrations\201904120507516_DeletePictureTable.Designer.cs">
+      <DependentUpon>201904120507516_DeletePictureTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="Specifications\Interfaces\ISpecification.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -70,7 +72,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\PictureRepository.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
@@ -87,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904100210114_DeleteContactTable.resx">
       <DependentUpon>201904100210114_DeleteContactTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904120507516_DeletePictureTable.resx">
+      <DependentUpon>201904120507516_DeletePictureTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

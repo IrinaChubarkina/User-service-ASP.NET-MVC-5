@@ -22,6 +22,7 @@ namespace MyBase.WEB
 
             NinjectModule userModule = new UserModule();
             NinjectModule serviceModule = new ServiceModule();
+
             var kernel = new StandardKernel(userModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

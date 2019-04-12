@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using MyBase.BLL.DTO;
-using MyBase.WEB.Models;
+using MyBase.BLL.Infrastructure;
 
 namespace MyBase.WEB.App_Start
 {
@@ -11,8 +10,8 @@ namespace MyBase.WEB.App_Start
             Mapper.Initialize(cfg =>
             {
                 cfg.AllowNullCollections = true;
-                cfg.CreateMap<UserDTO, UserViewModel>();
-                cfg.CreateMap<UserViewModel, UserDTO>();
+                cfg.AddProfile<AutoMapperProfileWEB>();
+                cfg.AddProfile<AutoMapperProfileBLL>();
             });
         }
     }

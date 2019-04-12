@@ -1,9 +1,8 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using MyBase.BLL.DataGen.Infrastructure;
 using MyBase.BLL.DTO;
 using MyBase.BLL.Infrastructure;
-using MyBase.BLL.Mappers;
-using MyBase.BLL.Services.UserService.Mappers;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System.Collections.Generic;
@@ -17,22 +16,13 @@ namespace MyBase.BLL.Services.UserService
     {
         IUnitOfWork _unitOfWork;
         IUserRepository<User> _userRepository;
-        IRepository<Picture> _pictureRepository;
-        IUserMapper<User, UserDTO> _userMapper;
-        IMapper<UserDTO, Picture> _pictureMapper;
 
         public UserService(
             IUnitOfWork unitOfWork,
-            IUserRepository<User> userRepository,
-            IRepository<Picture> pictureRepository,
-            IUserMapper<User, UserDTO> userMapper,
-            IMapper<UserDTO, Picture> pictureMapper)
+            IUserRepository<User> userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
-            _pictureRepository = pictureRepository;
-            _userMapper = userMapper;
-            _pictureMapper = pictureMapper;
         }
 
         public async Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int pageNumber)
@@ -40,7 +30,7 @@ namespace MyBase.BLL.Services.UserService
             var startFrom = (pageNumber - 1) * listSize;
 
             var users = await _userRepository.GetListOfUsersAsync(listSize, startFrom);
-            var usersDto = _userMapper.Map(users);
+            var usersDto = Mapper.Map<List<UserDTO>>(users);
 
             return usersDto;
         }
@@ -49,14 +39,7 @@ namespace MyBase.BLL.Services.UserService
         {
             new UserValidator().ValidateAndThrow(userDto);
 
-            var user = _userMapper.Map(userDto);
-
-            if (userDto.Image != null)
-            {
-                var picture = _pictureMapper.Map(userDto);
-                user.Picture = picture;
-            }
-
+            var user = Mapper.Map<User>(userDto);
             _userRepository.Create(user);
 
             return _unitOfWork.SaveChangesAsync();
@@ -65,22 +48,15 @@ namespace MyBase.BLL.Services.UserService
         public async Task<UserDTO> GetUserAsync(int id)
         {
             var user = await _userRepository.GetUserAsync(id);
-            return _userMapper.Map(user);
+
+            return Mapper.Map<UserDTO>(user);
         }
 
         public async Task UpdateUserAsync(UserDTO userDto)
         {
             new UserValidator().ValidateAndThrow(userDto);
 
-            var user = _userMapper.Map(userDto);
-
-            if (userDto.Image != null)
-            {
-                var picture = _pictureMapper.Map(userDto);
-                _pictureRepository.Create(picture);
-                user.Picture = picture;
-            }
-
+            var user = Mapper.Map<User>(userDto);
             _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync();

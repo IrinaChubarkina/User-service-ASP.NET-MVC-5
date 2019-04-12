@@ -7,8 +7,7 @@
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int? PictureId { get; set; }
-        public Picture Picture { get; set; }
+        public byte[] Image { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

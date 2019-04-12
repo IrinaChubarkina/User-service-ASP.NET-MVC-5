@@ -8,6 +8,5 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public byte[] Image { get; set; }
-        public int? PictureId { get; set; }
     }
 }

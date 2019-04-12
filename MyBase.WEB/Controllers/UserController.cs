@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MyBase.BLL.DTO;
 using MyBase.BLL.Services.UserService;
-using MyBase.BLL.Services.UserService.Mappers;
 using MyBase.WEB.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -13,10 +12,12 @@ namespace MyBase.WEB.Controllers
     public class UserController : Controller
     {
         IUserService _userService;
+        //readonly IMapper _mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService/*, IMapper mapper*/)
         {
             _userService = userService;
+            //_mapper = mapper;
         }
 
         public async Task<ActionResult> Index(int? page, int? size)
