@@ -12,12 +12,10 @@ namespace MyBase.WEB.Controllers
     public class UserController : Controller
     {
         IUserService _userService;
-        //readonly IMapper _mapper;
 
-        public UserController(IUserService userService/*, IMapper mapper*/)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            //_mapper = mapper;
         }
 
         public async Task<ActionResult> Index(int? page, int? size)
@@ -71,9 +69,11 @@ namespace MyBase.WEB.Controllers
                 }
 
             var userDto = Mapper.Map<UserDTO>(user);
-            await _userService.CreateUserAsync(userDto);
-            //tempdata успешное создание пользователя (уведомление)
-            return RedirectToAction("Index");
+            var newUserId = await _userService.CreateUserAsync(userDto);
+
+            TempData["Message"] = "Пользователь создан";
+
+            return RedirectToAction("Details", new { id = newUserId });
         }
 
         public async Task<ActionResult> Edit(int id)
@@ -101,7 +101,9 @@ namespace MyBase.WEB.Controllers
             var userDto = Mapper.Map<UserDTO>(user);
             await _userService.UpdateUserAsync(userDto);
 
-            return RedirectToAction("Index");
+            TempData["Message"] = "Изменения сохранены";
+
+            return RedirectToAction("Details", new { id = user.Id });
         }
 
         //отдать partial view попап
@@ -120,10 +122,11 @@ namespace MyBase.WEB.Controllers
             return View("Deleted", user);
         }
 
-        //tempdata - уведомление об успешном выполнении операции
         public async Task<ActionResult> FillStorageWithUsers()
         {
             await _userService.FillStorageWithUsersAsync();
+            TempData["Message"] = "Пользователи созданы";
+
             return RedirectToAction("Index");
         }
     }

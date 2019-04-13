@@ -35,14 +35,15 @@ namespace MyBase.BLL.Services.UserService
             return usersDto;
         }
 
-        public Task CreateUserAsync(UserDTO userDto)
+        public async Task<int> CreateUserAsync(UserDTO userDto)
         {
             new UserValidator().ValidateAndThrow(userDto);
 
             var user = Mapper.Map<User>(userDto);
             _userRepository.Create(user);
 
-            return _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
+            return user.Id;
         }
 
         public async Task<UserDTO> GetUserAsync(int id)
@@ -57,6 +58,14 @@ namespace MyBase.BLL.Services.UserService
             new UserValidator().ValidateAndThrow(userDto);
 
             var user = Mapper.Map<User>(userDto);
+
+            //if (user.Image == null)
+            //{
+            //    var currentUser = await _userRepository.GetUserAsync(userDto.Id);
+            //    user.Image = currentUser.Image;
+            //}
+
+            //найти нормальное решение обновления картинки
             _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync();

@@ -7,7 +7,7 @@ namespace MyBase.BLL.Services.UserService
     public interface IUserService
     {
         Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int startFrom);
-        Task CreateUserAsync(UserDTO userDto);
+        Task<int> CreateUserAsync(UserDTO userDto);
         Task<UserDTO> GetUserAsync(int id);
         Task UpdateUserAsync(UserDTO userDto);
         Task DeleteUserAsync(int id);

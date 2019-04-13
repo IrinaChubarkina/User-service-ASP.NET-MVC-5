@@ -1,9 +1,7 @@
 ﻿@model MyBase.WEB.Models.UserViewModel
-
 @{
     ViewBag.Title = "Delete";
 }
-
 @if (Model.Image != null)
 {
     @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
@@ -11,43 +9,35 @@
 }
 else
 {
-    <img  style='width:200px' margin: 20px' src="/no.jpg">
+    <img style='width:200px' margin: 20px' src="/no.jpg">
 }
 <hr />
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.FirstName)
     </dt>
-
     <dd>
         @Html.DisplayFor(model => model.FirstName)
     </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.LastName)
     </dt>
-
     <dd>
         @Html.DisplayFor(model => model.LastName)
     </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.PhoneNumber)
     </dt>
-
     <dd>
         @Html.DisplayFor(model => model.PhoneNumber)
     </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.Email)
     </dt>
-
     <dd>
         @Html.DisplayFor(model => model.Email)
     </dd>
 </dl>
-
 
 @using (Html.BeginForm("Delete", "User"))
 {
@@ -59,4 +49,3 @@ else
 }
 <hr />
 @Html.ActionLink("Все пользователи", "Index")
-
