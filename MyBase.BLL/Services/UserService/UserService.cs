@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MyBase.BLL.DataGen.Infrastructure;
 using MyBase.BLL.DTO;
 using MyBase.BLL.Infrastructure;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -30,7 +28,7 @@ namespace MyBase.BLL.Services.UserService
             var startFrom = (pageNumber - 1) * listSize;
 
             var users = await _userRepository.GetListOfUsersAsync(listSize, startFrom);
-            var usersDto = Mapper.Map<List<UserDTO>>(users);
+            var usersDto = users.Map<List<UserDTO>>();
 
             return usersDto;
         }
@@ -39,7 +37,7 @@ namespace MyBase.BLL.Services.UserService
         {
             new UserValidator().ValidateAndThrow(userDto);
 
-            var user = Mapper.Map<User>(userDto);
+            var user = userDto.Map<User>();
             _userRepository.Create(user);
 
             await _unitOfWork.SaveChangesAsync();
@@ -50,14 +48,14 @@ namespace MyBase.BLL.Services.UserService
         {
             var user = await _userRepository.GetUserAsync(id);
 
-            return Mapper.Map<UserDTO>(user);
+            return user.Map<UserDTO>();
         }
 
         public async Task UpdateUserAsync(UserDTO userDto)
         {
             new UserValidator().ValidateAndThrow(userDto);
 
-            var user = Mapper.Map<User>(userDto);
+            var user = userDto.Map<User>();
 
             //if (user.Image == null)
             //{

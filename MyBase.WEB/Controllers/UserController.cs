@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using MyBase.BLL.DTO;
+﻿using MyBase.BLL.DTO;
+using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
 using MyBase.WEB.Models;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace MyBase.WEB.Controllers
             };
 
             var usersDto = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
-            var users = Mapper.Map<List<UserViewModel>>(usersDto);
+            var users = usersDto.Map<List<UserViewModel>>();
 
             var indexViewModel = new IndexViewModel
             {
@@ -44,7 +44,7 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = Mapper.Map<UserViewModel>(userDto);
+            var user = userDto.Map<UserViewModel>();
 
             return View(user);
         }
@@ -68,7 +68,7 @@ namespace MyBase.WEB.Controllers
                     user.Image = binaryReader.ReadBytes(user.File.ContentLength);
                 }
 
-            var userDto = Mapper.Map<UserDTO>(user);
+            var userDto = user.Map<UserDTO>();
             var newUserId = await _userService.CreateUserAsync(userDto);
 
             TempData["Message"] = "Пользователь создан";
@@ -79,7 +79,7 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = Mapper.Map<UserViewModel>(userDto);
+            var user = userDto.Map<UserViewModel>();
 
             return View(user);
         }
@@ -98,7 +98,7 @@ namespace MyBase.WEB.Controllers
                     user.Image = binaryReader.ReadBytes(user.File.ContentLength);
                 }
 
-            var userDto = Mapper.Map<UserDTO>(user);
+            var userDto = user.Map<UserDTO>();
             await _userService.UpdateUserAsync(userDto);
 
             TempData["Message"] = "Изменения сохранены";
@@ -110,7 +110,7 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var userDto = await _userService.GetUserAsync(id);
-            var user = Mapper.Map<UserViewModel>(userDto);
+            var user = userDto.Map<UserViewModel>();
 
             return View(user);
         }

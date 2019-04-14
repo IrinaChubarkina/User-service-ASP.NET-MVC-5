@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\AutoMapperProfileBLL.cs" />
+    <Compile Include="Infrastructure\MapperExtension.cs" />
     <Compile Include="Services\UserService\TableGenerators\DataTableGenerator.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
