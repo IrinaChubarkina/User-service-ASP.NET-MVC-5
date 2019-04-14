@@ -1,7 +1,6 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
-using MyBase.DAL.Specifications.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -53,7 +52,7 @@ namespace MyBase.DAL.Repositories
         
         public Task<int> GetCountOfUsersAsync()
         {            
-            return _context.Users.CountAsync();
+            return _context.Users.CountAsync(x => x.IsDeleted == false);
         }
     }
 }

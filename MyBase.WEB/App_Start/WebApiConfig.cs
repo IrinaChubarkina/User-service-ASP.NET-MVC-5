@@ -1,4 +1,9 @@
-﻿using System;
+﻿using MyBase.BLL.Infrastructure;
+using MyBase.WEB.Util;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;

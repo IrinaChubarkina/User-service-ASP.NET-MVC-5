@@ -1,40 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using MyBase.BLL.DTO;
+using MyBase.BLL.Services.UserService;
+using MyBase.WEB.Controllers.Api.Models;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace MyBase.WEB.Controllers.Api
 {
-    //добавить роуты к контроллеру и ко всем методам -см. атрибут Route 
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController 
     {
-        // GET: api/Users
-        public IEnumerable<string> Get()
+        IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
         }
 
-        // GET: api/Users/5
-        public string Get(int id)
+        // GET: api/Users
+        [HttpGet]
+        [Route("")]
+        public async Task<Page> Get([FromUri]int? page, [FromUri]int? size)
         {
-            return "value";
+            var pageSize = size ?? 10;
+            var pageNumber = page ?? 1;
+            var users = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
+
+            var result = new Page
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = await _userService.GetCountOfUsersAsync(),
+                Users = users
+            };
+            return result;
+        }
+
+        // GET: api/Users/8
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<UserDTO> Get(int id)
+        {
+            var userDto = await _userService.GetUserAsync(id);
+
+            return userDto;
         }
 
         // POST: api/Users
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("")]
+        public async Task<int> Create([FromBody]UserDTO user)
         {
+            return await _userService.CreateUserAsync(user);
         }
 
         // PUT: api/Users/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("")]
+        public async Task Edit([FromBody]UserDTO user)
         {
+            await _userService.UpdateUserAsync(user);
         }
 
         // DELETE: api/Users/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task Delete(int id)
         {
+            await _userService.DeleteUserAsync(id);
         }
     }
 }
