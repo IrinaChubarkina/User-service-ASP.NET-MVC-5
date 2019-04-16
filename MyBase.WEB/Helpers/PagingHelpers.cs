@@ -12,6 +12,7 @@ namespace MyBase.WEB.Helpers
         {
             int startNumber;
             int lastNumber;
+
             if (pageInfo.PageNumber <= 5)
             {
                 startNumber = 1;
@@ -29,6 +30,7 @@ namespace MyBase.WEB.Helpers
             {
                 lastNumber = startNumber + 9;
             }
+
             StringBuilder result = new StringBuilder();
             for (int i = startNumber; i <= lastNumber; i++)
             {
@@ -43,6 +45,7 @@ namespace MyBase.WEB.Helpers
                 tag.AddCssClass("btn btn-default");
                 result.Append(tag.ToString());
             }
+
             return MvcHtmlString.Create(result.ToString());
         }
     }

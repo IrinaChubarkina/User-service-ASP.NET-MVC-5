@@ -56,14 +56,6 @@ namespace MyBase.BLL.Services.UserService
             new UserValidator().ValidateAndThrow(userDto);
 
             var user = userDto.Map<User>();
-
-            //if (user.Image == null)
-            //{
-            //    var currentUser = await _userRepository.GetUserAsync(userDto.Id);
-            //    user.Image = currentUser.Image;
-            //}
-
-            //найти нормальное решение обновления картинки
             _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync();

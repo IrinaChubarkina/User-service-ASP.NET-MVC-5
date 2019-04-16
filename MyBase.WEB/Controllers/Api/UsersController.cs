@@ -17,7 +17,6 @@ namespace MyBase.WEB.Controllers.Api
         }
 
         // GET: api/Users
-        [HttpGet]
         [Route("")]
         public async Task<Page> Get([FromUri]int? page, [FromUri]int? size)
         {
@@ -36,7 +35,6 @@ namespace MyBase.WEB.Controllers.Api
         }
 
         // GET: api/Users/8
-        [HttpGet]
         [Route("{id}")]
         public async Task<UserDTO> Get(int id)
         {
@@ -62,7 +60,6 @@ namespace MyBase.WEB.Controllers.Api
         }
 
         // DELETE: api/Users/5
-        [HttpDelete]
         [Route("{id}")]
         public async Task Delete(int id)
         {

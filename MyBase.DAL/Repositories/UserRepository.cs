@@ -18,7 +18,7 @@ namespace MyBase.DAL.Repositories
             _context = context;
         }
 
-        public async Task DeleteAsync(int id) 
+        public async Task DeleteAsync(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
             user.IsDeleted = true;
@@ -32,6 +32,11 @@ namespace MyBase.DAL.Repositories
         public void Update(User user)
         {
             _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            //логика в репо - не норм
+            if (user.Image == null)
+            {
+                _context.Entry(user).Property(e => e.Image).IsModified = false;
+            }
         }
 
         public Task<User> GetUserAsync(int id)
@@ -39,7 +44,6 @@ namespace MyBase.DAL.Repositories
             return _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        //паттерн спецификация нужен
         public Task<List<User>> GetListOfUsersAsync(int listSize, int startFrom)
         {
             return _context.Users
@@ -49,9 +53,9 @@ namespace MyBase.DAL.Repositories
                 .Take(listSize)
                 .ToListAsync();
         }
-        
+
         public Task<int> GetCountOfUsersAsync()
-        {            
+        {
             return _context.Users.CountAsync(x => x.IsDeleted == false);
         }
     }
