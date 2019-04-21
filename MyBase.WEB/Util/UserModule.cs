@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyBase.BLL.DTO;
+using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
 using MyBase.WEB.App_Start;

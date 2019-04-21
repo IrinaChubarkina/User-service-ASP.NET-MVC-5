@@ -1,7 +1,8 @@
-﻿using MyBase.BLL.DTO;
+﻿using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
 using MyBase.WEB.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -26,10 +27,10 @@ namespace MyBase.WEB.Controllers
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = await _userService.GetCountOfUsersAsync()
+                TotalItems = await _userService.GetUsersCountAsync()
             };
 
-            var usersDto = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
+            var usersDto = await _userService.GetUsersAsync(pageSize, pageNumber);
             var users = usersDto.Map<List<UserViewModel>>();
 
             var indexViewModel = new IndexViewModel
@@ -43,7 +44,7 @@ namespace MyBase.WEB.Controllers
 
         public async Task<ActionResult> Details(int id)
         {
-            var userDto = await _userService.GetUserAsync(id);
+            var userDto = await _userService.GetUserByIdAsync(id);
             var user = userDto.Map<UserViewModel>();
 
             return View(user);
@@ -63,12 +64,15 @@ namespace MyBase.WEB.Controllers
             }
 
             if (user.File != null)
-                using (var binaryReader = new BinaryReader(user.File.InputStream))
-                {
-                    user.Image = binaryReader.ReadBytes(user.File.ContentLength);
-                }
+            {
+                string extension = Path.GetExtension(user.File.FileName);
+                string fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
+                user.File.SaveAs(Server.MapPath(fileName));
 
-            var userDto = user.Map<UserDTO>();
+                user.Image = fileName;
+            }
+
+            var userDto = user.Map<UserDto>();
             var newUserId = await _userService.CreateUserAsync(userDto);
 
             TempData["Message"] = "Пользователь создан";
@@ -78,7 +82,7 @@ namespace MyBase.WEB.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            var userDto = await _userService.GetUserAsync(id);
+            var userDto = await _userService.GetUserByIdAsync(id);
             var user = userDto.Map<UserViewModel>();
 
             return View(user);
@@ -93,12 +97,14 @@ namespace MyBase.WEB.Controllers
             }
 
             if (user.File != null)
-                using (var binaryReader = new BinaryReader(user.File.InputStream))
-                {
-                    user.Image = binaryReader.ReadBytes(user.File.ContentLength);
-                }
+            {
+                string extension = Path.GetExtension(user.File.FileName);
+                string fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
+                user.File.SaveAs(Server.MapPath(fileName));
 
-            var userDto = user.Map<UserDTO>();
+                user.Image = fileName;
+            }
+            var userDto = user.Map<UserDto>();
             await _userService.UpdateUserAsync(userDto);
 
             TempData["Message"] = "Изменения сохранены";
@@ -106,10 +112,9 @@ namespace MyBase.WEB.Controllers
             return RedirectToAction("Details", new { id = user.Id });
         }
 
-        //отдать partial view попап
         public async Task<ActionResult> Delete(int id)
         {
-            var userDto = await _userService.GetUserAsync(id);
+            var userDto = await _userService.GetUserByIdAsync(id);
             var user = userDto.Map<UserViewModel>();
 
             return View(user);
@@ -118,13 +123,13 @@ namespace MyBase.WEB.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(UserViewModel user)
         {
-            await _userService.DeleteUserAsync(user.Id);
+            await _userService.DeleteUserByIdAsync(user.Id);
             return View("Deleted", user);
         }
 
         public async Task<ActionResult> FillStorageWithUsers()
         {
-            await _userService.FillStorageWithUsersAsync();
+            await _userService.FillStorageWithFakeUsersAsync();
             TempData["Message"] = "Пользователи созданы";
 
             return RedirectToAction("Index");

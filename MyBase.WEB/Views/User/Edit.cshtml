@@ -6,12 +6,13 @@
 
 @if (Model.Image != null)
 {
-    @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
-        + Convert.ToBase64String(Model.Image) + "\" />")
+    <a href=@Model.Image target="_blank">
+        <img style='max-width:50%; max-height: 400px ; margin: 30px;' src=@Model.Image>
+    </a>
 }
 else
 {
-    <img style='width:200px' margin: 20px' src="/no.jpg">
+    <img style='max-width:50%; max-height: 400px ; margin: 30px;' src="/Images/Default/default.jpg">
 }
 
 <hr />
@@ -40,5 +41,4 @@ else
     <input type="file" name="File" />
     <hr />
     <input type="submit" value="Готово" />
-    <hr />
 }

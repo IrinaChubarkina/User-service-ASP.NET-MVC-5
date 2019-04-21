@@ -24,7 +24,7 @@ namespace MyBase.WEB.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         public HttpPostedFileBase File { get; set; }
     }

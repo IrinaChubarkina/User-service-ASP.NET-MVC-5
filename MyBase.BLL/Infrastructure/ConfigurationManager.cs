@@ -1,10 +1,12 @@
-﻿namespace MyBase.BLL.Infrastructure
+﻿using ConfigManager = System.Configuration.ConfigurationManager;
+
+namespace MyBase.BLL.Infrastructure
 {
     public class ConfigurationManager
     {
         public static string ConnectionString()
         {
-            return System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;            
+            return ConfigManager.ConnectionStrings["DefaultConnection"].ConnectionString;            
         }
     }
 }

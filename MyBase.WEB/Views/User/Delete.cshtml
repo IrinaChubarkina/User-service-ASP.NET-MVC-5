@@ -4,8 +4,7 @@
 }
 @if (Model.Image != null)
 {
-    @Html.Raw("<img style='height:280px; margin: 20px' src=\"data:image/jpeg;base64,"
-        + Convert.ToBase64String(Model.Image) + "\" />")
+    <img style='max-width:200px; max-height: 200px' src=@Model.Image>
 }
 else
 {
@@ -47,5 +46,3 @@ else
         <input type="submit" value="Да" class="btn btn-default" />
     </div>
 }
-<hr />
-@Html.ActionLink("Все пользователи", "Index")

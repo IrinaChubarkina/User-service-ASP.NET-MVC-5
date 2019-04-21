@@ -1,9 +1,7 @@
 ﻿using MyBase.DAL.EF;
-using MyBase.DAL.Interfaces;
-using System;
 using System.Threading.Tasks;
 
-namespace MyBase.DAL.Repositories
+namespace MyBase.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -17,26 +15,6 @@ namespace MyBase.DAL.Repositories
         public Task SaveChangesAsync()
         {
             return _context.SaveChangesAsync();
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this.disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

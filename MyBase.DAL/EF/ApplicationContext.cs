@@ -7,17 +7,8 @@ namespace MyBase.DAL.EF
     {
         public DbSet<User> Users { get; set; }
 
-        static ApplicationContext()
-        {              
-            //Database.SetInitializer(new MyContextInitializer());
-        }
-
-        public ApplicationContext()
-            : base("DefaultConnection")
-        {            
-        }
-
-        class MyContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
+        public ApplicationContext(string connectionString)
+            : base(connectionString)
         {
         }
     }

@@ -1,4 +1,4 @@
-﻿using MyBase.BLL.DTO;
+﻿using MyBase.BLL.Dto;
 using MyBase.BLL.Services.UserService;
 using MyBase.WEB.Controllers.Api.Models;
 using System.Threading.Tasks;
@@ -22,13 +22,13 @@ namespace MyBase.WEB.Controllers.Api
         {
             var pageSize = size ?? 10;
             var pageNumber = page ?? 1;
-            var users = await _userService.GetListOfUsersAsync(pageSize, pageNumber);
+            var users = await _userService.GetUsersAsync(pageSize, pageNumber);
 
             var result = new Page
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = await _userService.GetCountOfUsersAsync(),
+                TotalItems = await _userService.GetUsersCountAsync(),
                 Users = users
             };
             return result;
@@ -36,9 +36,9 @@ namespace MyBase.WEB.Controllers.Api
 
         // GET: api/Users/8
         [Route("{id}")]
-        public async Task<UserDTO> Get(int id)
+        public async Task<UserDto> Get(int id)
         {
-            var userDto = await _userService.GetUserAsync(id);
+            var userDto = await _userService.GetUserByIdAsync(id);
 
             return userDto;
         }
@@ -46,7 +46,7 @@ namespace MyBase.WEB.Controllers.Api
         // POST: api/Users
         [HttpPost]
         [Route("")]
-        public async Task<int> Create([FromBody]UserDTO user)
+        public async Task<int> Create([FromBody]UserDto user)
         {
             return await _userService.CreateUserAsync(user);
         }
@@ -54,7 +54,7 @@ namespace MyBase.WEB.Controllers.Api
         // PUT: api/Users/5
         [HttpPut]
         [Route("")]
-        public async Task Edit([FromBody]UserDTO user)
+        public async Task Edit([FromBody]UserDto user)
         {
             await _userService.UpdateUserAsync(user);
         }
@@ -63,7 +63,7 @@ namespace MyBase.WEB.Controllers.Api
         [Route("{id}")]
         public async Task Delete(int id)
         {
-            await _userService.DeleteUserAsync(id);
+            await _userService.DeleteUserByIdAsync(id);
         }
     }
 }

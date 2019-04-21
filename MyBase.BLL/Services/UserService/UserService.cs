@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
-using MyBase.BLL.DataGen.Infrastructure;
-using MyBase.BLL.DTO;
+using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
+using MyBase.BLL.Services.UserService.TableGenerators;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
+using MyBase.DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -13,29 +14,29 @@ namespace MyBase.BLL.Services.UserService
     public class UserService : IUserService
     {
         IUnitOfWork _unitOfWork;
-        IUserRepository<User> _userRepository;
+        IUserRepository _userRepository;
 
         public UserService(
             IUnitOfWork unitOfWork,
-            IUserRepository<User> userRepository)
+            IUserRepository userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
         }
 
-        public async Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int pageNumber)
+        public async Task<List<UserDto>> GetUsersAsync(int listSize, int pageNumber)
         {
             var startFrom = (pageNumber - 1) * listSize;
 
-            var users = await _userRepository.GetListOfUsersAsync(listSize, startFrom);
-            var usersDto = users.Map<List<UserDTO>>();
+            var users = await _userRepository.GetAllAsync(listSize, startFrom);
+            var userList = users.Map<List<UserDto>>();
 
-            return usersDto;
+            return userList;
         }
 
-        public async Task<int> CreateUserAsync(UserDTO userDto)
+        public async Task<int> CreateUserAsync(UserDto userDto)
         {
-            new UserValidator().ValidateAndThrow(userDto);
+            new UserDtoValidator().ValidateAndThrow(userDto);
 
             var user = userDto.Map<User>();
             _userRepository.Create(user);
@@ -44,16 +45,16 @@ namespace MyBase.BLL.Services.UserService
             return user.Id;
         }
 
-        public async Task<UserDTO> GetUserAsync(int id)
+        public async Task<UserDto> GetUserByIdAsync(int id)
         {
-            var user = await _userRepository.GetUserAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
 
-            return user.Map<UserDTO>();
+            return user.Map<UserDto>();
         }
 
-        public async Task UpdateUserAsync(UserDTO userDto)
+        public async Task UpdateUserAsync(UserDto userDto)
         {
-            new UserValidator().ValidateAndThrow(userDto);
+            new UserDtoValidator().ValidateAndThrow(userDto);
 
             var user = userDto.Map<User>();
             _userRepository.Update(user);
@@ -61,26 +62,21 @@ namespace MyBase.BLL.Services.UserService
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task DeleteUserByIdAsync(int id)
         {
-            await _userRepository.DeleteAsync(id);
+            await _userRepository.DeleteByIdAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public void Dispose()
+        public Task<int> GetUsersCountAsync()
         {
-            _unitOfWork.Dispose();
+            return _userRepository.CountAsync();
         }
 
-        public Task<int> GetCountOfUsersAsync()
+        public async Task FillStorageWithFakeUsersAsync()
         {
-            return _userRepository.GetCountOfUsersAsync();
-        }
-
-        public async Task FillStorageWithUsersAsync()
-        {
-            var recordsCount = 100 * 1000;
-            var dataTable = new DataTableGenerator().CreateUsersTable(recordsCount);
+            const int recordsCount = 100_000;
+            var dataTable = DataTableGenerator.CreateUsersTable(recordsCount);
 
             var connectionString = ConfigurationManager.ConnectionString();
 

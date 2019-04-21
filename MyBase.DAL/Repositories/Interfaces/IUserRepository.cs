@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using MyBase.DAL.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyBase.DAL.Interfaces
 {
-    public interface IUserRepository<TEntity> 
-       where TEntity : class
+    public interface IUserRepository
     {
-        void Create(TEntity item);
-        void Update(TEntity item);
-        Task<List<TEntity>> GetListOfUsersAsync(int listSize, int startFrom);
-        Task<TEntity> GetUserAsync(int id);
-        Task<int> GetCountOfUsersAsync();
-        Task DeleteAsync(int id);
+        void Create(User user);
+        void Update(User user);
+        Task<List<User>> GetAllAsync(int listSize, int startFrom);
+        Task<User> GetByIdAsync(int id);
+        Task DeleteByIdAsync(int id);
+        Task<int> CountAsync();
     }
 }
 

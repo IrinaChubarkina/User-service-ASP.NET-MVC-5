@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MyBase.BLL.Infrastructure;
 
 namespace MyBase.WEB.App_Start
 {
@@ -10,8 +9,8 @@ namespace MyBase.WEB.App_Start
             Mapper.Initialize(cfg =>
             {
                 cfg.AllowNullCollections = true;
-                cfg.AddProfile<AutoMapperProfileWEB>();
-                cfg.AddProfile<AutoMapperProfileBLL>();
+                cfg.AddProfile<AutoMapperProfile>();
+                cfg.AddProfile<BLL.Infrastructure.AutoMapperProfile>();
             });
         }
     }

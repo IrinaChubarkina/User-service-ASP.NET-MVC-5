@@ -1,4 +1,4 @@
-﻿using MyBase.BLL.DTO;
+﻿using MyBase.BLL.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,13 +6,12 @@ namespace MyBase.BLL.Services.UserService
 {
     public interface IUserService
     {
-        Task<List<UserDTO>> GetListOfUsersAsync(int listSize, int startFrom);
-        Task<int> CreateUserAsync(UserDTO userDto);
-        Task<UserDTO> GetUserAsync(int id);
-        Task UpdateUserAsync(UserDTO userDto);
-        Task DeleteUserAsync(int id);
-        void Dispose();
-        Task<int> GetCountOfUsersAsync();
-        Task FillStorageWithUsersAsync();
+        Task<List<UserDto>> GetUsersAsync(int listSize, int startFrom);
+        Task<int> CreateUserAsync(UserDto userDto);
+        Task<UserDto> GetUserByIdAsync(int id);
+        Task UpdateUserAsync(UserDto userDto);
+        Task DeleteUserByIdAsync(int id);
+        Task<int> GetUsersCountAsync();
+        Task FillStorageWithFakeUsersAsync();
     }
 }

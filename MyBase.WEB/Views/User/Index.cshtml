@@ -9,6 +9,7 @@
         @TempData["Message"].ToString()
     </div>
 }
+
 <table class="table">
     @foreach (var item in Model.Users)
     {
@@ -16,12 +17,17 @@
             <td>
                 @if (item.Image != null)
                 {
-                    @Html.Raw("<img style='max-width:200px; max-height: 200px' src=\"data:image/jpeg;base64,"
-          + Convert.ToBase64String(item.Image) + "\" />")
+                    <a href=/User/Details/@item.Id>
+                        <div style='width:200px; height: 200px; background-image: url(@item.Image); background-size: cover'>
+                        </div>
+                    </a>
                 }
                 else
                 {
-                    <img style='max-width:200px; max-height: 200px; ' src="/no.jpg">
+                    <a href=/User/Details/@item.Id>
+                        <div style='width:200px; height: 200px; background-image: url(/Images/Default/default.jpg); background-size: cover'>
+                        </div>
+                    </a>
                 }
             </td>
             <td>
@@ -30,7 +36,6 @@
             </td>
             <td>
                 @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "btn btn-default" }) <br>
-                @Html.ActionLink("Открыть", "Details", new { id = item.Id }, new { @class = "btn btn-default" }) <br>
                 @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
@@ -39,34 +44,24 @@
 <br />
 @if (Model.PageInfo.TotalItems > Model.PageInfo.PageSize)
 {
-<div class="btn-group">
-    @if (Model.PageInfo.PageNumber > 1)
-    {
-        @Html.RouteLink("<<", "Default", new { page = 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
-        @Html.RouteLink("<", "Default", new { page = Model.PageInfo.PageNumber - 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
-        @*<a class="btn btn-default" href="/?page=1&size=@Model.PageInfo.PageSize"> << </a>
-            <a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber - 1)&size=@Model.PageInfo.PageSize"> < </a>*@
-    }
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, size = Model.PageInfo.PageSize }))
-    @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
-    {
-        @Html.RouteLink(">", "Default", new { page = Model.PageInfo.PageNumber + 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
-        @Html.RouteLink(">>", "Default", new { page = Model.PageInfo.TotalPages, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
-        @*<a class="btn btn-default" href="/?page=@(Model.PageInfo.PageNumber + 1)&size=@Model.PageInfo.PageSize"> > </a>
-        <a class="btn btn-default" href="/?page=@(Model.PageInfo.TotalPages)&size=@Model.PageInfo.PageSize"> >> </a>*@
-    }
-</div>
+    <div class="btn-group">
+        @if (Model.PageInfo.PageNumber > 1)
+        {
+            @Html.RouteLink("<<", "Default", new { page = 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
+            @Html.RouteLink("<", "Default", new { page = Model.PageInfo.PageNumber - 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
+        }
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x, size = Model.PageInfo.PageSize }))
+        @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
+        {
+            @Html.RouteLink(">", "Default", new { page = Model.PageInfo.PageNumber + 1, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
+            @Html.RouteLink(">>", "Default", new { page = Model.PageInfo.TotalPages, size = Model.PageInfo.PageSize }, new { @class = "btn btn-default" })
+        }
+    </div>
 
-<div class="btn-group" style="position:absolute; right:100px;">
-    <header style="margin:5px;">Выводить по</header>
-    @Html.RouteLink("10", "Default", new { size = 10 }, new { @class = "btn btn-default" })
-    @Html.RouteLink("25", "Default", new { size = 25 }, new { @class = "btn btn-default" })
-    @Html.RouteLink("100", "Default", new { size = 100 }, new { @class = "btn btn-default" })
-
-    @*<a class="btn btn-default" href="/?size=10"> 10 </a>
-    <a class="btn btn-default" href="/?size=25"> 25 </a>
-    <a class="btn btn-default" href="/?size=100"> 100 </a>*@
-</div>
+    <div class="btn-group" style="position:absolute; right:100px;">
+        <header style="margin:5px;">Выводить по</header>
+        @Html.RouteLink("10", "Default", new { size = 10 }, new { @class = "btn btn-default" })
+        @Html.RouteLink("25", "Default", new { size = 25 }, new { @class = "btn btn-default" })
+        @Html.RouteLink("100", "Default", new { size = 100 }, new { @class = "btn btn-default" })
+    </div>
 }
-
-

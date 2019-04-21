@@ -59,8 +59,11 @@
     <Compile Include="Migrations\201904120507516_DeletePictureTable.Designer.cs">
       <DependentUpon>201904120507516_DeletePictureTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904190730086_string Image.cs" />
+    <Compile Include="Migrations\201904190730086_string Image.Designer.cs">
+      <DependentUpon>201904190730086_string Image.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
-    <Compile Include="Specifications\Interfaces\ISpecification.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Migrations\201902231327217_AddPictureTable.cs" />
     <Compile Include="Migrations\201902231327217_AddPictureTable.Designer.cs">
@@ -91,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904120507516_DeletePictureTable.resx">
       <DependentUpon>201904120507516_DeletePictureTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904190730086_string Image.resx">
+      <DependentUpon>201904190730086_string Image.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

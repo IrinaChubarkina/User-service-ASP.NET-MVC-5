@@ -1,4 +1,4 @@
-﻿using MyBase.BLL.DTO;
+﻿using MyBase.BLL.Dto;
 using System;
 using System.Collections.Generic;
 
@@ -13,6 +13,6 @@ namespace MyBase.WEB.Controllers.Api.Models
         {
             get { return (int)Math.Ceiling((double)TotalItems / PageSize); }
         }
-        public IEnumerable<UserDTO> Users { get; set; }
+        public IEnumerable<UserDto> Users { get; set; }
     }
 }
