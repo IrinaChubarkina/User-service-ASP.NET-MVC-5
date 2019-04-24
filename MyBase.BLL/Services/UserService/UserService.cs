@@ -13,8 +13,8 @@ namespace MyBase.BLL.Services.UserService
 {
     public class UserService : IUserService
     {
-        IUnitOfWork _unitOfWork;
-        IUserRepository _userRepository;
+        readonly IUnitOfWork _unitOfWork;
+        readonly IUserRepository _userRepository;
 
         public UserService(
             IUnitOfWork unitOfWork,
@@ -48,7 +48,7 @@ namespace MyBase.BLL.Services.UserService
         public async Task<UserDto> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-
+            
             return user.Map<UserDto>();
         }
 

@@ -2,7 +2,6 @@
 using MyBase.DAL.Entities;
 using MyBase.DAL.Interfaces;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ namespace MyBase.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        ApplicationContext _context;
+        readonly ApplicationContext _context;
 
         public UserRepository(ApplicationContext context)
         {
