@@ -8,7 +8,6 @@ namespace MyBase.WEB.App_Start
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.AllowNullCollections = true;
                 cfg.AddProfile<AutoMapperProfile>();
                 cfg.AddProfile<BLL.Infrastructure.AutoMapperProfile>();
             });

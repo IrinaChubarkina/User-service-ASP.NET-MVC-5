@@ -63,7 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\AutoMapperProfile.cs" />
-    <Compile Include="Infrastructure\MapperExtension.cs" />
+    <Compile Include="Infrastructure\MapperExtensions.cs" />
+    <Compile Include="RegexPatterns.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegexPatterns.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\UserService\TableGenerators\DataTableGenerator.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
@@ -82,6 +87,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="RegexPatterns.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegexPatterns.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

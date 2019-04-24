@@ -2,7 +2,7 @@
 
 namespace MyBase.BLL.Infrastructure
 {
-    public class ConfigurationManager
+    public static class ConfigurationManager
     {
         public static string ConnectionString()
         {

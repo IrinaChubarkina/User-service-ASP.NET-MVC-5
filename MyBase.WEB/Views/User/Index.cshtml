@@ -1,8 +1,10 @@
 ﻿@model MyBase.WEB.Models.IndexViewModel
+
 @using MyBase.WEB.Helpers
 @{
     ViewBag.Title = "View";
 }
+
 @if (TempData["Message"] != null)
 {
     <div class="done">
@@ -27,7 +29,7 @@
                     <a href=/User/Details/@item.Id>
                         <div style='width:200px; height: 200px; background-image: url(/Images/Default/default.jpg); background-size: cover'>
                         </div>
-                    </a>
+                    </a>                    
                 }
             </td>
             <td>

@@ -1,70 +1,80 @@
-﻿using System;
-using Xunit;
-using MyBase.BLL.Services.UserService;
-using System.Threading.Tasks;
-using Moq;
-using MyBase.DAL.UnitOfWork;
-using MyBase.DAL.Entities;
-using MyBase.BLL.Dto;
+﻿using AutoFixture;
 using AutoMapper;
+using Moq;
+using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
-using AutoFixture;
+using MyBase.BLL.Services.UserService;
+using MyBase.DAL.Entities;
 using MyBase.DAL.Repositories.Interfaces;
+using MyBase.DAL.UnitOfWork;
+using System;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace MyBase.BLL.Tests
 {
     public class UserServiceTests : IDisposable
     {
-        readonly IUserService _service;
+        readonly IUserService _userService;
 
-        readonly Mock<IUserRepository> _mockRepository;
-        readonly Mock<IUnitOfWork> _mockUnitOfWork;
+        readonly Mock<IUserRepository> _userRepositoryMock;
+        readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
         public UserServiceTests()
         {
-            _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _mockRepository = new Mock<IUserRepository>();
+            _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _userRepositoryMock = new Mock<IUserRepository>();
 
-            _service = new UserService(_mockUnitOfWork.Object, _mockRepository.Object);
+            _userService = new UserService(_unitOfWorkMock.Object, _userRepositoryMock.Object);
 
-            Mapper.Initialize(cfg =>
+            Mapper.Initialize(config =>
             {
-                cfg.AllowNullCollections = true;
-                cfg.AddProfile<AutoMapperProfile>();
+                config.AddProfile<AutoMapperProfile>();
             });
         }
-        
+
+        public void Dispose() => Mapper.Reset();
+
         [Fact]
-        public async Task GetUserByIdAsync_CorrectData_Success()
+        public async Task GetUserByIdAsync_ModelIsNotEmpty_ShouldMapCorrectly()
         {
+            // Arrange
             var id = new Fixture().Create<int>();
             var user = GetUser(id);
 
-            _mockRepository
+            _userRepositoryMock
                 .Setup(x => x.GetByIdAsync(id))
                 .ReturnsAsync(user);
 
-            var expected = Mapper.Map<UserDto>(user);
+            var expectedUserDto = Mapper.Map<UserDto>(user);
 
-            var actual = await _service.GetUserByIdAsync(id);
+            // Act
+            var actualUserDto = await _userService.GetUserByIdAsync(id);
 
-            _mockRepository.Verify(repo => repo.GetByIdAsync(It.Is<int>(x => x == id)));
-            Assert.Equal(expected.Id, actual.Id);
+            // Assert
+            Assert.Equal(expectedUserDto.Id, actualUserDto.Id);
+            Assert.Equal(expectedUserDto.FirstName, actualUserDto.FirstName);
+            Assert.Equal(expectedUserDto.LastName, actualUserDto.LastName);
+            Assert.Equal(expectedUserDto.Email, actualUserDto.Email);
+            Assert.Equal(expectedUserDto.PhoneNumber, actualUserDto.PhoneNumber);
+            Assert.Equal(expectedUserDto.Image, actualUserDto.Image);
         }
 
         [Fact]
-        public async Task GetUserByIdAsync_RepositoryFailed_ThrowsException()
+        public async Task DeleteUserByIdAsync_WithoutConditions_ShouldInvokeDeleteAndSaveChanges()
         {
-            var expectedException = new Fixture().Create<Exception>();
+            // Arrange
+            var id = new Fixture().Create<int>();
 
-            _mockRepository
-                .Setup(x => x.GetByIdAsync(It.IsAny<int>()))
-                .ThrowsAsync(expectedException);
+            _userRepositoryMock
+                .Setup(x => x.GetByIdAsync(id));
 
-            var actualException = await Assert.ThrowsAsync<Exception>(() => _service.GetUserByIdAsync(It.IsAny<int>()));
+            // Act
+            await _userService.DeleteUserByIdAsync(id);
 
-            Assert.Equal(expectedException, actualException);
-
+            // Assert
+            _userRepositoryMock.Verify(repo => repo.DeleteByIdAsync(It.Is<int>(x => x == id)), Times.Exactly(1));
+            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(), Times.Exactly(1));
         }
 
         private static User GetUser(int id)
@@ -79,25 +89,6 @@ namespace MyBase.BLL.Tests
                 PhoneNumber = "1111111111",
                 Image = null
             };
-        }
-
-        [Fact]
-        public async Task DeleteUserByIdAsync_Success()
-        {
-            var id = new Fixture().Create<int>();
-
-            _mockRepository
-                .Setup(x => x.GetByIdAsync(id));
-
-            await _service.DeleteUserByIdAsync(id);
-
-            _mockRepository.Verify(repo => repo.DeleteByIdAsync(It.Is<int>(x => x == id)), Times.Exactly(1));
-            _mockUnitOfWork.Verify(x => x.SaveChangesAsync(), Times.Exactly(1));
-        }
-
-        public void Dispose()
-        {
-            Mapper.Reset();
         }
     }
 }
