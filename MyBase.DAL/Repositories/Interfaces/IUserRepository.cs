@@ -1,8 +1,8 @@
-﻿using MyBase.DAL.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MyBase.DAL.Entities;
 
-namespace MyBase.DAL.Interfaces
+namespace MyBase.DAL.Repositories.Interfaces
 {
     public interface IUserRepository
     {

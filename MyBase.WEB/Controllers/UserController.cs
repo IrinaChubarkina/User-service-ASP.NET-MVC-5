@@ -12,7 +12,7 @@ namespace MyBase.WEB.Controllers
 {
     public class UserController : Controller
     {
-        IUserService _userService;
+        readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
@@ -65,8 +65,8 @@ namespace MyBase.WEB.Controllers
 
             if (user.File != null)
             {
-                string extension = Path.GetExtension(user.File.FileName);
-                string fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
+                var extension = Path.GetExtension(user.File.FileName);
+                var fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
                 user.File.SaveAs(Server.MapPath(fileName));
 
                 user.Image = fileName;
@@ -98,8 +98,8 @@ namespace MyBase.WEB.Controllers
 
             if (user.File != null)
             {
-                string extension = Path.GetExtension(user.File.FileName);
-                string fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
+                var extension = Path.GetExtension(user.File.FileName);
+                var fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
                 user.File.SaveAs(Server.MapPath(fileName));
 
                 user.Image = fileName;

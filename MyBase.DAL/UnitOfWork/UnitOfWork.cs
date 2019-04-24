@@ -5,7 +5,7 @@ namespace MyBase.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        ApplicationContext _context;
+        readonly ApplicationContext _context;
 
         public UnitOfWork(ApplicationContext context)
         {

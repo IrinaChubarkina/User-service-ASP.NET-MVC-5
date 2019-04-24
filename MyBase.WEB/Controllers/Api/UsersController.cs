@@ -9,7 +9,7 @@ namespace MyBase.WEB.Controllers.Api
     [RoutePrefix("api/users")]
     public class UsersController : ApiController 
     {
-        IUserService _userService;
+        readonly IUserService _userService;
 
         public UsersController(IUserService userService)
         {

@@ -1,10 +1,10 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
-using MyBase.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using MyBase.DAL.Repositories.Interfaces;
 
 namespace MyBase.DAL.Repositories
 {

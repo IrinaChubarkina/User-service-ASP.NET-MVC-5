@@ -3,13 +3,13 @@ using Xunit;
 using MyBase.BLL.Services.UserService;
 using System.Threading.Tasks;
 using Moq;
-using MyBase.DAL.Interfaces;
 using MyBase.DAL.UnitOfWork;
 using MyBase.DAL.Entities;
 using MyBase.BLL.Dto;
 using AutoMapper;
 using MyBase.BLL.Infrastructure;
 using AutoFixture;
+using MyBase.DAL.Repositories.Interfaces;
 
 namespace MyBase.BLL.Tests
 {

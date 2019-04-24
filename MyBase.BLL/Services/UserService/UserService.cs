@@ -3,11 +3,12 @@ using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService.TableGenerators;
 using MyBase.DAL.Entities;
-using MyBase.DAL.Interfaces;
 using MyBase.DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using MyBase.BLL.Services.UserService.Validators;
+using MyBase.DAL.Repositories.Interfaces;
 
 namespace MyBase.BLL.Services.UserService
 {

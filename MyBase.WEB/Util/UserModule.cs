@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MyBase.BLL.Dto;
-using MyBase.BLL.Infrastructure;
-using MyBase.BLL.Services.UserService;
-using MyBase.WEB.App_Start;
-using MyBase.WEB.Models;
-using Ninject;
+﻿using MyBase.BLL.Services.UserService;
 using Ninject.Modules;
 
 namespace MyBase.WEB.Util

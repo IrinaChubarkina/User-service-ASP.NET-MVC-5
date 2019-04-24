@@ -19,10 +19,10 @@ namespace MyBase.WEB.Helpers
             }
             else
             {
-                startNumber = (int)pageInfo.PageNumber - 5;
+                startNumber = pageInfo.PageNumber - 5;
             }
 
-            if (pageInfo.PageNumber >= pageInfo.TotalPages-5)
+            if (pageInfo.PageNumber >= pageInfo.TotalPages - 5)
             {
                 lastNumber = pageInfo.TotalPages;
             }
@@ -31,10 +31,10 @@ namespace MyBase.WEB.Helpers
                 lastNumber = startNumber + 9;
             }
 
-            StringBuilder result = new StringBuilder();
-            for (int i = startNumber; i <= lastNumber; i++)
+            var result = new StringBuilder();
+            for (var i = startNumber; i <= lastNumber; i++)
             {
-                TagBuilder tag = new TagBuilder("a");
+                var tag = new TagBuilder("a");
                 tag.MergeAttribute("href", pageUrl(i));
                 tag.InnerHtml = i.ToString();
                 if (i == pageInfo.PageNumber)
