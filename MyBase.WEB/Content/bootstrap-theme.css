@@ -73,12 +73,7 @@ fieldset[disabled] .btn-danger {
   border-color: #dbdbdb;
   border-color: #ccc;
 }
-.done {
-    padding: 20px;
-    border-radius: 5px;
-    background-color: lightgrey;
-    margin: 15px;
-}
+
 .btn-default:hover,
 .btn-default:focus {
   background-color: #e0e0e0;

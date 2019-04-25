@@ -61,7 +61,7 @@ namespace MyBase.BLL {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @&quot;^[a-zA-Zа-яА-Я-&apos;]*$&quot;.
+        ///   Looks up a localized string similar to ^[a-zA-Zа-яА-Я-&apos;]*$.
         /// </summary>
         internal static string PatternForName {
             get {
@@ -70,7 +70,7 @@ namespace MyBase.BLL {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @&quot;\(?\d{3}\)?-? *\d{3}-? *-?\d{4}&quot;.
+        ///   Looks up a localized string similar to \(?\d{3}\)?-? *\d{3}-? *-?\d{4}.
         /// </summary>
         internal static string PatternForPhoneNumber {
             get {

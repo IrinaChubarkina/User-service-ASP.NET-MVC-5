@@ -2,13 +2,14 @@
 using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService.TableGenerators;
+using MyBase.BLL.Services.UserService.Validators;
 using MyBase.DAL.Entities;
+using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using MyBase.BLL.Services.UserService.Validators;
-using MyBase.DAL.Repositories.Interfaces;
 
 namespace MyBase.BLL.Services.UserService
 {
@@ -29,7 +30,7 @@ namespace MyBase.BLL.Services.UserService
         {
             var startFrom = (pageNumber - 1) * listSize;
 
-            var users = await _userRepository.GetAllAsync(listSize, startFrom);
+            var users = await _userRepository.GetAllNotDeletedUsersAsync(listSize, startFrom);
             var userList = users.Map<List<UserDto>>();
 
             return userList;
@@ -49,7 +50,12 @@ namespace MyBase.BLL.Services.UserService
         public async Task<UserDto> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            
+
+            if (user.IsDeleted)
+            {
+                throw new Exception("Пользователь был удален");
+            }
+
             return user.Map<UserDto>();
         }
 
@@ -71,7 +77,7 @@ namespace MyBase.BLL.Services.UserService
 
         public Task<int> GetUsersCountAsync()
         {
-            return _userRepository.CountAsync();
+            return _userRepository.NotDeletedUsersCountAsync();
         }
 
         public async Task FillStorageWithFakeUsersAsync()

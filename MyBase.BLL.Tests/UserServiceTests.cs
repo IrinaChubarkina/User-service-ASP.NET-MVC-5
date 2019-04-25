@@ -36,7 +36,7 @@ namespace MyBase.BLL.Tests
         public void Dispose() => Mapper.Reset();
 
         [Fact]
-        public async Task GetUserByIdAsync_ModelIsNotEmpty_ShouldMapCorrectly()
+        public async Task GetUserByIdAsync_UserIsNotEmptyAndNotDeleted_ShouldMapCorrectly()
         {
             // Arrange
             var id = new Fixture().Create<int>();
@@ -58,6 +58,22 @@ namespace MyBase.BLL.Tests
             Assert.Equal(expectedUserDto.Email, actualUserDto.Email);
             Assert.Equal(expectedUserDto.PhoneNumber, actualUserDto.PhoneNumber);
             Assert.Equal(expectedUserDto.Image, actualUserDto.Image);
+        }
+
+        [Fact]
+        public async Task GetUserByIdAsync_UserIsDeleted_ShouldThrowException()
+        {
+            // Arrange
+            var id = new Fixture().Create<int>();
+            var user = GetUser(id);
+            user.IsDeleted = true;
+
+            _userRepositoryMock
+                .Setup(x => x.GetByIdAsync(id))
+                .ReturnsAsync(user);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => _userService.GetUserByIdAsync(id));
         }
 
         [Fact]

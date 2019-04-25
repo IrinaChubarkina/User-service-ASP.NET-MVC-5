@@ -1,10 +1,10 @@
 ﻿using MyBase.DAL.EF;
 using MyBase.DAL.Entities;
+using MyBase.DAL.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using MyBase.DAL.Repositories.Interfaces;
 
 namespace MyBase.DAL.Repositories
 {
@@ -30,7 +30,8 @@ namespace MyBase.DAL.Repositories
 
         public void Update(User user)
         {
-            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
+
             if (user.Image == null)
             {
                 _context.Entry(user).Property(e => e.Image).IsModified = false;
@@ -42,17 +43,17 @@ namespace MyBase.DAL.Repositories
             return _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<List<User>> GetAllAsync(int listSize, int startFrom)
+        public Task<List<User>> GetAllNotDeletedUsersAsync(int listSize, int startFrom)
         {
             return _context.Users
-                .Where(u => u.IsDeleted == false)
+                .Where(u => !u.IsDeleted)
                 .OrderBy(u => u.Id)
                 .Skip(startFrom)
                 .Take(listSize)
                 .ToListAsync();
         }
 
-        public Task<int> CountAsync()
+        public Task<int> NotDeletedUsersCountAsync()
         {
             return _context.Users.CountAsync(x => !x.IsDeleted);
         }

@@ -6,10 +6,10 @@ namespace MyBase.WEB.App_Start
     {
         public static void Initialize()
         {
-            Mapper.Initialize(cfg =>
+            Mapper.Initialize(config =>
             {
-                cfg.AddProfile<AutoMapperProfile>();
-                cfg.AddProfile<BLL.Infrastructure.AutoMapperProfile>();
+                config.AddProfile<AutoMapperProfile>();
+                config.AddProfile<BLL.Infrastructure.AutoMapperProfile>();
             });
         }
     }

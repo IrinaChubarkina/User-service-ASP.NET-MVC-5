@@ -16,18 +16,18 @@
     @foreach (var item in Model.Users)
     {
         <tr>
-            <td>
+            <td class="contains-image">
                 @if (item.Image != null)
                 {
                     <a href=/User/Details/@item.Id>
-                        <div style='width:200px; height: 200px; background-image: url(@item.Image); background-size: cover'>
+                        <div class="contains-image" style='background-image: url(@item.Image);'>
                         </div>
                     </a>
                 }
                 else
                 {
                     <a href=/User/Details/@item.Id>
-                        <div style='width:200px; height: 200px; background-image: url(/Images/Default/default.jpg); background-size: cover'>
+                        <div class="contains-default-image">
                         </div>
                     </a>                    
                 }

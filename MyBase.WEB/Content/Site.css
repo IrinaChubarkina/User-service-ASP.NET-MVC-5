@@ -22,3 +22,29 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.done {
+    padding: 12px;
+    border-radius: 5px;
+    background-color: lightgrey;
+    margin: 15px;
+}
+
+.contains-image {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+
+.contains-default-image {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-image: url(/Images/Default/default.jpg);
+}
+
+.image-details {
+    max-width: 50%;
+    max-height: 400px;
+    margin: 30px;
+}

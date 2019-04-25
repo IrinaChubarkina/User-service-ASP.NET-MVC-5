@@ -1,0 +1,14 @@
+diff a/MyBase.WEB/Content/bootstrap-theme.css b/MyBase.WEB/Content/bootstrap-theme.css	(rejected hunks)
+@@ -73,6 +73,12 @@
+   border-color: #dbdbdb;
+   border-color: #ccc;
+ }
++.done {
++    padding: 20px;
++    border-radius: 5px;
++    background-color: lightgrey;
++    margin: 15px;
++}
+ .btn-default:hover,
+ .btn-default:focus {
+   background-color: #e0e0e0;

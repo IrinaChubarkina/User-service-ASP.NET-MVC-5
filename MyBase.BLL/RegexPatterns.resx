@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PatternForName" xml:space="preserve">
-    <value>@"^[a-zA-Zа-яА-Я-']*$"</value>
+    <value>^[a-zA-Zа-яА-Я-']*$</value>
   </data>
   <data name="PatternForPhoneNumber" xml:space="preserve">
-    <value>@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}"</value>
+    <value>\(?\d{3}\)?-? *\d{3}-? *-?\d{4}</value>
   </data>
 </root>

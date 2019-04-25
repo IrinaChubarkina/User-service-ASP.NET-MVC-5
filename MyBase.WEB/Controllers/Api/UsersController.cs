@@ -1,6 +1,5 @@
 ﻿using MyBase.BLL.Dto;
 using MyBase.BLL.Services.UserService;
-using MyBase.WEB.Controllers.Api.Models;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -14,24 +13,6 @@ namespace MyBase.WEB.Controllers.Api
         public UsersController(IUserService userService)
         {
             _userService = userService;
-        }
-
-        // GET: api/Users
-        [Route("")]
-        public async Task<Page> Get([FromUri]int? page, [FromUri]int? size)
-        {
-            var pageSize = size ?? 10;
-            var pageNumber = page ?? 1;
-            var users = await _userService.GetUsersAsync(pageSize, pageNumber);
-
-            var result = new Page
-            {
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                TotalItems = await _userService.GetUsersCountAsync(),
-                Users = users
-            };
-            return result;
         }
 
         // GET: api/Users/8
