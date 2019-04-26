@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace MyBase.BLL.Services.UserService.TableGenerators
 {
@@ -20,14 +19,13 @@ namespace MyBase.BLL.Services.UserService.TableGenerators
                 dataTable.Columns.Add(column);
             }
 
-            var random = new Random();
             for (var i = 1; i <= recordsCount; i++)
             {
                 var row = dataTable.NewRow();
-                row[FirstName] = "Name_" + random.Next(10000, 99999);
-                row[LastName] = "Surname_" + random.Next(10000, 99999);
-                row[PhoneNumber] = random.Next(100000, 999999);
-                row[Email] = random.Next(100, 999) + "@mail.ru";
+                row[FirstName] = Faker.Name.FirstName();
+                row[LastName] = Faker.Name.LastName();
+                row[PhoneNumber] = Faker.Phone.GetShortPhoneNumber();
+                row[Email] = Faker.Name.FirstName() + "@mail.ru";
 
                 dataTable.Rows.Add(row);
             }
