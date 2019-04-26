@@ -9,5 +9,5 @@ namespace MyBase.WEB.Util
         {
             Bind<IUserService>().To<UserService>();
         }
-}
+    }
 }

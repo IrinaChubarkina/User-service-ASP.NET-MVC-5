@@ -1,6 +1,6 @@
-﻿using MyBase.BLL.Dto;
-using MyBase.BLL.Infrastructure;
+﻿using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.WEB.Models;
 using System;
 using System.Collections.Generic;
@@ -126,7 +126,7 @@ namespace MyBase.WEB.Controllers
         public async Task<ActionResult> FillStorageWithUsers()
         {
             await _userService.FillStorageWithFakeUsersAsync();
-            TempData["Message"] = "Пользователи созданы";
+            TempData["Message"] = "Создано 100 000 пользователей";
 
             return RedirectToAction("Index");
         }

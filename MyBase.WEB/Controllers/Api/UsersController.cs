@@ -1,11 +1,10 @@
-﻿using MyBase.BLL.Dto;
-using MyBase.BLL.Services.UserService;
+﻿using MyBase.BLL.Services.UserService;
+using MyBase.BLL.Services.UserService.Dto;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace MyBase.WEB.Controllers.Api
 {
-    [RoutePrefix("api/users")]
     public class UsersController : ApiController 
     {
         readonly IUserService _userService;
@@ -15,8 +14,8 @@ namespace MyBase.WEB.Controllers.Api
             _userService = userService;
         }
 
-        // GET: api/Users/8
-        [Route("{id}")]
+        [HttpGet]
+        [Route("api/Users/{id}")]
         public async Task<UserDto> Get(int id)
         {
             var userDto = await _userService.GetUserByIdAsync(id);
@@ -24,24 +23,22 @@ namespace MyBase.WEB.Controllers.Api
             return userDto;
         }
 
-        // POST: api/Users
         [HttpPost]
-        [Route("")]
+        [Route("api/Users")]
         public async Task<int> Create([FromBody]UserDto user)
         {
             return await _userService.CreateUserAsync(user);
         }
 
-        // PUT: api/Users/5
         [HttpPut]
-        [Route("")]
+        [Route("api/Users")]
         public async Task Edit([FromBody]UserDto user)
         {
             await _userService.UpdateUserAsync(user);
         }
 
-        // DELETE: api/Users/5
-        [Route("{id}")]
+        [HttpDelete]
+        [Route("api/Users/{id}")]
         public async Task Delete(int id)
         {
             await _userService.DeleteUserByIdAsync(id);

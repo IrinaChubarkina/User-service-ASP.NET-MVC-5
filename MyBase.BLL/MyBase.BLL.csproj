@@ -73,7 +73,7 @@
       <DependentUpon>RegexPatterns.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\UserService\TableGenerators\DataTableGenerator.cs" />
-    <Compile Include="Dto\UserDto.cs" />
+    <Compile Include="Services\UserService\Dto\UserDto.cs" />
     <Compile Include="Infrastructure\ConfigurationManager.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Services\UserService\Validators\UserDtoValidator.cs" />

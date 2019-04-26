@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyBase.BLL.Dto;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.DAL.Entities;
 
 namespace MyBase.BLL.Infrastructure

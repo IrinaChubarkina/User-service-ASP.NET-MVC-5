@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.BLL.Services.UserService.TableGenerators;
 using MyBase.BLL.Services.UserService.Validators;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -53,7 +52,7 @@ namespace MyBase.BLL.Services.UserService
 
             if (user.IsDeleted)
             {
-                throw new Exception("Пользователь был удален");
+                return null;
             }
 
             return user.Map<UserDto>();

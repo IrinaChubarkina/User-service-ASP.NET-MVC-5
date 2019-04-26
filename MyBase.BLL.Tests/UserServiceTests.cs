@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using AutoMapper;
 using Moq;
-using MyBase.BLL.Dto;
 using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.DAL.Entities;
 using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
@@ -61,7 +61,7 @@ namespace MyBase.BLL.Tests
         }
 
         [Fact]
-        public async Task GetUserByIdAsync_UserIsDeleted_ShouldThrowException()
+        public async Task GetUserByIdAsync_UserIsDeleted_ShouldReturnNull()
         {
             // Arrange
             var id = new Fixture().Create<int>();
@@ -72,8 +72,13 @@ namespace MyBase.BLL.Tests
                 .Setup(x => x.GetByIdAsync(id))
                 .ReturnsAsync(user);
 
-            // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _userService.GetUserByIdAsync(id));
+            UserDto expectedUserDto = null;
+
+            // Act 
+            var actualUserDto = await _userService.GetUserByIdAsync(id);
+
+            // Assert
+            Assert.Equal(expectedUserDto, actualUserDto);
         }
 
         [Fact]
@@ -89,8 +94,8 @@ namespace MyBase.BLL.Tests
             await _userService.DeleteUserByIdAsync(id);
 
             // Assert
-            _userRepositoryMock.Verify(repo => repo.DeleteByIdAsync(It.Is<int>(x => x == id)), Times.Exactly(1));
-            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(), Times.Exactly(1));
+            _userRepositoryMock.Verify(repo => repo.DeleteByIdAsync(It.Is<int>(x => x == id)), Times.Once());
+            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(), Times.Once());
         }
 
         private static User GetUser(int id)

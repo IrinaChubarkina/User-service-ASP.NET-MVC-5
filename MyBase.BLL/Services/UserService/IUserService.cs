@@ -1,4 +1,4 @@
-﻿using MyBase.BLL.Dto;
+﻿using MyBase.BLL.Services.UserService.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-﻿namespace MyBase.BLL.Dto
+﻿namespace MyBase.BLL.Services.UserService.Dto
 {
     public class UserDto
     {

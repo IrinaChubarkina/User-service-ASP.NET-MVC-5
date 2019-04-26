@@ -1,12 +1,7 @@
 ﻿using AutoFixture;
 using FluentValidation;
-using MyBase.BLL.Dto;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.BLL.Services.UserService.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace MyBase.BLL.Tests

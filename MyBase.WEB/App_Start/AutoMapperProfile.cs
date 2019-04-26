@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyBase.BLL.Dto;
+using MyBase.BLL.Services.UserService.Dto;
 using MyBase.WEB.Models;
 
 namespace MyBase.WEB.App_Start
