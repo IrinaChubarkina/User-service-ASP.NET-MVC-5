@@ -5,6 +5,7 @@ using MyBase.BLL.Infrastructure;
 using MyBase.BLL.Services.UserService;
 using MyBase.BLL.Services.UserService.Dto;
 using MyBase.DAL.Entities;
+using MyBase.DAL.FileStorage;
 using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
 using System;
@@ -18,14 +19,19 @@ namespace MyBase.BLL.Tests
         readonly IUserService _userService;
 
         readonly Mock<IUserRepository> _userRepositoryMock;
+        readonly Mock<IFileStorage> _fileStorageMock;
         readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
         public UserServiceTests()
         {
             _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _fileStorageMock = new Mock<IFileStorage>();
             _userRepositoryMock = new Mock<IUserRepository>();
 
-            _userService = new UserService(_unitOfWorkMock.Object, _userRepositoryMock.Object);
+            _userService = new UserService(
+                _unitOfWorkMock.Object, 
+                _fileStorageMock.Object,
+                _userRepositoryMock.Object);
 
             Mapper.Initialize(config =>
             {
@@ -57,7 +63,7 @@ namespace MyBase.BLL.Tests
             Assert.Equal(expectedUserDto.LastName, actualUserDto.LastName);
             Assert.Equal(expectedUserDto.Email, actualUserDto.Email);
             Assert.Equal(expectedUserDto.PhoneNumber, actualUserDto.PhoneNumber);
-            Assert.Equal(expectedUserDto.Image, actualUserDto.Image);
+            Assert.Equal(expectedUserDto.ImageUrl, actualUserDto.ImageUrl);
         }
 
         [Fact]
@@ -108,7 +114,7 @@ namespace MyBase.BLL.Tests
                 Email = "dd@mail.ru",
                 IsDeleted = false,
                 PhoneNumber = "1111111111",
-                Image = null
+                ImageUrl = null
             };
         }
     }

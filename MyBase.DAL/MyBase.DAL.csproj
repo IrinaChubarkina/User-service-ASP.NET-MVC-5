@@ -41,6 +41,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,8 @@
   <ItemGroup>
     <Compile Include="EF\ApplicationContext.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="FileStorage\FileStorage.cs" />
+    <Compile Include="FileStorage\IFileStorage.cs" />
     <Compile Include="Migrations\201904100210114_DeleteContactTable.cs" />
     <Compile Include="Migrations\201904100210114_DeleteContactTable.Designer.cs">
       <DependentUpon>201904100210114_DeleteContactTable.cs</DependentUpon>
@@ -62,6 +65,10 @@
     <Compile Include="Migrations\201904190730086_string Image.cs" />
     <Compile Include="Migrations\201904190730086_string Image.Designer.cs">
       <DependentUpon>201904190730086_string Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904262114537_ImageUrl.cs" />
+    <Compile Include="Migrations\201904262114537_ImageUrl.Designer.cs">
+      <DependentUpon>201904262114537_ImageUrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -97,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904190730086_string Image.resx">
       <DependentUpon>201904190730086_string Image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904262114537_ImageUrl.resx">
+      <DependentUpon>201904262114537_ImageUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -35,9 +35,6 @@
       <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="Faker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Faker.Data.1.0.8\lib\net45\Faker.dll</HintPath>
-    </Reference>
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.8.2.2\lib\net45\FluentValidation.dll</HintPath>
     </Reference>

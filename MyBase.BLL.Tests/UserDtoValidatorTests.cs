@@ -72,7 +72,7 @@ namespace MyBase.BLL.Tests
                 LastName = "Chu",
                 Email = "dd@mail.ru",
                 PhoneNumber = "1111111111",
-                Image = null
+                ImageUrl = null
             };
         }
     }

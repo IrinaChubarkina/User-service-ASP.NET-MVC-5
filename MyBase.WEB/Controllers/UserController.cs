@@ -64,12 +64,6 @@ namespace MyBase.WEB.Controllers
                 return View(user);
             }
 
-            if (user.File != null)
-            {
-                var pathToImage = SaveFileAndGetPath(user.File);
-                user.Image = pathToImage;
-            }
-
             var userDto = user.Map<UserDto>();
             var newUserId = await _userService.CreateUserAsync(userDto);
 
@@ -92,12 +86,6 @@ namespace MyBase.WEB.Controllers
             if (!ModelState.IsValid)
             {
                 return View(user);
-            }
-
-            if (user.File != null)
-            {
-                var pathToImage = SaveFileAndGetPath(user.File);
-                user.Image = pathToImage;
             }
 
             var userDto = user.Map<UserDto>();
@@ -131,19 +119,5 @@ namespace MyBase.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        private string SaveFileAndGetPath(HttpPostedFileBase file)
-        {
-            var directoryName = "/Images/Avatars/";
-            var fileExtension = Path.GetExtension(file.FileName);
-            var newFileName = directoryName + Guid.NewGuid().ToString() + fileExtension;
-
-            if (!Directory.Exists(Server.MapPath(directoryName)))
-            {
-                Directory.CreateDirectory(Server.MapPath(directoryName));
-            }
-            file.SaveAs(Server.MapPath(newFileName));
-
-            return newFileName;
-        }
     }
 }

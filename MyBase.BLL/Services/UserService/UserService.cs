@@ -4,6 +4,7 @@ using MyBase.BLL.Services.UserService.Dto;
 using MyBase.BLL.Services.UserService.TableGenerators;
 using MyBase.BLL.Services.UserService.Validators;
 using MyBase.DAL.Entities;
+using MyBase.DAL.FileStorage;
 using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
 using System.Collections.Generic;
@@ -14,15 +15,18 @@ namespace MyBase.BLL.Services.UserService
 {
     public class UserService : IUserService
     {
-        readonly IUnitOfWork _unitOfWork;
-        readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IFileStorage _fileStorage;
+        private readonly IUserRepository _userRepository;
 
         public UserService(
             IUnitOfWork unitOfWork,
+            IFileStorage fileStorage,
             IUserRepository userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _fileStorage = fileStorage;
         }
 
         public async Task<List<UserDto>> GetUsersAsync(int listSize, int pageNumber)
@@ -35,11 +39,16 @@ namespace MyBase.BLL.Services.UserService
             return userList;
         }
 
+        /// <exception cref="ValidationException">Смотреть UserDtoValidator</exception>
         public async Task<int> CreateUserAsync(UserDto userDto)
         {
             new UserDtoValidator().ValidateAndThrow(userDto);
 
             var user = userDto.Map<User>();
+
+            var url = _fileStorage.SaveFile(userDto.Stream, userDto.FileName);
+
+            user.ImageUrl = url.Value;
             _userRepository.Create(user);
 
             await _unitOfWork.SaveChangesAsync();
@@ -58,11 +67,16 @@ namespace MyBase.BLL.Services.UserService
             return user.Map<UserDto>();
         }
 
+        /// <exception cref="ValidationException">Смотреть UserDtoValidator</exception>
         public async Task UpdateUserAsync(UserDto userDto)
         {
             new UserDtoValidator().ValidateAndThrow(userDto);
 
             var user = userDto.Map<User>();
+
+            var url = _fileStorage.SaveFile(userDto.Stream, userDto.FileName);
+
+            user.ImageUrl = url.Value;
             _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync();

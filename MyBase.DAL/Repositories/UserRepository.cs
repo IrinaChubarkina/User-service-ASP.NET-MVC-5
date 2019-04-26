@@ -32,9 +32,9 @@ namespace MyBase.DAL.Repositories
         {
             _context.Entry(user).State = EntityState.Modified;
 
-            if (user.Image == null)
+            if (user.ImageUrl == null)
             {
-                _context.Entry(user).Property(e => e.Image).IsModified = false;
+                _context.Entry(user).Property(e => e.ImageUrl).IsModified = false;
             }
         }
 

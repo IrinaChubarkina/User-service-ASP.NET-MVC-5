@@ -1,4 +1,5 @@
 ﻿using MyBase.DAL.EF;
+using MyBase.DAL.FileStorage;
 using MyBase.DAL.Repositories;
 using MyBase.DAL.Repositories.Interfaces;
 using MyBase.DAL.UnitOfWork;
@@ -16,8 +17,8 @@ namespace MyBase.BLL.Infrastructure
                 .InRequestScope()
                 .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionString());
             Bind<IUserRepository>().To<UserRepository>();
+            Bind<IFileStorage>().To<FileStorage>();
         }
-        
     }
 }
 

@@ -9,7 +9,11 @@ namespace MyBase.WEB.App_Start
         public AutoMapperProfile()
         {
             CreateMap<UserDto, UserViewModel>();
-            CreateMap<UserViewModel, UserDto>();
+            CreateMap<UserViewModel, UserDto>()
+                .ForMember(dest => dest.Stream,
+                           opt => opt.MapFrom(source => source.File != null ? source.File.InputStream : null))
+                .ForMember(dest => dest.FileName,
+                           opt => opt.MapFrom(source => source.File != null ? source.File.FileName : null));
         }
     }
 }
