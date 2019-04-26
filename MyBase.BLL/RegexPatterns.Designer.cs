@@ -61,7 +61,7 @@ namespace MyBase.BLL {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ^[a-zA-Zа-яА-Я-&apos;]*$.
+        ///   Looks up a localized string similar to ^[a-zA-Zа-яА-Я &apos;-]*$.
         /// </summary>
         internal static string PatternForName {
             get {

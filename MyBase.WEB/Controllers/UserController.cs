@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MyBase.WEB.Controllers
@@ -65,11 +66,8 @@ namespace MyBase.WEB.Controllers
 
             if (user.File != null)
             {
-                var extension = Path.GetExtension(user.File.FileName);
-                var fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
-                user.File.SaveAs(Server.MapPath(fileName));
-
-                user.Image = fileName;
+                var pathToImage = SaveFileAndGetPath(user.File);
+                user.Image = pathToImage;
             }
 
             var userDto = user.Map<UserDto>();
@@ -98,12 +96,10 @@ namespace MyBase.WEB.Controllers
 
             if (user.File != null)
             {
-                var extension = Path.GetExtension(user.File.FileName);
-                var fileName = "/Images/" + Guid.NewGuid().ToString() + extension;
-                user.File.SaveAs(Server.MapPath(fileName));
-
-                user.Image = fileName;
+                var pathToImage = SaveFileAndGetPath(user.File);
+                user.Image = pathToImage;
             }
+
             var userDto = user.Map<UserDto>();
             await _userService.UpdateUserAsync(userDto);
 
@@ -133,6 +129,21 @@ namespace MyBase.WEB.Controllers
             TempData["Message"] = "Пользователи созданы";
 
             return RedirectToAction("Index");
+        }
+
+        private string SaveFileAndGetPath(HttpPostedFileBase file)
+        {
+            var directoryName = "/Images/Avatars/";
+            var fileExtension = Path.GetExtension(file.FileName);
+            var newFileName = directoryName + Guid.NewGuid().ToString() + fileExtension;
+
+            if (!Directory.Exists(Server.MapPath(directoryName)))
+            {
+                Directory.CreateDirectory(Server.MapPath(directoryName));
+            }
+            file.SaveAs(Server.MapPath(newFileName));
+
+            return newFileName;
         }
     }
 }
